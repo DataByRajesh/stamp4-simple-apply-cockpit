@@ -19,7 +19,7 @@ export function FitVerdictCard({ score, parsed }: { score: ScoreBreakdown; parse
     <section className={`card verdict ${DECISION_CLASS[score.decision]}`}>
       <p className="eyebrow">Verdict</p>
       <h2>{score.decision}</h2>
-      <div className="metric">{score.total}/120</div>
+      <div className="metric">{score.total}/5</div>
       <p>{reasoning(score, parsed)}</p>
     </section>
   )

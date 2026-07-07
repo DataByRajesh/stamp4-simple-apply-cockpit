@@ -15,15 +15,15 @@ export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipR
     )
   }
 
-  if (score.domainFit < 8) {
+  if (score.domainFit < 2) {
     details.push('Few FinTech/banking/payments domain keywords were detected in the JD.')
   }
 
-  if (score.skillFit < 10) {
+  if (score.skillFit < 2.5) {
     details.push('Few of your core skills (SQL, UAT, reconciliation, incident/production support, etc.) matched.')
   }
 
-  if (score.permitFit < 10) {
+  if (score.permitFit < 2.5) {
     if (parsed.sponsorshipSignals.length) {
       details.push(
         `Permit risk: JD signals "${parsed.sponsorshipSignals[0]}"${
@@ -37,18 +37,18 @@ export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipR
     }
   }
 
-  if (score.proofStrength < 8) {
+  if (score.proofStrength < 2) {
     details.push('Little of your existing proof evidence (PayGuard IE, RegPulse, FIS experience) maps to this JD.')
   }
 
-  if (score.seniorityFit < 8) {
+  if (score.seniorityFit < 2) {
     details.push(
       `Seniority mismatch: this JD looks like it needs more scope/years than your ~${RAJ_PROFILE.yearsExperience} years of experience.`,
     )
   }
 
   return {
-    summary: `Scored ${score.total}/120 (Skip) — below the threshold for generating application content.`,
+    summary: `Scored ${score.total}/5 (Skip) — below the threshold for generating application content.`,
     details: details.length ? details : ['Overall score is too low across multiple fit dimensions.'],
   }
 }

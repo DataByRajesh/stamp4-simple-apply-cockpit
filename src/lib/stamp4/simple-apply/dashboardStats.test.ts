@@ -35,7 +35,7 @@ function breakdown(
   skillFit: number,
   permitFit: number,
   proofStrength: number,
-  seniorityFit = 20,
+  seniorityFit = 5,
 ): ScoreBreakdown {
   return {
     roleFit,
@@ -77,9 +77,9 @@ describe('computeDashboardStats', () => {
 
   it('finds the dimension most often weakest, ignoring jobs with no breakdown saved', () => {
     const jobs = [
-      job({ scoreBreakdown: breakdown(20, 20, 20, 5, 15) }), // permitFit weakest
-      job({ scoreBreakdown: breakdown(5, 20, 20, 20, 20) }), // roleFit weakest
-      job({ scoreBreakdown: breakdown(5, 20, 20, 20, 20) }), // roleFit weakest again
+      job({ scoreBreakdown: breakdown(5, 5, 5, 1.25, 3.75) }), // permitFit weakest
+      job({ scoreBreakdown: breakdown(1.25, 5, 5, 5, 5) }), // roleFit weakest
+      job({ scoreBreakdown: breakdown(1.25, 5, 5, 5, 5) }), // roleFit weakest again
       job({}), // no breakdown at all - excluded
     ]
     const stats = computeDashboardStats(jobs)

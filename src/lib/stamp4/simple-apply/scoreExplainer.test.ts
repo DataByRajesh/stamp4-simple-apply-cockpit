@@ -39,7 +39,7 @@ describe('explainScore', () => {
       'Proof strength',
       'Seniority fit',
     ])
-    expect(explanations.every((e) => e.cap === 20)).toBe(true)
+    expect(explanations.every((e) => e.cap === 5)).toBe(true)
     expect(explanations[0].points).toBe(score.roleFit)
     expect(explanations[1].points).toBe(score.domainFit)
   })

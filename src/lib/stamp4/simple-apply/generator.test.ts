@@ -30,13 +30,13 @@ function job(overrides: Partial<ParsedJob> = {}): ParsedJob {
 
 function score(overrides: Partial<ScoreBreakdown> = {}): ScoreBreakdown {
   return {
-    roleFit: 20,
-    domainFit: 20,
-    skillFit: 20,
-    permitFit: 20,
-    proofStrength: 20,
-    seniorityFit: 20,
-    total: 120,
+    roleFit: 5,
+    domainFit: 5,
+    skillFit: 5,
+    permitFit: 5,
+    proofStrength: 5,
+    seniorityFit: 5,
+    total: 5,
     decision: 'Apply Now',
     ...overrides,
   }
@@ -131,7 +131,7 @@ describe('generateInterviewQuestionsFallback', () => {
 
 describe('generateCorrectionActionsFallback', () => {
   it('flags weak proof strength as a high-priority action', () => {
-    const actions = generateCorrectionActionsFallback(job(), score({ proofStrength: 5 }), [])
+    const actions = generateCorrectionActionsFallback(job(), score({ proofStrength: 1.25 }), [])
     expect(actions.some((a) => a.action.includes('PayGuard IE') && a.priority === 'High')).toBe(true)
   })
 
@@ -148,7 +148,7 @@ describe('generateCorrectionActionsFallback', () => {
   })
 
   it('flags unclear permit fit and unknown salary', () => {
-    const actions = generateCorrectionActionsFallback(job({ salary: null }), score({ permitFit: 5 }), [])
+    const actions = generateCorrectionActionsFallback(job({ salary: null }), score({ permitFit: 1.25 }), [])
     expect(actions.some((a) => a.action.includes('sponsorship/permit fit unclear'))).toBe(true)
     expect(actions.some((a) => a.action.includes('Flag salary as unknown'))).toBe(true)
   })

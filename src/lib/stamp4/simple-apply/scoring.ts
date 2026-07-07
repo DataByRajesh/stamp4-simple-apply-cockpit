@@ -4,9 +4,9 @@ import type { ParsedJob, ScoreBreakdown } from './types'
 
 function roleFit(roleTitle: string) {
   const title = roleTitle.toLowerCase()
-  if (RAJ_PROFILE.targetRoleLane.some((role) => title.includes(role))) return 20
-  if ((title.includes('analyst') && title.includes('system')) || (title.includes('analyst') && title.includes('business'))) return 12
-  if (title.includes('analyst')) return 5
+  if (RAJ_PROFILE.targetRoleLane.some((role) => title.includes(role))) return 5
+  if ((title.includes('analyst') && title.includes('system')) || (title.includes('analyst') && title.includes('business'))) return 3
+  if (title.includes('analyst')) return 1.25
   return 0
 }
 
@@ -28,9 +28,9 @@ function extractNumericSalary(salary: string | null) {
 function scoreSalaryComponent(salary: string | null) {
   const parsedAmount = extractNumericSalary(salary)
 
-  if (!salary || parsedAmount === null) return -5
-  if (parsedAmount < RAJ_PROFILE.salaryPermitFloorEUR) return -15
-  if (parsedAmount >= RAJ_PROFILE.salaryTargetRangeEUR.min) return 5
+  if (!salary || parsedAmount === null) return -1.25
+  if (parsedAmount < RAJ_PROFILE.salaryPermitFloorEUR) return -3.75
+  if (parsedAmount >= RAJ_PROFILE.salaryTargetRangeEUR.min) return 1.25
   return 0
 }
 
@@ -49,45 +49,47 @@ function scoreSeniorityFit(parsed: ParsedJob): number {
   const hasSeniorKeyword = signals.some((signal) => SENIOR_KEYWORDS.includes(signal))
   const requiredYears = extractRequiredYears(parsed.senioritySignals)
 
-  let seniorityFit = 20
+  let seniorityFit = 5
 
-  if (hasSeniorKeyword) seniorityFit -= 12
+  if (hasSeniorKeyword) seniorityFit -= 3
   if (requiredYears !== null && requiredYears > RAJ_PROFILE.yearsExperience) {
-    seniorityFit -= Math.min(15, (requiredYears - RAJ_PROFILE.yearsExperience) * 5)
+    seniorityFit -= Math.min(3.75, (requiredYears - RAJ_PROFILE.yearsExperience) * 1.25)
   }
 
-  return Math.max(0, Math.min(20, seniorityFit))
+  return Math.max(0, Math.min(5, seniorityFit))
 }
 
 export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
   const role = roleFit(parsed.roleTitle)
-  const domainFit = Math.min(20, parsed.domainKeywords.length * 4)
+  const domainFit = Math.min(5, parsed.domainKeywords.length)
   const matchedCoreSkills = parsed.requiredSkills.filter((skill) =>
     RAJ_PROFILE.coreSkills.includes(skill as (typeof RAJ_PROFILE.coreSkills)[number]),
   )
-  const skillFit = Math.min(20, matchedCoreSkills.length * 2.5)
+  const skillFit = Math.min(5, matchedCoreSkills.length * 0.625)
   const hasPermitRisk = parsed.sponsorshipSignals.length > 0
   const countryLower = parsed.country.toLowerCase()
   const positiveCountry =
     countryLower === 'ireland' || countryLower === 'netherlands' || countryLower === 'eu'
-  let permitFit = 20
+  let permitFit = 5
 
-  if (hasPermitRisk && !positiveCountry) permitFit -= 15
-  if (hasPermitRisk && positiveCountry) permitFit -= 8
-  if (countryLower === 'uk') permitFit -= 10
+  if (hasPermitRisk && !positiveCountry) permitFit -= 3.75
+  if (hasPermitRisk && positiveCountry) permitFit -= 2
+  if (countryLower === 'uk') permitFit -= 2.5
   permitFit += scoreSalaryComponent(parsed.salary)
 
-  permitFit = Math.max(0, Math.min(20, permitFit))
+  permitFit = Math.max(0, Math.min(5, permitFit))
 
-  const proofStrength = Math.min(20, mapProofs(parsed).length * 4)
+  const proofStrength = Math.min(5, mapProofs(parsed).length)
   const seniorityFit = scoreSeniorityFit(parsed)
-  const total = Math.round(role + domainFit + skillFit + permitFit + proofStrength + seniorityFit)
+  // Each dimension is scored out of 5 so new dimensions can be added later without
+  // rebalancing a shared point pool; the verdict is their average, not their sum.
+  const total = Math.round(((role + domainFit + skillFit + permitFit + proofStrength + seniorityFit) / 6) * 10) / 10
   const decision: ScoreBreakdown['decision'] =
-    total >= 96
+    total >= 4
       ? 'Apply Now'
-      : total >= 72
+      : total >= 3
         ? 'Apply with Proof Fix'
-        : total >= 48
+        : total >= 2
           ? 'Save / Low Priority'
           : 'Skip'
 

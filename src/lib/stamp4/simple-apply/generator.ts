@@ -67,7 +67,7 @@ export function buildAIUserPrompt(input: AIGenerationInput) {
 - Country/location: ${input.parsed.country || 'unknown'} / ${input.parsed.location || 'unknown'}
 - Salary: ${input.parsed.salary ?? 'not stated'}
 - Decision: ${input.score.decision}
-- Score: ${input.score.total}/120
+- Score: ${input.score.total}/5
 - Matched domain keywords: ${input.parsed.domainKeywords.join(', ') || 'none'}
 - Matched skills: ${input.parsed.requiredSkills.join(', ') || 'none'}
 - Permit or sponsorship signals: ${input.parsed.sponsorshipSignals.join(', ') || 'none'}
@@ -356,7 +356,7 @@ export function generateCorrectionActionsFallback(
   const actions: CorrectionAction[] = []
   const text = parsed.rawText.toLowerCase()
 
-  if (score.proofStrength < 15) {
+  if (score.proofStrength < 3.75) {
     actions.push({
       action: 'Add one PayGuard IE reconciliation mismatch scenario',
       whyItMatters: 'The JD has too few directly mapped proof anchors for a strong application.',
@@ -372,7 +372,7 @@ export function generateCorrectionActionsFallback(
     })
   }
 
-  if (text.includes('uat') && score.proofStrength < 20) {
+  if (text.includes('uat') && score.proofStrength < 5) {
     actions.push({
       action: 'Practise UAT defect explanation',
       whyItMatters: 'A crisp UAT story will make the application quality angle more credible.',
@@ -380,7 +380,7 @@ export function generateCorrectionActionsFallback(
     })
   }
 
-  if (score.permitFit < 10) {
+  if (score.permitFit < 2.5) {
     actions.push({
       action: 'Save job for later - sponsorship/permit fit unclear',
       whyItMatters: 'Permit risk is high enough that a full application may not be worth immediate effort.',
