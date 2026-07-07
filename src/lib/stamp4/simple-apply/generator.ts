@@ -1,9 +1,15 @@
-﻿import type {
+﻿import { RAJ_PROFILE } from './profile'
+import type {
   ApplicationPack,
   CorrectionAction,
+  DeepInterviewQuestion,
+  InterviewPrepBundle,
   InterviewQuestion,
+  InterviewStage,
   ParsedJob,
   ProofMapping,
+  QuestionToAsk,
+  SalaryNegotiationPrep,
   ScoreBreakdown,
 } from './types'
 
@@ -117,10 +123,11 @@ Rules:
 
 export const INTERVIEW_PREP_SYSTEM_PROMPT = `${SYSTEM_PROMPT}
 
-For this task you are only producing an interview question bank - nothing else. Every question must be genuinely tailored to the exact job details and proof mappings supplied: reference specific responsibilities, tools, domain keywords, seniority signals or proof assets from that job. Do not produce generic, could-apply-to-any-analyst-role questions - each one should read as if written by someone who read this exact JD closely and is testing Raj against it specifically.`.trim()
+For this task you are producing a full interview prep bundle, not just a question bank: the questions Raj is likely to be asked (tagged by interview stage), good questions for Raj to ask the interviewer, and grounded salary-negotiation talking points. Every question must be genuinely tailored to the exact job details and proof mappings supplied: reference specific responsibilities, tools, domain keywords, seniority signals or proof assets from that job. Do not produce generic, could-apply-to-any-analyst-role questions - each one should read as if written by someone who read this exact JD closely and is testing Raj against it specifically.`.trim()
 
-export interface InterviewPrepOutput {
-  questions: InterviewQuestion[]
+function salaryContextLines() {
+  return `- Raj's target salary range: EUR ${RAJ_PROFILE.salaryTargetRangeEUR.min.toLocaleString()}-${RAJ_PROFILE.salaryTargetRangeEUR.max.toLocaleString()}
+- Raj's minimum permit-eligible salary floor: EUR ${RAJ_PROFILE.salaryPermitFloorEUR.toLocaleString()}`
 }
 
 export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
@@ -128,6 +135,7 @@ export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
 - Role: ${input.parsed.roleTitle}
 - Company: ${input.parsed.company}
 - Country/location: ${input.parsed.country || 'unknown'} / ${input.parsed.location || 'unknown'}
+- Salary stated in JD: ${input.parsed.salary ?? 'not stated'}
 - Decision: ${input.score.decision}
 - Score: ${input.score.total}/5
 - Responsibilities: ${input.parsed.responsibilities.join('; ') || 'none stated'}
@@ -139,35 +147,83 @@ export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
 Relevant proof mappings for this JD:
 ${proofLines(input.proofs)}
 
+Raj's salary context (for negotiation prep only - do not restate as fact about this specific offer):
+${salaryContextLines()}
+
 Generate a JSON object with this exact shape:
 {
   "questions": [
     {
       "question": "interview question",
+      "stage": "Phone Screen | Technical / Panel | Final Round",
       "answerDirection": "practical answer direction",
       "proofToMention": "specific proof asset",
       "tamilAudioNote": "'Add to Tamil TTS revision script' if this question deserves extra spoken-answer practice, otherwise null"
     }
-  ]
+  ],
+  "questionsToAsk": [
+    {
+      "question": "a good question for Raj to ask the interviewer",
+      "whyAsk": "one sentence on what this reveals or why it matters for this specific role"
+    }
+  ],
+  "salaryNegotiation": {
+    "talkingPoints": ["grounded talking point Raj can use if salary comes up"],
+    "suggestedRange": "a specific EUR range to anchor on for this role, reasoned from Raj's target range and what the JD states",
+    "notes": "1-2 sentences of role-specific negotiation context (e.g. permit/visa leverage considerations, seniority mismatch, salary not stated)"
+  }
 }
 
 Rules:
 - Return ONLY valid JSON.
 - Make exactly 8-10 interview questions - high-level and genuinely tailored to this JD, not generic filler.
 - Each question must reference at least one concrete detail from the job details above (a named responsibility, tool, domain keyword or proof asset) so it could not be reused unchanged for a different role.
-- If payment/reconciliation/settlement is relevant, include this exact question: "How would you investigate a payment marked successful in the application but missing in settlement?"
+- Tag every question with the stage it is most likely to appear in. Use a reasonable spread across all three stages rather than putting everything in one.
+- If payment/reconciliation/settlement is relevant, include this exact question tagged "Technical / Panel": "How would you investigate a payment marked successful in the application but missing in settlement?"
 - Only set tamilAudioNote to the revision-script note for questions that genuinely warrant extra spoken-answer practice; set it to null for the rest.
+- Make 4-6 questionsToAsk - genuinely specific to this company/role, not generic ("What's the culture like?" is not acceptable).
+- Ground salaryNegotiation.suggestedRange and notes in the actual JD salary (if stated) versus Raj's target range and permit floor above - do not invent a JD salary that was not given.
 - Keep every claim grounded in the job details and proof mappings above.`.trim()
 }
 
-export function isInterviewPrepOutput(value: unknown): value is InterviewPrepOutput {
+function isInterviewStage(value: unknown): value is InterviewStage {
+  return value === 'Phone Screen' || value === 'Technical / Panel' || value === 'Final Round'
+}
+
+function isDeepInterviewQuestion(value: unknown): value is DeepInterviewQuestion {
+  return isInterviewQuestion(value) && isInterviewStage((value as DeepInterviewQuestion).stage)
+}
+
+function isQuestionToAsk(value: unknown): value is QuestionToAsk {
   if (!value || typeof value !== 'object') return false
-  const output = value as InterviewPrepOutput
+  const item = value as QuestionToAsk
+  return typeof item.question === 'string' && typeof item.whyAsk === 'string'
+}
+
+function isSalaryNegotiationPrep(value: unknown): value is SalaryNegotiationPrep {
+  if (!value || typeof value !== 'object') return false
+  const prep = value as SalaryNegotiationPrep
+  return (
+    Array.isArray(prep.talkingPoints) &&
+    prep.talkingPoints.every((point) => typeof point === 'string') &&
+    typeof prep.suggestedRange === 'string' &&
+    typeof prep.notes === 'string'
+  )
+}
+
+export function isInterviewPrepOutput(value: unknown): value is InterviewPrepBundle {
+  if (!value || typeof value !== 'object') return false
+  const output = value as InterviewPrepBundle
   return (
     Array.isArray(output.questions) &&
     output.questions.length >= 8 &&
     output.questions.length <= 10 &&
-    output.questions.every(isInterviewQuestion)
+    output.questions.every(isDeepInterviewQuestion) &&
+    Array.isArray(output.questionsToAsk) &&
+    output.questionsToAsk.length >= 4 &&
+    output.questionsToAsk.length <= 6 &&
+    output.questionsToAsk.every(isQuestionToAsk) &&
+    isSalaryNegotiationPrep(output.salaryNegotiation)
   )
 }
 

@@ -4,10 +4,9 @@ import {
   buildInterviewPrepUserPrompt,
   INTERVIEW_PREP_SYSTEM_PROMPT,
   isInterviewPrepOutput,
-  type InterviewPrepOutput,
 } from '@/lib/stamp4/simple-apply/generator'
 import { callOpenAIJson } from '@/lib/stamp4/simple-apply/openai'
-import type { ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
+import type { InterviewPrepBundle, ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
 
@@ -20,7 +19,7 @@ type InterviewPrepRequest = {
 const INTERVIEW_PREP_SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['questions'],
+  required: ['questions', 'questionsToAsk', 'salaryNegotiation'],
   properties: {
     questions: {
       type: 'array',
@@ -29,13 +28,41 @@ const INTERVIEW_PREP_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['question', 'answerDirection', 'proofToMention', 'tamilAudioNote'],
+        required: ['question', 'stage', 'answerDirection', 'proofToMention', 'tamilAudioNote'],
         properties: {
           question: { type: 'string' },
+          stage: { type: 'string', enum: ['Phone Screen', 'Technical / Panel', 'Final Round'] },
           answerDirection: { type: 'string' },
           proofToMention: { type: 'string' },
           tamilAudioNote: { type: ['string', 'null'] },
         },
+      },
+    },
+    questionsToAsk: {
+      type: 'array',
+      minItems: 4,
+      maxItems: 6,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['question', 'whyAsk'],
+        properties: {
+          question: { type: 'string' },
+          whyAsk: { type: 'string' },
+        },
+      },
+    },
+    salaryNegotiation: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['talkingPoints', 'suggestedRange', 'notes'],
+      properties: {
+        talkingPoints: {
+          type: 'array',
+          items: { type: 'string' },
+        },
+        suggestedRange: { type: 'string' },
+        notes: { type: 'string' },
       },
     },
   },
@@ -81,7 +108,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'AI response did not match expected shape' }, { status: 502 })
     }
 
-    return NextResponse.json(parsed satisfies InterviewPrepOutput)
+    return NextResponse.json(parsed satisfies InterviewPrepBundle)
   } catch (error) {
     console.warn('Stamp4 interview prep generation failed', error)
     return NextResponse.json({ error: 'Interview prep generation unavailable' }, { status: 503 })

@@ -49,6 +49,29 @@ export interface InterviewQuestion {
   tamilAudioNote?: string | null
 }
 
+export type InterviewStage = 'Phone Screen' | 'Technical / Panel' | 'Final Round'
+
+export interface DeepInterviewQuestion extends InterviewQuestion {
+  stage: InterviewStage
+}
+
+export interface QuestionToAsk {
+  question: string
+  whyAsk: string
+}
+
+export interface SalaryNegotiationPrep {
+  talkingPoints: string[]
+  suggestedRange: string
+  notes: string
+}
+
+export interface InterviewPrepBundle {
+  questions: DeepInterviewQuestion[]
+  questionsToAsk: QuestionToAsk[]
+  salaryNegotiation: SalaryNegotiationPrep
+}
+
 export interface CorrectionAction {
   action: string
   whyItMatters: string

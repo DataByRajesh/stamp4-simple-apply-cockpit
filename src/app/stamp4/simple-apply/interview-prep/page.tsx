@@ -1,16 +1,16 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { InterviewPrep } from '@/components/stamp4/simple-apply/InterviewPrep'
+import { DeepInterviewPrep } from '@/components/stamp4/simple-apply/DeepInterviewPrep'
 import { apiCall, getAllTrackedJobs } from '@/lib/stamp4/simple-apply/storage'
-import type { InterviewQuestion, TrackedJob } from '@/lib/stamp4/simple-apply/types'
+import type { InterviewPrepBundle, TrackedJob } from '@/lib/stamp4/simple-apply/types'
 
 export default function InterviewPrepPage() {
   const [jobs, setJobs] = useState<TrackedJob[]>([])
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
   const [selectedId, setSelectedId] = useState('')
-  const [questions, setQuestions] = useState<InterviewQuestion[] | null>(null)
+  const [bundle, setBundle] = useState<InterviewPrepBundle | null>(null)
   const [generating, setGenerating] = useState(false)
   const [generateError, setGenerateError] = useState('')
 
@@ -27,10 +27,10 @@ export default function InterviewPrepPage() {
     if (!selectedJob?.parsedJob || !selectedJob.scoreBreakdown || generating) return
     setGenerating(true)
     setGenerateError('')
-    setQuestions(null)
+    setBundle(null)
 
     try {
-      const result = await apiCall<{ questions: InterviewQuestion[] }>('interview-prep', {
+      const result = await apiCall<InterviewPrepBundle>('interview-prep', {
         method: 'POST',
         body: JSON.stringify({
           parsed: selectedJob.parsedJob,
@@ -38,9 +38,9 @@ export default function InterviewPrepPage() {
           proofs: selectedJob.proofMap,
         }),
       })
-      setQuestions(result.questions)
+      setBundle(result)
     } catch {
-      setGenerateError('Live generation failed. The question bank was not produced.')
+      setGenerateError('Live generation failed. The prep bundle was not produced.')
     } finally {
       setGenerating(false)
     }
@@ -52,8 +52,9 @@ export default function InterviewPrepPage() {
         <p className="eyebrow">Stamp4 Simple Apply</p>
         <h1>Interview prep</h1>
         <p>
-          Pick a saved job and generate a fresh, tailored interview question bank on demand. Always a live AI call -
-          if it fails, nothing generic is shown in its place.
+          Pick a saved job and generate a fresh, tailored interview prep bundle on demand: questions by stage,
+          questions to ask them, and salary-negotiation prep. Always a live AI call - if it fails, nothing generic
+          is shown in its place.
         </p>
       </section>
 
@@ -76,7 +77,7 @@ export default function InterviewPrepPage() {
               value={selectedId}
               onChange={(event) => {
                 setSelectedId(event.target.value)
-                setQuestions(null)
+                setBundle(null)
                 setGenerateError('')
               }}
             >
@@ -88,7 +89,7 @@ export default function InterviewPrepPage() {
               ))}
             </select>
             <button className="button" type="button" onClick={generate} disabled={!selectedJob || generating}>
-              {generating ? 'Generating live bank...' : 'Generate live interview bank'}
+              {generating ? 'Generating live prep bundle...' : 'Generate live interview prep'}
             </button>
           </div>
         )}
@@ -103,7 +104,7 @@ export default function InterviewPrepPage() {
         )}
       </section>
 
-      {questions && <InterviewPrep questions={questions} />}
+      {bundle && <DeepInterviewPrep bundle={bundle} />}
     </main>
   )
 }
