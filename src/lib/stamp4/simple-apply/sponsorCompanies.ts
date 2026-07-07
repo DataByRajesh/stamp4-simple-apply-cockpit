@@ -377,8 +377,8 @@ export const SPONSOR_COMPANIES: SponsorCompany[] = [
     sector: 'Data/search platform software',
     whySponsorFriendly: 'Co-founded in the Netherlands with an ongoing Amsterdam-area presence and international hiring.',
     careersUrl: 'https://www.elastic.co/careers',
-    atsProvider: null,
-    atsSlug: null,
+    atsProvider: 'greenhouse',
+    atsSlug: 'elastic',
   },
   {
     name: 'Optiver',
