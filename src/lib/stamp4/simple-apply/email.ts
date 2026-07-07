@@ -3,6 +3,8 @@ export interface SponsorAlertMatch {
   title: string
   url: string
   location: string | null
+  scoreTotal: number
+  decision: string
 }
 
 function escapeHtml(value: string) {
@@ -23,14 +25,16 @@ function escapeHtml(value: string) {
 }
 
 function buildDigestHtml(matches: SponsorAlertMatch[]): string {
-  const items = matches
-    .map(
-      (match) =>
-        `<li><strong>${escapeHtml(match.companyName)}</strong> - <a href="${escapeHtml(match.url)}">${escapeHtml(match.title)}</a>${match.location ? ` (${escapeHtml(match.location)})` : ''}</li>`,
-    )
+  const sorted = [...matches].sort((a, b) => b.scoreTotal - a.scoreTotal)
+
+  const items = sorted
+    .map((match) => {
+      const scoreLabel = `${match.scoreTotal}/5, ${escapeHtml(match.decision)}`
+      return `<li><strong>${scoreLabel}</strong> - <a href="${escapeHtml(match.url)}">${escapeHtml(match.title)}</a> at ${escapeHtml(match.companyName)}${match.location ? ` (${escapeHtml(match.location)})` : ''}</li>`
+    })
     .join('')
 
-  return `<p>New roles matching your target lane were just posted by sponsor-friendly companies on your Stamp4 watchlist:</p><ul>${items}</ul>`
+  return `<p>New roles matching your target lane were just posted by sponsor-friendly companies on your Stamp4 watchlist, pre-scored with your Cockpit's scoring engine:</p><ul>${items}</ul>`
 }
 
 export async function sendSponsorAlertEmail(matches: SponsorAlertMatch[]): Promise<void> {

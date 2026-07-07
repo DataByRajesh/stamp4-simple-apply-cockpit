@@ -7,8 +7,9 @@ export default function SponsorCompaniesPage() {
         <p className="eyebrow">Stamp4 Simple Apply</p>
         <h1>Sponsor companies</h1>
         <p>
-          Ireland and Netherlands employers with a track record of work-permit/visa sponsorship, plus automated
-          checks against the public job feeds of the ones we can monitor live.
+          Ireland and Netherlands employers with a track record of work-permit/visa sponsorship. New roles from the
+          ones we can monitor live are run through the same scoring engine as the Cockpit before you're emailed -
+          Skip-tier matches are recorded but not sent.
         </p>
       </section>
 

@@ -5,6 +5,7 @@ export interface NormalizedJobPosting {
   title: string
   url: string
   location: string | null
+  descriptionText: string
 }
 
 interface GreenhouseJob {
@@ -12,6 +13,7 @@ interface GreenhouseJob {
   title: string
   absolute_url: string
   location?: { name?: string } | null
+  content?: string | null
 }
 
 interface LeverJob {
@@ -19,6 +21,8 @@ interface LeverJob {
   text: string
   hostedUrl: string
   categories?: { location?: string } | null
+  descriptionPlain?: string | null
+  description?: string | null
 }
 
 interface AshbyJob {
@@ -26,10 +30,33 @@ interface AshbyJob {
   title: string
   jobUrl: string
   location?: string | null
+  descriptionPlain?: string | null
+  descriptionHtml?: string | null
+}
+
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+}
+
+function stripHtml(html: string): string {
+  // Some ATS boards (observed on Greenhouse) return the content field HTML-entity-encoded
+  // (literal "&lt;p&gt;" instead of "<p>"), so entities must be decoded before tags can be
+  // stripped - decoding first is also safe for plain HTML with inline entities like "&amp;".
+  const tagsRevealed = decodeHtmlEntities(html)
+  const tagsStripped = tagsRevealed.replace(/<[^>]+>/g, ' ')
+  // Decode again: entities that survive the first pass (e.g. "&amp;" meaning a literal "&" in
+  // the visible text, as opposed to the tag-hiding entities the first pass exists to reveal).
+  return decodeHtmlEntities(tagsStripped).replace(/\s+/g, ' ').trim()
 }
 
 async function fetchGreenhouseJobs(slug: string): Promise<NormalizedJobPosting[]> {
-  const response = await fetch(`https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(slug)}/jobs`)
+  const response = await fetch(`https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(slug)}/jobs?content=true`)
   if (!response.ok) throw new Error(`Greenhouse feed failed for ${slug}: ${response.status}`)
 
   const data = (await response.json()) as { jobs?: GreenhouseJob[] }
@@ -38,6 +65,7 @@ async function fetchGreenhouseJobs(slug: string): Promise<NormalizedJobPosting[]
     title: job.title,
     url: job.absolute_url,
     location: job.location?.name ?? null,
+    descriptionText: job.content ? stripHtml(job.content) : '',
   }))
 }
 
@@ -51,6 +79,7 @@ async function fetchLeverJobs(slug: string): Promise<NormalizedJobPosting[]> {
     title: job.text,
     url: job.hostedUrl,
     location: job.categories?.location ?? null,
+    descriptionText: job.descriptionPlain || (job.description ? stripHtml(job.description) : ''),
   }))
 }
 
@@ -64,6 +93,7 @@ async function fetchAshbyJobs(slug: string): Promise<NormalizedJobPosting[]> {
     title: job.title,
     url: job.jobUrl,
     location: job.location ?? null,
+    descriptionText: job.descriptionPlain || (job.descriptionHtml ? stripHtml(job.descriptionHtml) : ''),
   }))
 }
 

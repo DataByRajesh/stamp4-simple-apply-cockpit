@@ -3,6 +3,7 @@ import { fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsF
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
+import { scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 
 export const runtime = 'nodejs'
@@ -25,6 +26,8 @@ type SeenPostingInsert = {
   title: string
   url: string
   location: string | null
+  score_total: number
+  decision: string
 }
 
 function isAuthorized(request: Request): boolean {
@@ -76,12 +79,16 @@ export async function GET(request: Request) {
       for (const job of jobs) {
         if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
 
+        const { score } = scorePosting(company.name, job.title, job.location, job.descriptionText)
+
         candidateRows.push({
           company_name: company.name,
           external_id: job.externalId,
           title: job.title,
           url: job.url,
           location: job.location,
+          score_total: score.total,
+          decision: score.decision,
         })
       }
     } catch (error) {
@@ -95,7 +102,7 @@ export async function GET(request: Request) {
     const { data: insertedRows, error: insertError } = await supabase
       .from('seen_job_postings')
       .upsert(candidateRows, { onConflict: 'company_name,external_id', ignoreDuplicates: true })
-      .select('company_name, title, url, location')
+      .select('company_name, title, url, location, score_total, decision')
 
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 500 })
@@ -106,14 +113,19 @@ export async function GET(request: Request) {
       title: row.title as string,
       url: row.url as string,
       location: row.location as string | null,
+      scoreTotal: row.score_total as number,
+      decision: row.decision as string,
     }))
   }
 
+  // Skip-tier matches are still recorded (so they don't get rescored every poll) but not worth an email.
+  const emailWorthyMatches = newMatches.filter((match) => match.decision !== 'Skip')
+
   let emailed = false
 
-  if (newMatches.length > 0) {
+  if (emailWorthyMatches.length > 0) {
     try {
-      await sendSponsorAlertEmail(newMatches)
+      await sendSponsorAlertEmail(emailWorthyMatches)
       emailed = true
     } catch (error) {
       console.warn('Stamp4 sponsor alert email failed', error)
@@ -125,6 +137,7 @@ export async function GET(request: Request) {
     checkedCompanyCount: checkedCompanies.length,
     failedCompanyCount: failedCompanies.length,
     newMatchCount: newMatches.length,
+    emailedMatchCount: emailWorthyMatches.length,
     emailed,
   }
 
@@ -132,5 +145,5 @@ export async function GET(request: Request) {
     .from('app_settings')
     .upsert({ key: 'last_sponsor_poll', value: summary, updated_at: summary.at }, { onConflict: 'key' })
 
-  return NextResponse.json({ ...summary, checkedCompanies, failedCompanies })
+  return NextResponse.json({ ...summary, checkedCompanies, failedCompanies, newMatches })
 }

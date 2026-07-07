@@ -28,6 +28,7 @@ type PollSummary = {
   checkedCompanyCount: number
   failedCompanyCount: number
   newMatchCount: number
+  emailedMatchCount: number
   emailed: boolean
 }
 
@@ -110,7 +111,7 @@ export function SponsorCompaniesPanel() {
         <p className="notice info">
           Last automated check: {new Date(pollSummary.at).toLocaleString()} - {pollSummary.checkedCompanyCount}{' '}
           companies checked, {pollSummary.newMatchCount} new matching role
-          {pollSummary.newMatchCount === 1 ? '' : 's'}
+          {pollSummary.newMatchCount === 1 ? '' : 's'} pre-scored, {pollSummary.emailedMatchCount} worth emailing
           {pollSummary.emailed ? ' (email sent)' : ''}.
         </p>
       )}

@@ -66,6 +66,13 @@ create table seen_job_postings (
   title text not null,
   url text not null,
   location text,
+  score_total numeric,
+  decision text,
   first_seen_at timestamptz not null default now(),
   unique (company_name, external_id)
 );
+
+-- Run this against an existing database that predates the score_total/decision columns
+-- (added so the sponsor-company digest can be pre-scored instead of just title-matched):
+-- alter table seen_job_postings add column if not exists score_total numeric;
+-- alter table seen_job_postings add column if not exists decision text;
