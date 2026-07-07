@@ -6,6 +6,8 @@ import { copyToClipboard } from '@/lib/stamp4/simple-apply/clipboard'
 import { buildSuggestedSearchQuery, JOB_SOURCES, type JobSource } from '@/lib/stamp4/simple-apply/jobSources'
 import { getAlertSetupStatus, setAlertSetupStatus } from '@/lib/stamp4/simple-apply/storage'
 
+const REGIONS: JobSource['region'][] = ['Ireland', 'Netherlands', 'EU-wide']
+
 function alertHref(source: JobSource) {
   return source.alertUrlHint ?? source.url
 }
@@ -46,12 +48,17 @@ export function AlertSetupChecklist() {
     }
   }
 
+  const progressPercent = JOB_SOURCES.length ? Math.round((completed / JOB_SOURCES.length) * 100) : 0
+
   return (
     <section className="panel stack">
       <div>
         <p className="eyebrow">Alert checklist</p>
         <h2>Set native job alerts</h2>
-        <p>Use each platform&apos;s own alert feature. This checklist only tracks what Raj has manually set up.</p>
+        <p>
+          Use each platform&apos;s own alert feature - copy a search below, paste it into the matching site, then
+          tick it off once its alert is set up. This checklist only tracks what Raj has manually set up.
+        </p>
       </div>
 
       <div className="grid two-grid">
@@ -72,34 +79,53 @@ export function AlertSetupChecklist() {
         })}
       </div>
 
-      <div className="toolbar">
-        <strong>{completed} of {JOB_SOURCES.length} alerts set up</strong>
-        {loading && <span className="muted">Loading cloud status...</span>}
+      <div className="stack compact-stack">
+        <div className="toolbar">
+          <strong>
+            {completed} of {JOB_SOURCES.length} alerts set up
+          </strong>
+          {loading && <span className="muted">Loading cloud status...</span>}
+        </div>
+        <div className="meter">
+          <div className="meter-fill" data-tier={progressPercent === 100 ? 'top' : 'high'} style={{ width: `${progressPercent}%` }} />
+        </div>
       </div>
 
       {error && <p className="notice error">{error}</p>}
 
-      <div className="stack compact-stack">
-        {JOB_SOURCES.map((source) => (
-          <label className="check-row" key={source.name}>
-            <input
-              type="checkbox"
-              checked={Boolean(statusMap[source.name])}
-              disabled={loading}
-              onChange={(event) => handleToggle(source.name, event.target.checked)}
-            />
-            <span className="check-content">
-              <span className="source-heading">
-                <a href={alertHref(source)} target="_blank" rel="noreferrer">
-                  {source.name}
-                  <ExternalLink size={14} aria-hidden="true" />
-                </a>
-                {source.fintechRelevant && <span className="badge ok">FinTech-relevant</span>}
-              </span>
-              <span className="muted">{source.alertInstructions}</span>
-            </span>
-          </label>
-        ))}
+      <div className="grid two-grid">
+        {REGIONS.map((region) => {
+          const regionSources = JOB_SOURCES.filter((source) => source.region === region)
+          if (!regionSources.length) return null
+
+          return (
+            <article className="card stack" key={region}>
+              <h3>{region}</h3>
+              <div className="stack compact-stack">
+                {regionSources.map((source) => (
+                  <label className="check-row" key={source.name}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(statusMap[source.name])}
+                      disabled={loading}
+                      onChange={(event) => handleToggle(source.name, event.target.checked)}
+                    />
+                    <span className="check-content">
+                      <span className="source-heading">
+                        <a href={alertHref(source)} target="_blank" rel="noreferrer">
+                          {source.name}
+                          <ExternalLink size={14} aria-hidden="true" />
+                        </a>
+                        {source.fintechRelevant && <span className="badge ok">FinTech-relevant</span>}
+                      </span>
+                      <span className="muted">{source.alertInstructions}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </article>
+          )
+        })}
       </div>
     </section>
   )
