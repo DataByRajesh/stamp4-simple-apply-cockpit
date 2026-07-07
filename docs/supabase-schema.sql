@@ -5,7 +5,7 @@
   country text,
   location text,
   salary text,
-  score integer not null,
+  score numeric not null,
   decision text not null,
   status text not null default 'Saved',
   date_added timestamptz not null default now(),
@@ -24,6 +24,10 @@
 -- Run this against an existing database that predates the parsed_job column
 -- (added so "Why this score?" explanations work for already-saved jobs too):
 -- alter table tracked_jobs add column if not exists parsed_job jsonb;
+
+-- Run this against an existing database where score is still integer (the original type) - the
+-- /6-dimension average scoring model produces decimal totals, so saving fails without this:
+-- alter table tracked_jobs alter column score type numeric using score::numeric;
 
 create table custom_job_sources (
   id uuid primary key default gen_random_uuid(),
