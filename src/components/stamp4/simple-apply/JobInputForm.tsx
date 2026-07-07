@@ -193,7 +193,10 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
       <div>
         <p className="eyebrow">Manual JD paste</p>
         <h2>Analyse a role description</h2>
-        <p>Deterministic parsing and scoring, with optional AI prose generation and deterministic fallback.</p>
+        <p>
+          Deterministic parsing and scoring, with AI-generated application content for viable roles - low-scoring
+          roles skip generation automatically to save cost.
+        </p>
       </div>
       <textarea
         className="textarea"
