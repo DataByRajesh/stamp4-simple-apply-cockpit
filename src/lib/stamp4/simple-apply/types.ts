@@ -94,6 +94,16 @@ export interface BackupPayload {
   appSettings: unknown[]
 }
 
+export interface SeenSponsorPosting {
+  companyName: string
+  title: string
+  url: string
+  location: string | null
+  scoreTotal: number | null
+  decision: string | null
+  firstSeenAt: string
+}
+
 export interface TrackedJob {
   id: string
   company: string

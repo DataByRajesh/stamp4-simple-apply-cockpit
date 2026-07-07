@@ -1,3 +1,4 @@
+import { SeenPostingsTable } from '@/components/stamp4/simple-apply/SeenPostingsTable'
 import { SponsorCompaniesPanel } from '@/components/stamp4/simple-apply/SponsorCompaniesPanel'
 
 export default function SponsorCompaniesPage() {
@@ -14,6 +15,7 @@ export default function SponsorCompaniesPage() {
       </section>
 
       <SponsorCompaniesPanel />
+      <SeenPostingsTable />
     </main>
   )
 }
