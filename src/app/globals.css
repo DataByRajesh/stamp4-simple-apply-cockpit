@@ -369,22 +369,187 @@ button {
   font-size: 0.85rem;
 }
 
-/* Progress */
+/* Score breakdown card */
 
-.progress {
-  height: 8px;
+.score-card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.score-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.score-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.score-row-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.score-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--color-neutral-bg);
+  color: var(--color-neutral);
+  white-space: nowrap;
+}
+
+.score-pill-max {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.score-pill-top {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.score-pill-high {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--color-primary);
+}
+
+.score-pill-mid {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.score-pill-low {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+/* Segmented meter: a gradient fill under 5 evenly-spaced dividers, echoing the /5 scale */
+
+.meter {
+  position: relative;
+  height: 11px;
   border-radius: 999px;
   background: var(--color-neutral-bg);
   overflow: hidden;
-  margin-top: 6px;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
-.progress span {
-  display: block;
-  height: 100%;
-  background: var(--color-primary);
+.meter-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
   border-radius: 999px;
-  transition: width 0.3s ease;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.meter-fill[data-tier='top'] {
+  background: linear-gradient(90deg, #4ade80, var(--color-success));
+}
+
+.meter-fill[data-tier='high'] {
+  background: linear-gradient(90deg, #60a5fa, var(--color-primary));
+}
+
+.meter-fill[data-tier='mid'] {
+  background: linear-gradient(90deg, #fcd34d, var(--color-warning));
+}
+
+.meter-fill[data-tier='low'] {
+  background: linear-gradient(90deg, #fca5a5, var(--color-danger));
+}
+
+.meter-pips {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.meter-pips span {
+  flex: 1;
+  border-right: 2px solid var(--color-surface);
+}
+
+.meter-pips span:last-child {
+  border-right: none;
+}
+
+/* Circular gauge for the averaged verdict score */
+
+.score-ring {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex: none;
+}
+
+.score-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-track,
+.ring-fill {
+  fill: none;
+  stroke-width: 6;
+}
+
+.ring-track {
+  stroke: var(--color-neutral-bg);
+}
+
+.ring-fill {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-ring-top .ring-fill {
+  stroke: var(--color-success);
+}
+
+.score-ring-high .ring-fill {
+  stroke: var(--color-primary);
+}
+
+.score-ring-mid .ring-fill {
+  stroke: var(--color-warning);
+}
+
+.score-ring-low .ring-fill {
+  stroke: var(--color-danger);
+}
+
+.ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1px;
+}
+
+.ring-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ring-max {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
 }
 
 /* Metric + verdict */
