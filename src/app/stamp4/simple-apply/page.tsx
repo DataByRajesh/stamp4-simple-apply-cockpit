@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import { Save } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ApplicationPack } from '@/components/stamp4/simple-apply/ApplicationPack'
 import { AlertSetupChecklist } from '@/components/stamp4/simple-apply/AlertSetupChecklist'
 import { ApplicationTracker } from '@/components/stamp4/simple-apply/ApplicationTracker'
@@ -49,8 +49,15 @@ export default function SimpleApplyPage() {
   const [savedMessage, setSavedMessage] = useState('')
   const [saveStatus, setSaveStatus] = useState<'success' | 'error' | null>(null)
   const [saving, setSaving] = useState(false)
+  const resultsRef = useRef<HTMLDivElement>(null)
 
   const trackedJob = useMemo(() => (analysis ? makeTrackedJob(analysis) : null), [analysis])
+
+  useEffect(() => {
+    if (analysis) {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [analysis])
 
   async function saveCurrentJob() {
     if (!trackedJob || saving) return
@@ -96,7 +103,7 @@ export default function SimpleApplyPage() {
       <AlertSetupChecklist />
 
       {analysis && (
-        <>
+        <div ref={resultsRef} className="stack">
           <section className="grid summary-grid">
             <FitVerdictCard parsed={analysis.parsed} score={analysis.score} />
             <ScoreBreakdown score={analysis.score} parsed={analysis.parsed} proofs={analysis.proofs} />
@@ -151,7 +158,7 @@ export default function SimpleApplyPage() {
               <p className={`notice ${saveStatus === 'success' ? 'success' : 'error'}`}>{savedMessage}</p>
             )}
           </section>
-        </>
+        </div>
       )}
 
       <ApplicationTracker refreshKey={trackerRefresh} />
