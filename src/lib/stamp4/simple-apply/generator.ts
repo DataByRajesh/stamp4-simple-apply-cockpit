@@ -25,6 +25,15 @@ export interface GenerationResult extends AIGenerationOutput {
   source: GenerationSource
 }
 
+export const EMPTY_APPLICATION_PACK: ApplicationPack = {
+  tailoredCvSummary: '',
+  topCvBullets: [],
+  coverMessage: '',
+  recruiterLinkedInMessage: '',
+  whyMeAnswer: '',
+  projectProofParagraph: '',
+}
+
 export const SYSTEM_PROMPT = `You are helping Raj, a FinTech systems/application analyst candidate, write application materials for Ireland/EU job applications.
 
 Tone: UK English, practical, no hype, no fake claims, no invented experience. Only use the facts provided below. Raj will personally review and edit every output before use.

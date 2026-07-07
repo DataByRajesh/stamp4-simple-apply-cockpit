@@ -15,6 +15,7 @@ import { PermitRiskCard } from '@/components/stamp4/simple-apply/PermitRiskCard'
 import { ProofMapperTable } from '@/components/stamp4/simple-apply/ProofMapperTable'
 import { ScoreBreakdown } from '@/components/stamp4/simple-apply/ScoreBreakdown'
 import { SprintDashboard } from '@/components/stamp4/simple-apply/SprintDashboard'
+import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { saveJobToTracker } from '@/lib/stamp4/simple-apply/storage'
 import type { TrackedJob } from '@/lib/stamp4/simple-apply/types'
 
@@ -34,10 +35,10 @@ function makeTrackedJob(result: AnalysisResult): TrackedJob {
     scoreBreakdown: result.score,
     status: 'Saved',
     dateAdded: new Date().toISOString(),
-    notes: '',
-    generatedPack: result.pack,
+    notes: result.skipped ? 'AI generation skipped (score below Apply threshold).' : '',
+    generatedPack: result.skipped ? EMPTY_APPLICATION_PACK : result.pack,
     proofMap: result.proofs,
-    correctionActions: result.actions,
+    correctionActions: result.skipped ? [] : result.actions,
   }
 }
 
@@ -45,6 +46,7 @@ export default function SimpleApplyPage() {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [trackerRefresh, setTrackerRefresh] = useState(0)
   const [savedMessage, setSavedMessage] = useState('')
+  const [saveStatus, setSaveStatus] = useState<'success' | 'error' | null>(null)
   const [saving, setSaving] = useState(false)
 
   const trackedJob = useMemo(() => (analysis ? makeTrackedJob(analysis) : null), [analysis])
@@ -57,9 +59,11 @@ export default function SimpleApplyPage() {
       await saveJobToTracker(trackedJob)
       setTrackerRefresh(value => value + 1)
       setSavedMessage('Saved to cloud tracker.')
+      setSaveStatus('success')
     } catch (error) {
       console.error('Failed to save job', error)
       setSavedMessage('Cloud tracker unavailable. Check Supabase and STAMP4 access secret env vars.')
+      setSaveStatus('error')
     } finally {
       setSaving(false)
     }
@@ -83,6 +87,7 @@ export default function SimpleApplyPage() {
           setAnalysis(result)
           // Reset save message when a new analysis is performed
           setSavedMessage('')
+          setSaveStatus(null)
         }}
       />
 
@@ -98,26 +103,52 @@ export default function SimpleApplyPage() {
           </section>
 
           <ProofMapperTable proofs={analysis.proofs} />
-          {analysis.generationSource === 'fallback' && (
-            <p className="notice warning">
-              AI generation was unavailable, so the application pack, interview questions and correction actions below
-              are deterministic templates, not AI-written prose. Check OPENAI_API_KEY/OPENAI_MODEL if this is
-              unexpected.
-            </p>
-          )}
-          <ApplicationPack pack={analysis.pack} />
-          <InterviewPrep questions={analysis.questions} />
-          <CorrectionActions actions={analysis.actions} />
 
-          <section className="panel toolbar">
-            <div>
-              <h2>Save this job</h2>
-              <p>{savedMessage || 'Persist the full analysis to the isolated Stamp4 Supabase project.'}</p>
+          {analysis.skipped ? (
+            <section className="panel stack">
+              <div>
+                <p className="eyebrow">Application pack</p>
+                <h2>Generation skipped</h2>
+              </div>
+              <div className="notice error stack">
+                <strong>{analysis.skipSummary}</strong>
+                <ul>
+                  {analysis.skipDetails.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+                <p className="muted">
+                  No AI call was made for this role to save cost. If you still want a drafted application pack, edit
+                  the fields above to improve the fit (or override your judgement) and re-run Confirm &amp; generate.
+                </p>
+              </div>
+            </section>
+          ) : (
+            <>
+              <ApplicationPack pack={analysis.pack} source={analysis.generationSource} />
+              <InterviewPrep questions={analysis.questions} />
+              <CorrectionActions actions={analysis.actions} />
+            </>
+          )}
+
+          <section className="panel stack">
+            <div className="toolbar">
+              <div>
+                <h2>Save this job</h2>
+                <p>
+                  {analysis.skipped
+                    ? 'Save this rejected assessment for reference (no application pack included).'
+                    : 'Persist the full analysis to the isolated Stamp4 Supabase project.'}
+                </p>
+              </div>
+              <button className="button" type="button" onClick={saveCurrentJob} disabled={saving}>
+                <Save size={18} aria-hidden="true" />
+                {saving ? 'Saving...' : 'Save to Tracker'}
+              </button>
             </div>
-            <button className="button" type="button" onClick={saveCurrentJob} disabled={saving}>
-              <Save size={18} aria-hidden="true" />
-              {saving ? 'Saving...' : 'Save to Tracker'}
-            </button>
+            {savedMessage && (
+              <p className={`notice ${saveStatus === 'success' ? 'success' : 'error'}`}>{savedMessage}</p>
+            )}
           </section>
         </>
       )}

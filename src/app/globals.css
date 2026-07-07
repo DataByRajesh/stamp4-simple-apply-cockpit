@@ -349,6 +349,26 @@ button {
   border-color: rgba(217, 119, 6, 0.35);
 }
 
+.notice.error {
+  background: var(--color-danger-bg);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+.notice.success {
+  background: var(--color-success-bg);
+  border-color: rgba(22, 163, 74, 0.35);
+}
+
+.notice.info {
+  background: var(--color-neutral-bg);
+  border-color: rgba(100, 116, 139, 0.35);
+}
+
+.text-error {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+}
+
 /* Progress */
 
 .progress {

@@ -77,7 +77,7 @@ export function AlertSetupChecklist() {
         {loading && <span className="muted">Loading cloud status...</span>}
       </div>
 
-      {error && <p className="muted">{error}</p>}
+      {error && <p className="notice error">{error}</p>}
 
       <div className="stack compact-stack">
         {JOB_SOURCES.map((source) => (

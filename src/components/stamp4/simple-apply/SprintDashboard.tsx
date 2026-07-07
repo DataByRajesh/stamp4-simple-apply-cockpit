@@ -37,7 +37,7 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
       {loading ? (
         <p>Loading dashboard...</p>
       ) : error ? (
-        <p className="muted">{error}</p>
+        <p className="notice error">{error}</p>
       ) : stats.totalTracked === 0 ? (
         <p>No tracked jobs yet. Analyse and save a job to see stats here.</p>
       ) : (

@@ -18,27 +18,36 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [jobs, setJobs] = useState<TrackedJob[]>([])
   const [sortBy, setSortBy] = useState<'date' | 'score'>('date')
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [loadError, setLoadError] = useState('')
+  const [actionMessage, setActionMessage] = useState<{ text: string; kind: 'success' | 'error' } | null>(null)
   const [exporting, setExporting] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
   const notesTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
+  const actionMessageTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     const timers = notesTimers.current
     return () => {
       Object.values(timers).forEach(clearTimeout)
+      clearTimeout(actionMessageTimer.current)
     }
   }, [])
 
+  function flashActionMessage(text: string, kind: 'success' | 'error') {
+    clearTimeout(actionMessageTimer.current)
+    setActionMessage({ text, kind })
+    actionMessageTimer.current = setTimeout(() => setActionMessage(null), 4000)
+  }
+
   async function refresh() {
     setLoading(true)
-    setError('')
+    setLoadError('')
 
     try {
       setJobs(await getAllTrackedJobs())
     } catch {
-      setError('Cloud tracker unavailable. Check Supabase and STAMP4 access secret env vars.')
+      setLoadError('Cloud tracker unavailable. Check Supabase and STAMP4 access secret env vars.')
       setJobs([])
     } finally {
       setLoading(false)
@@ -65,8 +74,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
       link.download = `stamp4-simple-apply-backup-${new Date().toISOString().slice(0, 10)}.json`
       link.click()
       URL.revokeObjectURL(url)
+      flashActionMessage('Backup downloaded.', 'success')
     } catch {
-      setError('Could not export backup. Check Supabase and STAMP4 access secret env vars.')
+      flashActionMessage('Could not export backup. Check Supabase and STAMP4 access secret env vars.', 'error')
     } finally {
       setExporting(false)
     }
@@ -87,8 +97,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
     try {
       await deleteJobFromTracker(job.id)
       await refresh()
+      flashActionMessage(`Deleted "${job.roleTitle}" from the tracker.`, 'success')
     } catch {
-      setError('Could not delete job from cloud tracker.')
+      flashActionMessage('Could not delete job from cloud tracker.', 'error')
     } finally {
       setDeletingId(null)
     }
@@ -120,10 +131,11 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
           </button>
         </div>
       </div>
+      {actionMessage && <p className={`notice ${actionMessage.kind}`}>{actionMessage.text}</p>}
       {loading ? (
         <p>Loading tracker...</p>
-      ) : error ? (
-        <p className="muted">{error}</p>
+      ) : loadError ? (
+        <p className="notice error">{loadError}</p>
       ) : sortedJobs.length === 0 ? (
         <p>No saved jobs yet.</p>
       ) : (
@@ -163,11 +175,12 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                         setJobs((current) => current.map((item) => (item.id === job.id ? { ...item, status } : item)))
                         try {
                           await updateJobStatus(job.id, status)
+                          flashActionMessage(`${job.roleTitle} marked as ${status}.`, 'success')
                         } catch {
                           setJobs((current) =>
                             current.map((item) => (item.id === job.id ? { ...item, status: previousStatus } : item)),
                           )
-                          setError(`Could not save status change for "${job.roleTitle}". Reverted.`)
+                          flashActionMessage(`Could not save status change for "${job.roleTitle}". Reverted.`, 'error')
                         }
                       }}
                     >
@@ -191,7 +204,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                         queueNotesSave(job.id, notes)
                       }}
                     />
-                    {noteErrorId === job.id && <p className="muted">Note did not save. Edit again to retry.</p>}
+                    {noteErrorId === job.id && <p className="text-error">Note did not save. Edit again to retry.</p>}
                   </td>
                   <td>
                     <button

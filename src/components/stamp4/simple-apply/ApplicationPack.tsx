@@ -3,6 +3,7 @@
 import { Copy } from 'lucide-react'
 import { useState } from 'react'
 import { copyToClipboard } from '@/lib/stamp4/simple-apply/clipboard'
+import type { GenerationSource } from '@/lib/stamp4/simple-apply/generator'
 import type { ApplicationPack as ApplicationPackType } from '@/lib/stamp4/simple-apply/types'
 
 function CopyBlock({ title, text }: { title: string; text: string }) {
@@ -28,13 +29,30 @@ function CopyBlock({ title, text }: { title: string; text: string }) {
   )
 }
 
-export function ApplicationPack({ pack }: { pack: ApplicationPackType }) {
+export function ApplicationPack({
+  pack,
+  source,
+}: {
+  pack: ApplicationPackType
+  source: GenerationSource
+}) {
   return (
     <section className="panel stack">
-      <div>
-        <p className="eyebrow">Application pack</p>
-        <h2>Template text</h2>
+      <div className="toolbar">
+        <div>
+          <p className="eyebrow">Application pack</p>
+          <h2>Template text</h2>
+        </div>
+        <span className={`badge ${source === 'ai' ? 'ok' : 'medium'}`}>
+          {source === 'ai' ? 'AI-generated' : 'Fallback template'}
+        </span>
       </div>
+      {source === 'fallback' && (
+        <p className="notice warning">
+          AI generation was unavailable, so this pack, the interview questions and correction actions below are
+          deterministic templates, not AI-written prose. Check OPENAI_API_KEY/OPENAI_MODEL if this is unexpected.
+        </p>
+      )}
       <CopyBlock title="CV summary" text={pack.tailoredCvSummary} />
       <CopyBlock title="Top CV bullets" text={pack.topCvBullets.map((bullet) => `- ${bullet}`).join('\n')} />
       <CopyBlock title="Cover message" text={pack.coverMessage} />

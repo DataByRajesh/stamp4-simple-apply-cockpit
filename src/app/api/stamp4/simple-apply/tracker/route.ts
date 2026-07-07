@@ -1,18 +1,10 @@
 ﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
-import type { ApplicationPack, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
-
-const EMPTY_APPLICATION_PACK: ApplicationPack = {
-  tailoredCvSummary: '',
-  topCvBullets: [],
-  coverMessage: '',
-  recruiterLinkedInMessage: '',
-  whyMeAnswer: '',
-  projectProofParagraph: '',
-}
 
 type TrackedJobRow = {
   id: string

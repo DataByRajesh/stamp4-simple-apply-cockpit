@@ -40,6 +40,7 @@ export function JobSourcesPanel() {
   const [isChecking, setIsChecking] = useState(false)
   const [suggestions, setSuggestions] = useState<SuggestedSource[]>([])
   const [message, setMessage] = useState('')
+  const [messageKind, setMessageKind] = useState<'success' | 'error' | 'info'>('info')
   const [addingName, setAddingName] = useState<string | null>(null)
 
   const sources = useMemo(() => [...JOB_SOURCES, ...customSources], [customSources])
@@ -55,7 +56,9 @@ export function JobSourcesPanel() {
         setCustomSources(custom)
         setShowReminder(prompt)
         setDaysSinceCheck(days)
-      } catch {        setMessage('Cloud source settings unavailable. Static source list is still usable.')
+      } catch {
+        setMessage('Cloud source settings unavailable. Static source list is still usable.')
+        setMessageKind('error')
       }
     }
 
@@ -71,13 +74,23 @@ export function JobSourcesPanel() {
         method: 'POST',
         body: JSON.stringify({ existingSources: sources }),
       })
+      const filtered = nextSuggestions.filter(isSuggestedSource)
 
-      setSuggestions(nextSuggestions.filter(isSuggestedSource))
+      setSuggestions(filtered)
       await recordSourceCheck()
       setShowReminder(false)
       setDaysSinceCheck(0)
-      setMessage(nextSuggestions.length ? '' : 'No useful new source suggestions returned this time.')
-    } catch {      setMessage('Source discovery is unavailable right now. Static source list is unchanged.')
+
+      if (filtered.length) {
+        setMessage(`Found ${filtered.length} new source suggestion${filtered.length === 1 ? '' : 's'}.`)
+        setMessageKind('success')
+      } else {
+        setMessage('No useful new source suggestions returned this time.')
+        setMessageKind('info')
+      }
+    } catch {
+      setMessage('Source discovery is unavailable right now. Static source list is unchanged.')
+      setMessageKind('error')
     } finally {
       setIsChecking(false)
     }
@@ -88,8 +101,10 @@ export function JobSourcesPanel() {
       await recordSourceCheck()
       setShowReminder(false)
       setDaysSinceCheck(0)
-    } catch {      setShowReminder(false)
+    } catch {
+      setShowReminder(false)
       setMessage('Could not save the 2-week dismissal in cloud settings.')
+      setMessageKind('error')
     }
   }
 
@@ -103,7 +118,10 @@ export function JobSourcesPanel() {
       setCustomSources(await getCustomSources())
       setSuggestions((current) => current.filter((item) => item.name !== suggestion.name))
       setMessage(`Added ${suggestion.name} to custom sources.`)
-    } catch {      setMessage('Could not save that source to Supabase.')
+      setMessageKind('success')
+    } catch {
+      setMessage('Could not save that source to Supabase.')
+      setMessageKind('error')
     } finally {
       setAddingName(null)
     }
@@ -145,7 +163,7 @@ export function JobSourcesPanel() {
         </div>
       )}
 
-      {message && <p className="muted">{message}</p>}
+      {message && <p className={`notice ${messageKind}`}>{message}</p>}
 
       {suggestions.length > 0 && (
         <div className="notice warning stack">

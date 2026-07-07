@@ -6,6 +6,7 @@ import { generateApplicationOutputs, type GenerationSource } from '@/lib/stamp4/
 import { parseJobDescription } from '@/lib/stamp4/simple-apply/parser'
 import { mapProofs } from '@/lib/stamp4/simple-apply/proofMapper'
 import { scoreJob } from '@/lib/stamp4/simple-apply/scoring'
+import { buildSkipReason } from '@/lib/stamp4/simple-apply/skipReason'
 import type {
   ApplicationPack,
   CorrectionAction,
@@ -15,15 +16,25 @@ import type {
   ScoreBreakdown,
 } from '@/lib/stamp4/simple-apply/types'
 
-export interface AnalysisResult {
-  parsed: ParsedJob
-  score: ScoreBreakdown
-  proofs: ProofMapping[]
-  pack: ApplicationPack
-  questions: InterviewQuestion[]
-  actions: CorrectionAction[]
-  generationSource: GenerationSource
-}
+export type AnalysisResult =
+  | {
+      skipped: false
+      parsed: ParsedJob
+      score: ScoreBreakdown
+      proofs: ProofMapping[]
+      pack: ApplicationPack
+      questions: InterviewQuestion[]
+      actions: CorrectionAction[]
+      generationSource: GenerationSource
+    }
+  | {
+      skipped: true
+      parsed: ParsedJob
+      score: ScoreBreakdown
+      proofs: ProofMapping[]
+      skipSummary: string
+      skipDetails: string[]
+    }
 
 type EditableField = 'roleTitle' | 'company' | 'country' | 'location' | 'salary'
 
@@ -70,9 +81,24 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
     try {
       const proofs = mapProofs(parsedDraft)
       const score = scoreJob(parsedDraft)
+
+      if (score.decision === 'Skip') {
+        const reason = buildSkipReason(score, parsedDraft)
+        onAnalyse({
+          skipped: true,
+          parsed: parsedDraft,
+          score,
+          proofs,
+          skipSummary: reason.summary,
+          skipDetails: reason.details,
+        })
+        return
+      }
+
       const generated = await generateApplicationOutputs(parsedDraft, score, proofs)
 
       onAnalyse({
+        skipped: false,
         parsed: parsedDraft,
         score,
         proofs,
@@ -157,7 +183,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
             {isAnalysing ? 'Generating...' : 'Confirm & generate'}
           </button>
         </div>
-        {error && <p className="muted">{error}</p>}
+        {error && <p className="notice error">{error}</p>}
       </section>
     )
   }
@@ -182,7 +208,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
           Analyse
         </button>
       </div>
-      {error && <p className="muted">{error}</p>}
+      {error && <p className="notice error">{error}</p>}
     </form>
   )
 }
