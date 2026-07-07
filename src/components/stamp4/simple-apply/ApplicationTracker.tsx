@@ -169,7 +169,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     <span className="muted">{job.decision}</span>
                     <br />
                     <button
-                      className="button ghost"
+                      className="button secondary"
                       type="button"
                       onClick={() => setExpandedWhyId((current) => (current === job.id ? null : job.id))}
                     >

@@ -32,7 +32,7 @@ export function ScoreBreakdown({
           <h2>Breakdown</h2>
         </div>
         {explanations && (
-          <button className="button ghost" type="button" onClick={() => setShowWhy((current) => !current)}>
+          <button className="button secondary" type="button" onClick={() => setShowWhy((current) => !current)}>
             {showWhy ? 'Hide reasons' : 'Why this score?'}
           </button>
         )}

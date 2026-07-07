@@ -175,7 +175,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
         </div>
 
         <div className="toolbar">
-          <button className="button ghost" type="button" onClick={handleBackToText} disabled={isAnalysing}>
+          <button className="button secondary" type="button" onClick={handleBackToText} disabled={isAnalysing}>
             Back to JD text
           </button>
           <button className="button" type="button" onClick={handleGenerate} disabled={isAnalysing}>
