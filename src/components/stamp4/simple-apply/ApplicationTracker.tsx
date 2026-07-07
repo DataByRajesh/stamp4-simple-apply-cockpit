@@ -46,6 +46,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   }
 
   useEffect(() => {
+    // Standard fetch-on-mount pattern; setLoading(true) runs before the await, which the
+    // react-hooks lint rule flags as a false positive for this case.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh()
   }, [refreshKey])
 

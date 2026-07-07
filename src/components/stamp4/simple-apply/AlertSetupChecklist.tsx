@@ -25,7 +25,8 @@ export function AlertSetupChecklist() {
   useEffect(() => {
     getAlertSetupStatus()
       .then(setStatusMap)
-      .catch((err) => {        setError('Cloud alert checklist unavailable. Check Supabase and STAMP4 access secret env vars.')
+      .catch(() => {
+        setError('Cloud alert checklist unavailable. Check Supabase and STAMP4 access secret env vars.')
       })
       .finally(() => setLoading(false))
   }, [])
@@ -50,7 +51,7 @@ export function AlertSetupChecklist() {
       <div>
         <p className="eyebrow">Alert checklist</p>
         <h2>Set native job alerts</h2>
-        <p>Use each platform's own alert feature. This checklist only tracks what Raj has manually set up.</p>
+        <p>Use each platform&apos;s own alert feature. This checklist only tracks what Raj has manually set up.</p>
       </div>
 
       <div className="grid two-grid">

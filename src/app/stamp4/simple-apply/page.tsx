@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import { Save } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ApplicationPack } from '@/components/stamp4/simple-apply/ApplicationPack'
 import { AlertSetupChecklist } from '@/components/stamp4/simple-apply/AlertSetupChecklist'
 import { ApplicationTracker } from '@/components/stamp4/simple-apply/ApplicationTracker'
@@ -71,7 +71,7 @@ export default function SimpleApplyPage() {
         <p className="eyebrow">Stamp4 Simple Apply</p>
         <h1>Permit-aware FinTech role cockpit</h1>
         <p>
-          Built for Raj's Ireland/EU Financial Systems Analyst and Application Analyst lane. Deterministic scoring,
+          Built for Raj&apos;s Ireland/EU Financial Systems Analyst and Application Analyst lane. Deterministic scoring,
           optional AI prose, no scraping, no cloud storage.
         </p>
       </section>
