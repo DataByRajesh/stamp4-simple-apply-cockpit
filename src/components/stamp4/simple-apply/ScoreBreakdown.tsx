@@ -10,6 +10,7 @@ const labels: Array<[keyof Omit<ScoreBreakdownType, 'total' | 'decision'>, strin
   ['skillFit', 'Skill fit'],
   ['permitFit', 'Permit fit'],
   ['proofStrength', 'Proof strength'],
+  ['seniorityFit', 'Seniority fit'],
 ]
 
 export function ScoreBreakdown({

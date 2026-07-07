@@ -34,6 +34,31 @@ function scoreSalaryComponent(salary: string | null) {
   return 0
 }
 
+const SENIOR_KEYWORDS = ['senior', 'lead', 'principal', 'manager']
+
+function extractRequiredYears(signals: string[]): number | null {
+  for (const signal of signals) {
+    const match = signal.match(/(\d+)\+?\s*years?/i)
+    if (match) return Number(match[1])
+  }
+  return null
+}
+
+function scoreSeniorityFit(parsed: ParsedJob): number {
+  const signals = parsed.senioritySignals.map((signal) => signal.toLowerCase())
+  const hasSeniorKeyword = signals.some((signal) => SENIOR_KEYWORDS.includes(signal))
+  const requiredYears = extractRequiredYears(parsed.senioritySignals)
+
+  let seniorityFit = 20
+
+  if (hasSeniorKeyword) seniorityFit -= 12
+  if (requiredYears !== null && requiredYears > RAJ_PROFILE.yearsExperience) {
+    seniorityFit -= Math.min(15, (requiredYears - RAJ_PROFILE.yearsExperience) * 5)
+  }
+
+  return Math.max(0, Math.min(20, seniorityFit))
+}
+
 export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
   const role = roleFit(parsed.roleTitle)
   const domainFit = Math.min(20, parsed.domainKeywords.length * 4)
@@ -55,13 +80,14 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
   permitFit = Math.max(0, Math.min(20, permitFit))
 
   const proofStrength = Math.min(20, mapProofs(parsed).length * 4)
-  const total = Math.round(role + domainFit + skillFit + permitFit + proofStrength)
+  const seniorityFit = scoreSeniorityFit(parsed)
+  const total = Math.round(role + domainFit + skillFit + permitFit + proofStrength + seniorityFit)
   const decision: ScoreBreakdown['decision'] =
-    total >= 80
+    total >= 96
       ? 'Apply Now'
-      : total >= 60
+      : total >= 72
         ? 'Apply with Proof Fix'
-        : total >= 40
+        : total >= 48
           ? 'Save / Low Priority'
           : 'Skip'
 
@@ -71,6 +97,7 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
     skillFit,
     permitFit,
     proofStrength,
+    seniorityFit,
     total,
     decision,
   }

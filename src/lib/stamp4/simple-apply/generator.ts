@@ -67,10 +67,11 @@ export function buildAIUserPrompt(input: AIGenerationInput) {
 - Country/location: ${input.parsed.country || 'unknown'} / ${input.parsed.location || 'unknown'}
 - Salary: ${input.parsed.salary ?? 'not stated'}
 - Decision: ${input.score.decision}
-- Score: ${input.score.total}/100
+- Score: ${input.score.total}/120
 - Matched domain keywords: ${input.parsed.domainKeywords.join(', ') || 'none'}
 - Matched skills: ${input.parsed.requiredSkills.join(', ') || 'none'}
 - Permit or sponsorship signals: ${input.parsed.sponsorshipSignals.join(', ') || 'none'}
+- Seniority signals: ${input.parsed.senioritySignals.join(', ') || 'none'}
 
 Relevant proof mappings for this JD:
 ${proofLines(input.proofs)}

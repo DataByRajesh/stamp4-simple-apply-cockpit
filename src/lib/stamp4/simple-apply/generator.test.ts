@@ -35,7 +35,8 @@ function score(overrides: Partial<ScoreBreakdown> = {}): ScoreBreakdown {
     skillFit: 20,
     permitFit: 20,
     proofStrength: 20,
-    total: 100,
+    seniorityFit: 20,
+    total: 120,
     decision: 'Apply Now',
     ...overrides,
   }

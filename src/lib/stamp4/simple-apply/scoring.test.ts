@@ -99,8 +99,38 @@ describe('scoreJob - permitFit and salary', () => {
   })
 })
 
+describe('scoreJob - seniorityFit', () => {
+  it('scores full marks when there is no seniority signal', () => {
+    expect(scoreJob(job({})).seniorityFit).toBe(20)
+  })
+
+  it('penalises senior/lead/principal/manager keyword signals by 12', () => {
+    expect(scoreJob(job({ senioritySignals: ['senior'] })).seniorityFit).toBe(8)
+    expect(scoreJob(job({ senioritySignals: ['lead'] })).seniorityFit).toBe(8)
+  })
+
+  it('does not penalise a junior signal', () => {
+    expect(scoreJob(job({ senioritySignals: ['junior'] })).seniorityFit).toBe(20)
+  })
+
+  it('does not penalise required years at or below the 3-year experience level', () => {
+    expect(scoreJob(job({ senioritySignals: ['3 years experience'] })).seniorityFit).toBe(20)
+    expect(scoreJob(job({ senioritySignals: ['2 years experience'] })).seniorityFit).toBe(20)
+  })
+
+  it('penalises an explicit years-required gap beyond 3 years, scaled by the gap and capped at -15', () => {
+    expect(scoreJob(job({ senioritySignals: ['5+ years experience'] })).seniorityFit).toBe(10) // 20 - min(15, 2*5)
+    expect(scoreJob(job({ senioritySignals: ['7+ years experience'] })).seniorityFit).toBe(5) // 20 - min(15, 4*5)
+    expect(scoreJob(job({ senioritySignals: ['10+ years experience'] })).seniorityFit).toBe(5) // 20 - min(15, 7*5=35->15)
+  })
+
+  it('stacks the senior-keyword and years-gap penalties, clamped at 0', () => {
+    expect(scoreJob(job({ senioritySignals: ['senior', '10+ years experience'] })).seniorityFit).toBe(0)
+  })
+})
+
 describe('scoreJob - decision thresholds', () => {
-  it('returns Apply Now at or above 80', () => {
+  it('returns Apply Now at or above 96 (80% of the /120 max)', () => {
     const strong = job({
       roleTitle: 'Systems Analyst',
       domainKeywords: ['fintech', 'banking', 'payments', 'risk', 'compliance'],
@@ -112,11 +142,11 @@ describe('scoreJob - decision thresholds', () => {
         'monitoring compliance regulatory kyc stakeholder business user requirements',
     })
     const result = scoreJob(strong)
-    expect(result.total).toBe(100)
+    expect(result.total).toBe(120)
     expect(result.decision).toBe('Apply Now')
   })
 
-  it('returns Apply with Proof Fix between 60 and 79', () => {
+  it('returns Apply with Proof Fix between 72 and 95', () => {
     const midHigh = job({
       roleTitle: 'Data Analyst', // roleFit 5
       domainKeywords: ['fintech', 'banking', 'payments'], // domainFit 12
@@ -126,11 +156,11 @@ describe('scoreJob - decision thresholds', () => {
       rawText: 'payment reconciliation sql data validation uat testing incident application support', // 4 rules -> proofStrength 16
     })
     const result = scoreJob(midHigh)
-    expect(result.total).toBe(68)
+    expect(result.total).toBe(88) // 68 + seniorityFit 20
     expect(result.decision).toBe('Apply with Proof Fix')
   })
 
-  it('returns Save / Low Priority between 40 and 59', () => {
+  it('returns Save / Low Priority between 48 and 71', () => {
     const midLow = job({
       roleTitle: 'Analyst', // roleFit 5
       domainKeywords: ['fintech', 'banking'], // domainFit 8
@@ -140,11 +170,11 @@ describe('scoreJob - decision thresholds', () => {
       rawText: 'sql data validation uat testing', // 2 rules -> proofStrength 8
     })
     const result = scoreJob(midLow)
-    expect(result.total).toBe(41)
+    expect(result.total).toBe(61) // 41 + seniorityFit 20
     expect(result.decision).toBe('Save / Low Priority')
   })
 
-  it('returns Skip below 40', () => {
+  it('returns Skip below 48', () => {
     const weak = job({
       roleTitle: 'Software Engineer',
       country: 'UK',
@@ -152,7 +182,7 @@ describe('scoreJob - decision thresholds', () => {
       salary: null,
     })
     const result = scoreJob(weak)
-    expect(result.total).toBe(0)
+    expect(result.total).toBe(20) // 0 + seniorityFit 20
     expect(result.decision).toBe('Skip')
   })
 })

@@ -164,7 +164,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                   </td>
                   <td>{job.company}</td>
                   <td>
-                    {job.score}/100
+                    {job.score}/120
                     <br />
                     <span className="muted">{job.decision}</span>
                     <br />

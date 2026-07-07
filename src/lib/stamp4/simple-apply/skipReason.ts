@@ -41,8 +41,14 @@ export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipR
     details.push('Little of your existing proof evidence (PayGuard IE, RegPulse, FIS experience) maps to this JD.')
   }
 
+  if (score.seniorityFit < 8) {
+    details.push(
+      `Seniority mismatch: this JD looks like it needs more scope/years than your ~${RAJ_PROFILE.yearsExperience} years of experience.`,
+    )
+  }
+
   return {
-    summary: `Scored ${score.total}/100 (Skip) — below the threshold for generating application content.`,
+    summary: `Scored ${score.total}/120 (Skip) — below the threshold for generating application content.`,
     details: details.length ? details : ['Overall score is too low across multiple fit dimensions.'],
   }
 }

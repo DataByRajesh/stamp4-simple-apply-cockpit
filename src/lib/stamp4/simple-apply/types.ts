@@ -22,6 +22,7 @@ export interface ScoreBreakdown {
   skillFit: number
   permitFit: number
   proofStrength: number
+  seniorityFit: number
   total: number
   decision: 'Apply Now' | 'Apply with Proof Fix' | 'Save / Low Priority' | 'Skip'
 }

@@ -1,4 +1,5 @@
 ﻿export const RAJ_PROFILE = {
+  yearsExperience: 3,
   targetCountries: ['Ireland', 'Netherlands'],
   passiveCountries: ['UK'],
   targetRoleLane: [

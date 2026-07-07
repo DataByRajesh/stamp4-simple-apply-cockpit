@@ -49,7 +49,7 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
             </article>
             <article className="card">
               <p className="eyebrow">Average score</p>
-              <div className="metric">{stats.averageScore}/100</div>
+              <div className="metric">{stats.averageScore}/120</div>
             </article>
             <article className="card">
               <p className="eyebrow">Application rate</p>

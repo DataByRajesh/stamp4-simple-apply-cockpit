@@ -64,6 +64,28 @@ function explainProofStrength(proofs: ProofMapping[]): string {
   return `Matched ${proofs.length} of your proof-mapper rules: ${proofs.map((proof) => proof.jdRequirement).join(', ')} (4 pts each, capped at 20).`
 }
 
+const SENIOR_KEYWORDS = ['senior', 'lead', 'principal', 'manager']
+
+function explainSeniorityFit(parsed: ParsedJob): string {
+  const signals = parsed.senioritySignals.map((signal) => signal.toLowerCase())
+  const seniorKeyword = signals.find((signal) => SENIOR_KEYWORDS.includes(signal))
+  const yearsSignal = parsed.senioritySignals.find((signal) => /\d+\+?\s*years?/i.test(signal))
+
+  const parts: string[] = []
+  if (seniorKeyword) {
+    parts.push(
+      `JD signals a "${seniorKeyword}"-level role, which typically needs more scope/years than your ~${RAJ_PROFILE.yearsExperience} years of experience.`,
+    )
+  }
+  if (yearsSignal) {
+    parts.push(`JD states "${yearsSignal}" - checked against your ~${RAJ_PROFILE.yearsExperience} years of experience.`)
+  }
+
+  return parts.length
+    ? parts.join(' ')
+    : "No seniority signal detected, or it matches your early/mid-career level - full marks."
+}
+
 export function explainScore(score: ScoreBreakdown, parsed: ParsedJob, proofs: ProofMapping[]): ScoreExplanation[] {
   return [
     { dimension: 'Role fit', points: score.roleFit, cap: 20, reason: explainRoleFit(score.roleFit, parsed) },
@@ -71,5 +93,6 @@ export function explainScore(score: ScoreBreakdown, parsed: ParsedJob, proofs: P
     { dimension: 'Skill fit', points: score.skillFit, cap: 20, reason: explainSkillFit(parsed) },
     { dimension: 'Permit fit', points: score.permitFit, cap: 20, reason: explainPermitFit(parsed) },
     { dimension: 'Proof strength', points: score.proofStrength, cap: 20, reason: explainProofStrength(proofs) },
+    { dimension: 'Seniority fit', points: score.seniorityFit, cap: 20, reason: explainSeniorityFit(parsed) },
   ]
 }

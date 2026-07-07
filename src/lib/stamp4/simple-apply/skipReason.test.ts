@@ -29,7 +29,7 @@ describe('buildSkipReason', () => {
     const parsed = job({ roleTitle: 'Software Engineer', country: 'UK', sponsorshipSignals: ['contract'] })
     const score = scoreJob(parsed)
     const reason = buildSkipReason(score, parsed)
-    expect(reason.summary).toBe('Scored 0/100 (Skip) — below the threshold for generating application content.')
+    expect(reason.summary).toBe('Scored 20/120 (Skip) — below the threshold for generating application content.')
   })
 
   it('flags a mismatched role title', () => {

@@ -35,6 +35,7 @@ function breakdown(
   skillFit: number,
   permitFit: number,
   proofStrength: number,
+  seniorityFit = 20,
 ): ScoreBreakdown {
   return {
     roleFit,
@@ -42,7 +43,8 @@ function breakdown(
     skillFit,
     permitFit,
     proofStrength,
-    total: roleFit + domainFit + skillFit + permitFit + proofStrength,
+    seniorityFit,
+    total: roleFit + domainFit + skillFit + permitFit + proofStrength + seniorityFit,
     decision: 'Apply Now',
   }
 }

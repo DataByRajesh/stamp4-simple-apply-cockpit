@@ -16,6 +16,7 @@ const DIMENSIONS: Array<[keyof Omit<ScoreBreakdown, 'total' | 'decision'>, strin
   ['skillFit', 'Skill fit'],
   ['permitFit', 'Permit fit'],
   ['proofStrength', 'Proof strength'],
+  ['seniorityFit', 'Seniority fit'],
 ]
 
 function round(value: number): number {

@@ -26,7 +26,7 @@ function job(overrides: Partial<ParsedJob> = {}): ParsedJob {
 }
 
 describe('explainScore', () => {
-  it('returns all five dimensions in a fixed order with matching point/cap values', () => {
+  it('returns all six dimensions in a fixed order with matching point/cap values', () => {
     const parsed = job({ roleTitle: 'Systems Analyst', domainKeywords: ['fintech'] })
     const score = scoreJob(parsed)
     const explanations = explainScore(score, parsed, mapProofs(parsed))
@@ -37,6 +37,7 @@ describe('explainScore', () => {
       'Skill fit',
       'Permit fit',
       'Proof strength',
+      'Seniority fit',
     ])
     expect(explanations.every((e) => e.cap === 20)).toBe(true)
     expect(explanations[0].points).toBe(score.roleFit)
@@ -80,5 +81,23 @@ describe('explainScore', () => {
     const parsed = job({ country: 'Ireland', salary: '50000' })
     const explanations = explainScore(scoreJob(parsed), parsed, [])
     expect(explanations[3].reason).toContain('50000')
+  })
+
+  it('explains a senior-keyword seniority mismatch', () => {
+    const parsed = job({ senioritySignals: ['senior'] })
+    const explanations = explainScore(scoreJob(parsed), parsed, [])
+    expect(explanations[5].reason).toContain('"senior"-level role')
+  })
+
+  it('explains an explicit years-required seniority mismatch', () => {
+    const parsed = job({ senioritySignals: ['7+ years experience'] })
+    const explanations = explainScore(scoreJob(parsed), parsed, [])
+    expect(explanations[5].reason).toContain('7+ years experience')
+  })
+
+  it('gives full marks with no penalty note when there is no seniority signal', () => {
+    const parsed = job({})
+    const explanations = explainScore(scoreJob(parsed), parsed, [])
+    expect(explanations[5].reason).toContain('full marks')
   })
 })
