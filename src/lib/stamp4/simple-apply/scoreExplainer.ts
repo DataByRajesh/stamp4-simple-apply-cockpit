@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import { matchedDomainSectors, RAJ_PROFILE } from './profile'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from './types'
 
 export interface ScoreExplanation {
@@ -21,7 +21,9 @@ function explainRoleFit(points: number, parsed: ParsedJob): string {
 
 function explainDomainFit(parsed: ParsedJob): string {
   if (!parsed.domainKeywords.length) return 'No FinTech/banking/payments domain keywords were detected in the JD.'
-  return `Matched ${parsed.domainKeywords.length} domain keyword${parsed.domainKeywords.length === 1 ? '' : 's'}: ${parsed.domainKeywords.join(', ')} (1 pt each, capped at 5).`
+  const sectors = matchedDomainSectors(parsed.domainKeywords)
+  const sectorLine = sectors.length ? ` Sector${sectors.length === 1 ? '' : 's'}: ${sectors.join(', ')}.` : ''
+  return `Matched ${parsed.domainKeywords.length} domain keyword${parsed.domainKeywords.length === 1 ? '' : 's'}: ${parsed.domainKeywords.join(', ')} (1 pt each, capped at 5).${sectorLine}`
 }
 
 function explainSkillFit(parsed: ParsedJob): string {

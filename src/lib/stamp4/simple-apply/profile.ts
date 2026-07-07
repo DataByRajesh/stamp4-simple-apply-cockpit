@@ -1,4 +1,43 @@
-﻿export const RAJ_PROFILE = {
+﻿// Named sector categories, mirroring how the sponsor-companies watchlist groups by sector -
+// gives domain-fit scoring a legible "which sector(s) does this JD belong to" answer instead of
+// just a bag of matched keywords, and organises the vocabulary so it's easier to extend per sector.
+const DOMAIN_SECTORS = [
+  {
+    name: 'Payments & Transactions',
+    keywords: ['fintech', 'payments', 'reconciliation', 'settlement', 'transaction', 'clearing', 'chargeback', 'ledger'],
+  },
+  {
+    name: 'Banking & Financial Services',
+    keywords: [
+      'banking',
+      'financial services',
+      'saas finance',
+      'core banking',
+      'digital banking',
+      'open banking',
+      'lending',
+      'credit risk',
+      'trade finance',
+    ],
+  },
+  {
+    name: 'Risk, Compliance & RegTech',
+    keywords: ['kyc', 'aml', 'compliance', 'risk', 'regulatory', 'regtech', 'dora', 'psd2', 'psd3', 'fida', 'fraud'],
+  },
+  {
+    name: 'Enterprise Systems',
+    keywords: ['enterprise systems'],
+  },
+] as const
+
+export function matchedDomainSectors(domainKeywords: readonly string[]): string[] {
+  const matched = new Set(domainKeywords.map((keyword) => keyword.toLowerCase()))
+  return DOMAIN_SECTORS.filter((sector) => sector.keywords.some((keyword) => matched.has(keyword))).map(
+    (sector) => sector.name,
+  )
+}
+
+export const RAJ_PROFILE = {
   yearsExperience: 3,
   targetCountries: ['Ireland', 'Netherlands'],
   passiveCountries: ['UK'],
@@ -26,22 +65,8 @@
     'business intelligence analyst',
     'financial analyst',
   ],
-  targetDomains: [
-    'fintech',
-    'banking',
-    'payments',
-    'reconciliation',
-    'settlement',
-    'transaction',
-    'kyc',
-    'aml',
-    'compliance',
-    'risk',
-    'regulatory',
-    'saas finance',
-    'financial services',
-    'enterprise systems',
-  ],
+  domainSectors: DOMAIN_SECTORS,
+  targetDomains: DOMAIN_SECTORS.flatMap((sector) => sector.keywords),
   coreSkills: [
     'sql',
     'data validation',

@@ -56,6 +56,19 @@ describe('explainScore', () => {
     expect(explanations[1].reason).toContain('fintech, banking')
   })
 
+  it('names the matched sector(s) alongside the raw domain keywords', () => {
+    const parsed = job({ domainKeywords: ['fintech', 'kyc'] })
+    const explanations = explainScore(scoreJob(parsed), parsed, [])
+    expect(explanations[1].reason).toContain('Payments & Transactions')
+    expect(explanations[1].reason).toContain('Risk, Compliance & RegTech')
+  })
+
+  it('does not mention sectors when no domain keywords matched', () => {
+    const parsed = job({ domainKeywords: [] })
+    const explanations = explainScore(scoreJob(parsed), parsed, [])
+    expect(explanations[1].reason).not.toContain('Sector')
+  })
+
   it('names the matched core skills', () => {
     const parsed = job({ requiredSkills: ['sql', 'uat'] })
     const explanations = explainScore(scoreJob(parsed), parsed, [])
