@@ -68,6 +68,7 @@ create table seen_job_postings (
   location text,
   score_total numeric,
   decision text,
+  description_text text,
   first_seen_at timestamptz not null default now(),
   unique (company_name, external_id)
 );
@@ -76,3 +77,7 @@ create table seen_job_postings (
 -- (added so the sponsor-company digest can be pre-scored instead of just title-matched):
 -- alter table seen_job_postings add column if not exists score_total numeric;
 -- alter table seen_job_postings add column if not exists decision text;
+
+-- Run this against an existing database that predates the description_text column (added so a
+-- seen posting can be sent straight into the Cockpit for a full analysis without re-fetching):
+-- alter table seen_job_postings add column if not exists description_text text;

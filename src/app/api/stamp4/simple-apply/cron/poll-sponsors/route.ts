@@ -28,6 +28,7 @@ type SeenPostingInsert = {
   location: string | null
   score_total: number
   decision: string
+  description_text: string
 }
 
 function isAuthorized(request: Request): boolean {
@@ -89,6 +90,7 @@ export async function GET(request: Request) {
           location: job.location,
           score_total: score.total,
           decision: score.decision,
+          description_text: job.descriptionText,
         })
       }
     } catch (error) {

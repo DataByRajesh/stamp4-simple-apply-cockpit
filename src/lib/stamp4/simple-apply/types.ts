@@ -101,6 +101,7 @@ export interface SeenSponsorPosting {
   location: string | null
   scoreTotal: number | null
   decision: string | null
+  descriptionText: string | null
   firstSeenAt: string
 }
 
