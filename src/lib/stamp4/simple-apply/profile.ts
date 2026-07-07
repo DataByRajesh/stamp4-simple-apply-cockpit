@@ -13,6 +13,19 @@
     'application quality analyst',
     'payments analyst',
   ],
+  // Genuinely adjacent analyst titles - real fits, just not the primary lane above (roleFit 3.75 vs 5).
+  adjacentRoleLane: [
+    'data analyst',
+    'risk analyst',
+    'compliance analyst',
+    'product analyst',
+    'reporting analyst',
+    'quality assurance analyst',
+    'qa analyst',
+    'operations analyst',
+    'business intelligence analyst',
+    'financial analyst',
+  ],
   targetDomains: [
     'fintech',
     'banking',

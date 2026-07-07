@@ -11,9 +11,12 @@ export interface ScoreExplanation {
 function explainRoleFit(points: number, parsed: ParsedJob): string {
   const title = parsed.roleTitle || 'The role title'
   if (points === 5) return `"${title}" is an exact match for your target role lane.`
+  if (points === 3.75) {
+    return `"${title}" is a closely adjacent analyst title (Data/Risk/Compliance/Product/Reporting/QA/Operations/BI/Financial Analyst) - a real fit, just not your primary lane.`
+  }
   if (points === 3) return `"${title}" combines "analyst" with "system" or "business" - close to your lane, but not an exact match.`
   if (points === 1.25) return `"${title}" is a generic analyst title with no specific lane signal.`
-  return `"${title}" has no analyst/target-lane signal at all.`
+  return `"${title}" has no analyst/target-lane signal at all - this caps the decision at Save / Low Priority regardless of the other scores.`
 }
 
 function explainDomainFit(parsed: ParsedJob): string {

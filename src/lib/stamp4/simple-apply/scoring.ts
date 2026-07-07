@@ -5,6 +5,7 @@ import type { ParsedJob, ScoreBreakdown } from './types'
 function roleFit(roleTitle: string) {
   const title = roleTitle.toLowerCase()
   if (RAJ_PROFILE.targetRoleLane.some((role) => title.includes(role))) return 5
+  if (RAJ_PROFILE.adjacentRoleLane.some((role) => title.includes(role))) return 3.75
   if ((title.includes('analyst') && title.includes('system')) || (title.includes('analyst') && title.includes('business'))) return 3
   if (title.includes('analyst')) return 1.25
   return 0
@@ -84,7 +85,7 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
   // Each dimension is scored out of 5 so new dimensions can be added later without
   // rebalancing a shared point pool; the verdict is their average, not their sum.
   const total = Math.round(((role + domainFit + skillFit + permitFit + proofStrength + seniorityFit) / 6) * 10) / 10
-  const decision: ScoreBreakdown['decision'] =
+  let decision: ScoreBreakdown['decision'] =
     total >= 4
       ? 'Apply Now'
       : total >= 3
@@ -92,6 +93,14 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
         : total >= 2
           ? 'Save / Low Priority'
           : 'Skip'
+
+  // A title with zero relation to the target role lane can otherwise still get averaged up to an
+  // Apply-tier verdict by strong domain/skill/proof signals alone (e.g. a Software Engineer JD that
+  // happens to mention SQL and FinTech) - cap it at Save / Low Priority so role mismatch can't be
+  // diluted away entirely. Skip is already lower, so it's left alone.
+  if (role === 0 && decision !== 'Skip') {
+    decision = 'Save / Low Priority'
+  }
 
   return {
     roleFit: role,

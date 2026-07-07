@@ -28,12 +28,19 @@ describe('scoreJob - roleFit', () => {
     expect(scoreJob(job({ roleTitle: 'Systems Analyst' })).roleFit).toBe(5)
   })
 
+  it('scores 3.75 for a closely adjacent analyst title', () => {
+    expect(scoreJob(job({ roleTitle: 'Data Analyst' })).roleFit).toBe(3.75)
+    expect(scoreJob(job({ roleTitle: 'Risk Analyst' })).roleFit).toBe(3.75)
+    expect(scoreJob(job({ roleTitle: 'Compliance Analyst' })).roleFit).toBe(3.75)
+    expect(scoreJob(job({ roleTitle: 'Quality Assurance Analyst' })).roleFit).toBe(3.75)
+  })
+
   it('scores 3 for "analyst" combined with "business" or "system" outside the target lane', () => {
     expect(scoreJob(job({ roleTitle: 'Business Analyst' })).roleFit).toBe(3)
   })
 
   it('scores 1.25 for a bare "analyst" title', () => {
-    expect(scoreJob(job({ roleTitle: 'Data Analyst' })).roleFit).toBe(1.25)
+    expect(scoreJob(job({ roleTitle: 'Analyst' })).roleFit).toBe(1.25)
   })
 
   it('scores 0 for a title with no analyst signal', () => {
@@ -148,7 +155,7 @@ describe('scoreJob - decision thresholds', () => {
 
   it('returns Apply with Proof Fix between 3 and 3.9', () => {
     const midHigh = job({
-      roleTitle: 'Data Analyst', // roleFit 1.25
+      roleTitle: 'Analyst', // roleFit 1.25
       domainKeywords: ['fintech', 'banking', 'payments'], // domainFit 3
       requiredSkills: ['sql', 'uat', 'jira', 'testing', 'defect', 'incident'], // skillFit 3.75
       country: 'Ireland',
@@ -184,5 +191,24 @@ describe('scoreJob - decision thresholds', () => {
     const result = scoreJob(weak)
     expect(result.total).toBe(0.8) // average of 0 + 0 + 0 + 0 + 0 + seniorityFit 5, rounded
     expect(result.decision).toBe('Skip')
+  })
+
+  it('caps a zero role-fit title at Save / Low Priority, even when every other dimension is strong', () => {
+    // Same strong signals as the "Apply Now" case above, but a title with zero relation to the
+    // target role lane - without the cap, averaging would otherwise still clear this to an Apply tier.
+    const wrongLane = job({
+      roleTitle: 'Software Engineer',
+      domainKeywords: ['fintech', 'banking', 'payments', 'risk', 'compliance'],
+      requiredSkills: ['sql', 'uat', 'jira', 'testing', 'defect', 'incident', 'production support', 'application support'],
+      country: 'Ireland',
+      salary: '50000',
+      rawText:
+        'payment reconciliation settlement sql data validation uat testing incident application support logs ' +
+        'monitoring compliance regulatory kyc stakeholder business user requirements',
+    })
+    const result = scoreJob(wrongLane)
+    expect(result.roleFit).toBe(0)
+    expect(result.total).toBe(4.2) // would be well into Apply Now territory without the cap
+    expect(result.decision).toBe('Save / Low Priority')
   })
 })
