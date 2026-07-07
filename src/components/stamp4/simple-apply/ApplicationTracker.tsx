@@ -15,6 +15,55 @@ import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 const STATUSES: TrackerStatus[] = ['Saved', 'Applied', 'Follow-up', 'Interview', 'Rejected', 'Archived']
 const NOTES_SAVE_DELAY_MS = 600
 
+function sanitizeCsvField(value: string): string {
+  // Guard against CSV/formula injection - a JD-derived field starting with one of these
+  // would otherwise execute as a formula when the file is opened in Excel/Sheets.
+  const guarded = /^[=+\-@\t\r]/.test(value) ? `'${value}` : value
+  return /[",\n]/.test(guarded) ? `"${guarded.replace(/"/g, '""')}"` : guarded
+}
+
+function jobsToCsv(jobs: TrackedJob[]): string {
+  const headers = [
+    'Role title',
+    'Company',
+    'Country',
+    'Location',
+    'Salary',
+    'Score',
+    'Decision',
+    'Status',
+    'Date added',
+    'Notes',
+  ]
+  const rows = jobs.map((job) =>
+    [
+      job.roleTitle,
+      job.company,
+      job.country,
+      job.location,
+      job.salary ?? '',
+      String(job.score),
+      job.decision,
+      job.status,
+      job.dateAdded,
+      job.notes,
+    ]
+      .map(sanitizeCsvField)
+      .join(','),
+  )
+  return [headers.join(','), ...rows].join('\n')
+}
+
+function downloadFile(content: string, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
 export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [jobs, setJobs] = useState<TrackedJob[]>([])
   const [sortBy, setSortBy] = useState<'date' | 'score'>('date')
@@ -22,6 +71,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [loadError, setLoadError] = useState('')
   const [actionMessage, setActionMessage] = useState<{ text: string; kind: 'success' | 'error' } | null>(null)
   const [exporting, setExporting] = useState(false)
+  const [exportFormat, setExportFormat] = useState<'json' | 'csv'>('json')
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
   const [expandedWhyId, setExpandedWhyId] = useState<string | null>(null)
@@ -63,22 +113,30 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
     void refresh()
   }, [refreshKey])
 
+  const sortedJobs = useMemo(() => {
+    return [...jobs].sort((a, b) =>
+      sortBy === 'score'
+        ? b.score - a.score
+        : new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime(),
+    )
+  }, [jobs, sortBy])
+
   async function downloadBackup() {
     if (exporting) return
     setExporting(true)
+    const today = new Date().toISOString().slice(0, 10)
 
     try {
-      const backup = await exportBackup()
-      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `stamp4-simple-apply-backup-${new Date().toISOString().slice(0, 10)}.json`
-      link.click()
-      URL.revokeObjectURL(url)
-      flashActionMessage('Backup downloaded.', 'success')
+      if (exportFormat === 'csv') {
+        downloadFile(jobsToCsv(sortedJobs), `stamp4-simple-apply-tracker-${today}.csv`, 'text/csv')
+        flashActionMessage('CSV exported (tracker summary only).', 'success')
+      } else {
+        const backup = await exportBackup()
+        downloadFile(JSON.stringify(backup, null, 2), `stamp4-simple-apply-backup-${today}.json`, 'application/json')
+        flashActionMessage('Full JSON backup downloaded.', 'success')
+      }
     } catch {
-      flashActionMessage('Could not export backup. Check Supabase and STAMP4 access secret env vars.', 'error')
+      flashActionMessage('Could not export. Check Supabase and STAMP4 access secret env vars.', 'error')
     } finally {
       setExporting(false)
     }
@@ -107,14 +165,6 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
     }
   }
 
-  const sortedJobs = useMemo(() => {
-    return [...jobs].sort((a, b) =>
-      sortBy === 'score'
-        ? b.score - a.score
-        : new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime(),
-    )
-  }, [jobs, sortBy])
-
   return (
     <section className="panel stack">
       <div className="toolbar">
@@ -127,9 +177,18 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
             <option value="date">Sort by date</option>
             <option value="score">Sort by score</option>
           </select>
+          <select
+            className="select"
+            value={exportFormat}
+            onChange={(event) => setExportFormat(event.target.value as 'json' | 'csv')}
+            aria-label="Export format"
+          >
+            <option value="json">JSON (full backup)</option>
+            <option value="csv">CSV (tracker summary)</option>
+          </select>
           <button className="button secondary" type="button" onClick={downloadBackup} disabled={exporting}>
             <Download size={16} aria-hidden="true" />
-            {exporting ? 'Exporting...' : 'Export backup'}
+            {exporting ? 'Exporting...' : 'Export'}
           </button>
         </div>
       </div>
