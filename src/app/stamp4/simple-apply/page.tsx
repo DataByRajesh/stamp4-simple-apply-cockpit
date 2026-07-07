@@ -39,6 +39,7 @@ function makeTrackedJob(result: AnalysisResult): TrackedJob {
     generatedPack: result.skipped ? EMPTY_APPLICATION_PACK : result.pack,
     proofMap: result.proofs,
     correctionActions: result.skipped ? [] : result.actions,
+    parsedJob: result.parsed,
   }
 }
 
@@ -98,7 +99,7 @@ export default function SimpleApplyPage() {
         <>
           <section className="grid summary-grid">
             <FitVerdictCard parsed={analysis.parsed} score={analysis.score} />
-            <ScoreBreakdown score={analysis.score} />
+            <ScoreBreakdown score={analysis.score} parsed={analysis.parsed} proofs={analysis.proofs} />
             <PermitRiskCard parsed={analysis.parsed} />
           </section>
 

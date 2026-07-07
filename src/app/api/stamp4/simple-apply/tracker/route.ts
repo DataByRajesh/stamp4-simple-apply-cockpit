@@ -22,6 +22,7 @@ type TrackedJobRow = {
   proof_map: TrackedJob['proofMap'] | null
   correction_actions: TrackedJob['correctionActions'] | null
   score_breakdown: TrackedJob['scoreBreakdown'] | null
+  parsed_job: TrackedJob['parsedJob'] | null
 }
 
 function rowToJob(row: TrackedJobRow): TrackedJob {
@@ -41,6 +42,7 @@ function rowToJob(row: TrackedJobRow): TrackedJob {
     proofMap: row.proof_map ?? [],
     correctionActions: row.correction_actions ?? [],
     scoreBreakdown: row.score_breakdown ?? undefined,
+    parsedJob: row.parsed_job ?? undefined,
   }
 }
 
@@ -61,6 +63,7 @@ function jobToInsert(job: TrackedJob) {
     proof_map: job.proofMap,
     correction_actions: job.correctionActions,
     score_breakdown: job.scoreBreakdown ?? null,
+    parsed_job: job.parsedJob ?? null,
     updated_at: new Date().toISOString(),
   }
 }

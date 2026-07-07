@@ -14,11 +14,16 @@
   proof_map jsonb,
   correction_actions jsonb,
   score_breakdown jsonb,
+  parsed_job jsonb,
   updated_at timestamptz not null default now()
 );
 
 -- Run this against an existing database that predates the score_breakdown column:
 -- alter table tracked_jobs add column if not exists score_breakdown jsonb;
+
+-- Run this against an existing database that predates the parsed_job column
+-- (added so "Why this score?" explanations work for already-saved jobs too):
+-- alter table tracked_jobs add column if not exists parsed_job jsonb;
 
 create table custom_job_sources (
   id uuid primary key default gen_random_uuid(),

@@ -86,4 +86,5 @@ export interface TrackedJob {
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]
   correctionActions: CorrectionAction[]
+  parsedJob?: ParsedJob
 }

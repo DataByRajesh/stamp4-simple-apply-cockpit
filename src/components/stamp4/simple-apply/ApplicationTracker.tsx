@@ -1,7 +1,8 @@
 ﻿'use client'
 
 import { Download, Trash2 } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { explainScore } from '@/lib/stamp4/simple-apply/scoreExplainer'
 import {
   deleteJobFromTracker,
   exportBackup,
@@ -23,6 +24,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [exporting, setExporting] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
+  const [expandedWhyId, setExpandedWhyId] = useState<string | null>(null)
   const notesTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
   const actionMessageTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -153,7 +155,8 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
             </thead>
             <tbody>
               {sortedJobs.map((job) => (
-                <tr key={job.id}>
+                <Fragment key={job.id}>
+                  <tr>
                   <td>
                     <strong>{job.roleTitle}</strong>
                     <br />
@@ -164,6 +167,14 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     {job.score}/100
                     <br />
                     <span className="muted">{job.decision}</span>
+                    <br />
+                    <button
+                      className="button ghost"
+                      type="button"
+                      onClick={() => setExpandedWhyId((current) => (current === job.id ? null : job.id))}
+                    >
+                      {expandedWhyId === job.id ? 'Hide reasons' : 'Why this score?'}
+                    </button>
                   </td>
                   <td>
                     <select
@@ -217,7 +228,31 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                       <Trash2 size={16} aria-hidden="true" />
                     </button>
                   </td>
-                </tr>
+                  </tr>
+                  {expandedWhyId === job.id && (
+                    <tr>
+                      <td colSpan={6}>
+                        {job.scoreBreakdown && job.parsedJob ? (
+                          <ul className="stack compact-stack">
+                            {explainScore(job.scoreBreakdown, job.parsedJob, job.proofMap).map((explanation) => (
+                              <li key={explanation.dimension}>
+                                <strong>
+                                  {explanation.dimension} ({explanation.points}/{explanation.cap}):
+                                </strong>{' '}
+                                {explanation.reason}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="muted">
+                            Full breakdown unavailable for jobs saved before this feature. Re-analyse and re-save to
+                            see it.
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               ))}
             </tbody>
           </table>
