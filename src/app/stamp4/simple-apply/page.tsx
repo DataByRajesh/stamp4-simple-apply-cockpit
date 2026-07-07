@@ -3,14 +3,12 @@
 import { Save } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ApplicationPack } from '@/components/stamp4/simple-apply/ApplicationPack'
-import { AlertSetupChecklist } from '@/components/stamp4/simple-apply/AlertSetupChecklist'
 import { ApplicationTracker } from '@/components/stamp4/simple-apply/ApplicationTracker'
 import { CorrectionActions } from '@/components/stamp4/simple-apply/CorrectionActions'
 import { FitVerdictCard } from '@/components/stamp4/simple-apply/FitVerdictCard'
 import { InterviewPrep } from '@/components/stamp4/simple-apply/InterviewPrep'
 import { JobInputForm } from '@/components/stamp4/simple-apply/JobInputForm'
 import type { AnalysisResult } from '@/components/stamp4/simple-apply/JobInputForm'
-import { JobSourcesPanel } from '@/components/stamp4/simple-apply/JobSourcesPanel'
 import { PermitRiskCard } from '@/components/stamp4/simple-apply/PermitRiskCard'
 import { ProofMapperTable } from '@/components/stamp4/simple-apply/ProofMapperTable'
 import { ScoreBreakdown } from '@/components/stamp4/simple-apply/ScoreBreakdown'
@@ -158,9 +156,6 @@ export default function SimpleApplyPage() {
           </section>
         </div>
       )}
-
-      <JobSourcesPanel />
-      <AlertSetupChecklist />
 
       <ApplicationTracker refreshKey={trackerRefresh} />
     </main>
