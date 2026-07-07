@@ -99,9 +99,6 @@ export default function SimpleApplyPage() {
         }}
       />
 
-      <JobSourcesPanel />
-      <AlertSetupChecklist />
-
       {analysis && (
         <div ref={resultsRef} className="stack">
           <section className="grid summary-grid">
@@ -160,6 +157,9 @@ export default function SimpleApplyPage() {
           </section>
         </div>
       )}
+
+      <JobSourcesPanel />
+      <AlertSetupChecklist />
 
       <ApplicationTracker refreshKey={trackerRefresh} />
     </main>
