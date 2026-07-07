@@ -145,7 +145,7 @@ export async function POST(request: Request) {
     return NextResponse.json(suggestions)
   } catch (error) {
     console.warn('Stamp4 source discovery failed', error)
-    return NextResponse.json([], { status: 200 })
+    return NextResponse.json({ error: 'Source discovery unavailable' }, { status: 503 })
   }
 }
 

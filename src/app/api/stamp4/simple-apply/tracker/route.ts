@@ -1,8 +1,18 @@
 ﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
-import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { ApplicationPack, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
+
+const EMPTY_APPLICATION_PACK: ApplicationPack = {
+  tailoredCvSummary: '',
+  topCvBullets: [],
+  coverMessage: '',
+  recruiterLinkedInMessage: '',
+  whyMeAnswer: '',
+  projectProofParagraph: '',
+}
 
 type TrackedJobRow = {
   id: string
@@ -35,7 +45,7 @@ function rowToJob(row: TrackedJobRow): TrackedJob {
     status: row.status,
     dateAdded: row.date_added,
     notes: row.notes ?? '',
-    generatedPack: row.generated_pack!,
+    generatedPack: row.generated_pack ?? EMPTY_APPLICATION_PACK,
     proofMap: row.proof_map ?? [],
     correctionActions: row.correction_actions ?? [],
     scoreBreakdown: row.score_breakdown ?? undefined,
@@ -78,7 +88,10 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const job = (await request.json()) as TrackedJob
+  const parsed = await parseJsonBody<TrackedJob>(request)
+  if (!parsed.ok) return parsed.response
+  const job = parsed.body
+
   const { error } = await getSupabaseServer().from('tracked_jobs').upsert(jobToInsert(job), { onConflict: 'id' })
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
@@ -88,7 +101,9 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const body = (await request.json()) as { id?: string; status?: TrackerStatus; notes?: string }
+  const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string }>(request)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.body
   if (!body.id) return Response.json({ error: 'Missing id' }, { status: 400 })
 
   const update: { status?: TrackerStatus; notes?: string; updated_at: string } = { updated_at: new Date().toISOString() }

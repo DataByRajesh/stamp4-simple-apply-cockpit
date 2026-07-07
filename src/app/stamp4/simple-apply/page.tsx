@@ -45,11 +45,13 @@ export default function SimpleApplyPage() {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [trackerRefresh, setTrackerRefresh] = useState(0)
   const [savedMessage, setSavedMessage] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const trackedJob = useMemo(() => (analysis ? makeTrackedJob(analysis) : null), [analysis])
 
   async function saveCurrentJob() {
-    if (!trackedJob) return
+    if (!trackedJob || saving) return
+    setSaving(true)
 
     try {
       await saveJobToTracker(trackedJob)
@@ -58,6 +60,8 @@ export default function SimpleApplyPage() {
     } catch (error) {
       console.error('Failed to save job', error)
       setSavedMessage('Cloud tracker unavailable. Check Supabase and STAMP4 access secret env vars.')
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -94,6 +98,13 @@ export default function SimpleApplyPage() {
           </section>
 
           <ProofMapperTable proofs={analysis.proofs} />
+          {analysis.generationSource === 'fallback' && (
+            <p className="notice warning">
+              AI generation was unavailable, so the application pack, interview questions and correction actions below
+              are deterministic templates, not AI-written prose. Check OPENAI_API_KEY/OPENAI_MODEL if this is
+              unexpected.
+            </p>
+          )}
           <ApplicationPack pack={analysis.pack} />
           <InterviewPrep questions={analysis.questions} />
           <CorrectionActions actions={analysis.actions} />
@@ -103,9 +114,9 @@ export default function SimpleApplyPage() {
               <h2>Save this job</h2>
               <p>{savedMessage || 'Persist the full analysis to the isolated Stamp4 Supabase project.'}</p>
             </div>
-            <button className="button" type="button" onClick={saveCurrentJob}>
+            <button className="button" type="button" onClick={saveCurrentJob} disabled={saving}>
               <Save size={18} aria-hidden="true" />
-              Save to Tracker
+              {saving ? 'Saving...' : 'Save to Tracker'}
             </button>
           </section>
         </>

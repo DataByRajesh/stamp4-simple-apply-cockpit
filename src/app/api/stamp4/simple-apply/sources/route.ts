@@ -1,4 +1,5 @@
 ﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 import type { JobSource } from '@/lib/stamp4/simple-apply/jobSources'
 
@@ -33,7 +34,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const source = (await request.json()) as JobSource
+  const parsed = await parseJsonBody<JobSource>(request)
+  if (!parsed.ok) return parsed.response
+  const source = parsed.body
   const { error } = await getSupabaseServer().from('custom_job_sources').insert({
     name: source.name,
     url: source.url === '#' ? null : source.url,

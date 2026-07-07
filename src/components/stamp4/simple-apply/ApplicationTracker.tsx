@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import { Download, Trash2 } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   deleteJobFromTracker,
   exportBackup,
@@ -12,12 +12,24 @@ import {
 import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 const STATUSES: TrackerStatus[] = ['Saved', 'Applied', 'Follow-up', 'Interview', 'Rejected', 'Archived']
+const NOTES_SAVE_DELAY_MS = 600
 
 export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [jobs, setJobs] = useState<TrackedJob[]>([])
   const [sortBy, setSortBy] = useState<'date' | 'score'>('date')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [exporting, setExporting] = useState(false)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
+  const notesTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
+
+  useEffect(() => {
+    const timers = notesTimers.current
+    return () => {
+      Object.values(timers).forEach(clearTimeout)
+    }
+  }, [])
 
   async function refresh() {
     setLoading(true)
@@ -38,6 +50,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   }, [refreshKey])
 
   async function downloadBackup() {
+    if (exporting) return
+    setExporting(true)
+
     try {
       const backup = await exportBackup()
       const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
@@ -49,6 +64,30 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
       URL.revokeObjectURL(url)
     } catch {
       setError('Could not export backup. Check Supabase and STAMP4 access secret env vars.')
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  function queueNotesSave(id: string, notes: string) {
+    clearTimeout(notesTimers.current[id])
+    notesTimers.current[id] = setTimeout(() => {
+      updateJobNotes(id, notes).catch(() => setNoteErrorId(id))
+    }, NOTES_SAVE_DELAY_MS)
+  }
+
+  async function handleDelete(job: TrackedJob) {
+    if (deletingId) return
+    if (!window.confirm(`Delete "${job.roleTitle}" at ${job.company} from the tracker? This cannot be undone.`)) return
+
+    setDeletingId(job.id)
+    try {
+      await deleteJobFromTracker(job.id)
+      await refresh()
+    } catch {
+      setError('Could not delete job from cloud tracker.')
+    } finally {
+      setDeletingId(null)
     }
   }
 
@@ -72,9 +111,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
             <option value="date">Sort by date</option>
             <option value="score">Sort by score</option>
           </select>
-          <button className="button secondary" type="button" onClick={downloadBackup}>
+          <button className="button secondary" type="button" onClick={downloadBackup} disabled={exporting}>
             <Download size={16} aria-hidden="true" />
-            Export backup
+            {exporting ? 'Exporting...' : 'Export backup'}
           </button>
         </div>
       </div>
@@ -117,11 +156,15 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                       value={job.status}
                       onChange={async (event) => {
                         const status = event.target.value as TrackerStatus
+                        const previousStatus = job.status
                         setJobs((current) => current.map((item) => (item.id === job.id ? { ...item, status } : item)))
                         try {
                           await updateJobStatus(job.id, status)
                         } catch {
-                          await refresh()
+                          setJobs((current) =>
+                            current.map((item) => (item.id === job.id ? { ...item, status: previousStatus } : item)),
+                          )
+                          setError(`Could not save status change for "${job.roleTitle}". Reverted.`)
                         }
                       }}
                     >
@@ -138,26 +181,22 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                       value={job.notes}
                       onChange={(event) => {
                         const notes = event.target.value
+                        setNoteErrorId((current) => (current === job.id ? null : current))
                         setJobs((current) =>
                           current.map((item) => (item.id === job.id ? { ...item, notes } : item)),
                         )
-                        updateJobNotes(job.id, notes).catch(() => undefined)
+                        queueNotesSave(job.id, notes)
                       }}
                     />
+                    {noteErrorId === job.id && <p className="muted">Note did not save. Edit again to retry.</p>}
                   </td>
                   <td>
                     <button
                       className="button ghost"
                       type="button"
                       aria-label={`Delete ${job.roleTitle}`}
-                      onClick={async () => {
-                        try {
-                          await deleteJobFromTracker(job.id)
-                          await refresh()
-                        } catch {
-                          setError('Could not delete job from cloud tracker.')
-                        }
-                      }}
+                      disabled={deletingId === job.id}
+                      onClick={() => handleDelete(job)}
                     >
                       <Trash2 size={16} aria-hidden="true" />
                     </button>

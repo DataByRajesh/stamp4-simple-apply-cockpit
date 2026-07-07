@@ -40,6 +40,7 @@ export function JobSourcesPanel() {
   const [isChecking, setIsChecking] = useState(false)
   const [suggestions, setSuggestions] = useState<SuggestedSource[]>([])
   const [message, setMessage] = useState('')
+  const [addingName, setAddingName] = useState<string | null>(null)
 
   const sources = useMemo(() => [...JOB_SOURCES, ...customSources], [customSources])
 
@@ -93,6 +94,8 @@ export function JobSourcesPanel() {
   }
 
   async function addSuggestion(suggestion: SuggestedSource) {
+    if (addingName) return
+    setAddingName(suggestion.name)
     const source = suggestionToSource(suggestion)
 
     try {
@@ -101,6 +104,8 @@ export function JobSourcesPanel() {
       setSuggestions((current) => current.filter((item) => item.name !== suggestion.name))
       setMessage(`Added ${suggestion.name} to custom sources.`)
     } catch {      setMessage('Could not save that source to Supabase.')
+    } finally {
+      setAddingName(null)
     }
   }
 
@@ -165,12 +170,18 @@ export function JobSourcesPanel() {
                   <p className="muted">No URL supplied - search manually.</p>
                 )}
                 <div className="source-actions">
-                  <button className="button secondary" type="button" onClick={() => addSuggestion(suggestion)}>
-                    Add to my source list
+                  <button
+                    className="button secondary"
+                    type="button"
+                    disabled={addingName === suggestion.name}
+                    onClick={() => addSuggestion(suggestion)}
+                  >
+                    {addingName === suggestion.name ? 'Adding...' : 'Add to my source list'}
                   </button>
                   <button
                     className="button ghost"
                     type="button"
+                    disabled={addingName === suggestion.name}
                     onClick={() => setSuggestions((current) => current.filter((item) => item.name !== suggestion.name))}
                   >
                     Not useful

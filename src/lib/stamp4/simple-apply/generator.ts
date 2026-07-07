@@ -19,6 +19,12 @@ export interface AIGenerationOutput {
   actions: CorrectionAction[]
 }
 
+export type GenerationSource = 'ai' | 'fallback'
+
+export interface GenerationResult extends AIGenerationOutput {
+  source: GenerationSource
+}
+
 export const SYSTEM_PROMPT = `You are helping Raj, a FinTech systems/application analyst candidate, write application materials for Ireland/EU job applications.
 
 Tone: UK English, practical, no hype, no fake claims, no invented experience. Only use the facts provided below. Raj will personally review and edit every output before use.
@@ -173,12 +179,13 @@ export async function generateApplicationOutputs(
   parsed: ParsedJob,
   score: ScoreBreakdown,
   proofs: ProofMapping[],
-): Promise<AIGenerationOutput> {
+): Promise<GenerationResult> {
   const input = { parsed, score, proofs }
 
   try {
-    return await generateWithAI(input)
-  } catch {    return generateApplicationOutputsFallback(parsed, score, proofs)
+    const output = await generateWithAI(input)
+    return { ...output, source: 'ai' }
+  } catch {    return { ...generateApplicationOutputsFallback(parsed, score, proofs), source: 'fallback' }
   }
 }
 

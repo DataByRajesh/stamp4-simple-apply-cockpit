@@ -1,4 +1,5 @@
 ﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 
 export async function GET(request: Request) {
@@ -16,7 +17,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const body = (await request.json()) as { key?: string; value?: unknown }
+  const parsed = await parseJsonBody<{ key?: string; value?: unknown }>(request)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.body
   if (!body.key) return Response.json({ error: 'Missing key' }, { status: 400 })
 
   const { error } = await getSupabaseServer().from('app_settings').upsert(

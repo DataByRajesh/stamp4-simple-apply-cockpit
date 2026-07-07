@@ -1,4 +1,5 @@
 ﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 
 type AlertRow = { source_name: string; done: boolean }
@@ -17,7 +18,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const body = (await request.json()) as { sourceName?: string; source_name?: string; done?: boolean }
+  const parsed = await parseJsonBody<{ sourceName?: string; source_name?: string; done?: boolean }>(request)
+  if (!parsed.ok) return parsed.response
+  const body = parsed.body
   const sourceName = body.sourceName ?? body.source_name
 
   if (!sourceName || typeof body.done !== 'boolean') {

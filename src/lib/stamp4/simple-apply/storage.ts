@@ -13,7 +13,8 @@ export async function apiCall<T>(path: string, options: RequestInit = {}): Promi
   })
 
   if (!response.ok) {
-    throw new Error(`Stamp4 API call failed: ${response.status}`)
+    const body = await response.json().catch(() => null) as { error?: string } | null
+    throw new Error(body?.error ?? `Stamp4 API call failed: ${response.status}`)
   }
 
   return response.json() as Promise<T>
