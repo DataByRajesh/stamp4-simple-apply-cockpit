@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { href: '/stamp4/simple-apply', label: 'Cockpit' },
   { href: '/stamp4/simple-apply/sources-alerts', label: 'Job Sources & Alerts' },
   { href: '/stamp4/simple-apply/interview-prep', label: 'Interview Prep' },
+  { href: '/stamp4/simple-apply/sponsor-companies', label: 'Sponsor Companies' },
 ]
 
 export function TopNav() {
