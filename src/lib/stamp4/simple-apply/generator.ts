@@ -115,6 +115,62 @@ Rules:
 - Do not alter the score, decision or parsed job fields.`.trim()
 }
 
+export const INTERVIEW_PREP_SYSTEM_PROMPT = `${SYSTEM_PROMPT}
+
+For this task you are only producing an interview question bank - nothing else. Every question must be genuinely tailored to the exact job details and proof mappings supplied: reference specific responsibilities, tools, domain keywords, seniority signals or proof assets from that job. Do not produce generic, could-apply-to-any-analyst-role questions - each one should read as if written by someone who read this exact JD closely and is testing Raj against it specifically.`.trim()
+
+export interface InterviewPrepOutput {
+  questions: InterviewQuestion[]
+}
+
+export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
+  return `Job details:
+- Role: ${input.parsed.roleTitle}
+- Company: ${input.parsed.company}
+- Country/location: ${input.parsed.country || 'unknown'} / ${input.parsed.location || 'unknown'}
+- Decision: ${input.score.decision}
+- Score: ${input.score.total}/5
+- Responsibilities: ${input.parsed.responsibilities.join('; ') || 'none stated'}
+- Matched domain keywords: ${input.parsed.domainKeywords.join(', ') || 'none'}
+- Matched skills: ${input.parsed.requiredSkills.join(', ') || 'none'}
+- Tools: ${input.parsed.tools.join(', ') || 'none'}
+- Seniority signals: ${input.parsed.senioritySignals.join(', ') || 'none'}
+
+Relevant proof mappings for this JD:
+${proofLines(input.proofs)}
+
+Generate a JSON object with this exact shape:
+{
+  "questions": [
+    {
+      "question": "interview question",
+      "answerDirection": "practical answer direction",
+      "proofToMention": "specific proof asset",
+      "tamilAudioNote": "'Add to Tamil TTS revision script' if this question deserves extra spoken-answer practice, otherwise null"
+    }
+  ]
+}
+
+Rules:
+- Return ONLY valid JSON.
+- Make exactly 8-10 interview questions - high-level and genuinely tailored to this JD, not generic filler.
+- Each question must reference at least one concrete detail from the job details above (a named responsibility, tool, domain keyword or proof asset) so it could not be reused unchanged for a different role.
+- If payment/reconciliation/settlement is relevant, include this exact question: "How would you investigate a payment marked successful in the application but missing in settlement?"
+- Only set tamilAudioNote to the revision-script note for questions that genuinely warrant extra spoken-answer practice; set it to null for the rest.
+- Keep every claim grounded in the job details and proof mappings above.`.trim()
+}
+
+export function isInterviewPrepOutput(value: unknown): value is InterviewPrepOutput {
+  if (!value || typeof value !== 'object') return false
+  const output = value as InterviewPrepOutput
+  return (
+    Array.isArray(output.questions) &&
+    output.questions.length >= 8 &&
+    output.questions.length <= 10 &&
+    output.questions.every(isInterviewQuestion)
+  )
+}
+
 function isCorrectionAction(value: unknown): value is CorrectionAction {
   if (!value || typeof value !== 'object') return false
   const action = value as CorrectionAction
