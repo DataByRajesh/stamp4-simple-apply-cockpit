@@ -2,6 +2,7 @@
 
 import { Save } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { ApplicationDocuments } from '@/components/stamp4/simple-apply/ApplicationDocuments'
 import { ApplicationPack } from '@/components/stamp4/simple-apply/ApplicationPack'
 import { ApplicationTracker } from '@/components/stamp4/simple-apply/ApplicationTracker'
 import { CorrectionActions } from '@/components/stamp4/simple-apply/CorrectionActions'
@@ -131,6 +132,7 @@ export default function SimpleApplyPage() {
           ) : (
             <>
               <ApplicationPack pack={analysis.pack} source={analysis.generationSource} />
+              {trackedJob && <ApplicationDocuments job={trackedJob} />}
               <InterviewPrep questions={analysis.questions} />
               <CorrectionActions actions={analysis.actions} />
             </>

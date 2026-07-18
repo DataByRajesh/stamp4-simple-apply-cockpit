@@ -151,6 +151,7 @@ export interface ApplicationRecord {
   proofPoints: string
   missingActions: string
   interviewMaterialsUrl: string
+  generatedDocuments: string
 }
 export interface InterviewExecution {
   scheduledAt: string

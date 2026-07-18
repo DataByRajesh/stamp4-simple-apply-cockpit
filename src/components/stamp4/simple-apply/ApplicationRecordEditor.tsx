@@ -1,6 +1,6 @@
 'use client'
 import type { ApplicationRecord, TrackedJob } from '@/lib/stamp4/simple-apply/types'
-export const EMPTY_APPLICATION_RECORD: ApplicationRecord = { cvVersion:'', coverLetterVersion:'', jdSnapshot:'', submittedAt:'', confirmationNumber:'', portalUrl:'', deadline:'', proofPoints:'', missingActions:'', interviewMaterialsUrl:'' }
+export const EMPTY_APPLICATION_RECORD: ApplicationRecord = { cvVersion:'', coverLetterVersion:'', jdSnapshot:'', submittedAt:'', confirmationNumber:'', portalUrl:'', deadline:'', proofPoints:'', missingActions:'', interviewMaterialsUrl:'', generatedDocuments:'' }
 export function ApplicationRecordEditor({job,onChange,onSave}:{job:TrackedJob;onChange:(v:ApplicationRecord)=>void;onSave:(v:ApplicationRecord)=>void}){
  const record={...EMPTY_APPLICATION_RECORD,...job.applicationRecord}; const field=<K extends keyof ApplicationRecord>(k:K,v:ApplicationRecord[K])=>onChange({...record,[k]:v}); const save=()=>onSave(record)
  return <div className="stack"><div className="form-grid">
