@@ -1,4 +1,4 @@
-import type { BackupPayload, OutreachDetails, TrackedJob, TrackerStatus } from './types'
+import type { ApplicationRecord, BackupPayload, OutreachDetails, TrackedJob, TrackerStatus } from './types'
 
 const STAMP4_SECRET = process.env.NEXT_PUBLIC_STAMP4_ACCESS_SECRET ?? ''
 
@@ -44,6 +44,9 @@ export async function updateOutreach(id: string, outreach: OutreachDetails): Pro
   await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, outreach }) })
 }
 
+export async function updateApplicationRecord(id: string, applicationRecord: ApplicationRecord): Promise<void> {
+  await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, applicationRecord }) })
+}
 export async function deleteJobFromTracker(id: string): Promise<void> {
   await apiCall<{ ok: true }>(`tracker?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
 }

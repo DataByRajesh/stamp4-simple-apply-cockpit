@@ -3,6 +3,7 @@
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { explainScore } from '@/lib/stamp4/simple-apply/scoreExplainer'
+import { ApplicationRecordEditor, EMPTY_APPLICATION_RECORD } from './ApplicationRecordEditor'
 import { EMPTY_OUTREACH, isFollowUpOverdue, OutreachEditor } from './OutreachEditor'
 import {
   deleteJobFromTracker,
@@ -10,10 +11,11 @@ import {
   getAllTrackedJobs,
   updateJobNotes,
   updateOutreach,
+  updateApplicationRecord,
   updateJobStatus,
   updateSponsorship,
 } from '@/lib/stamp4/simple-apply/storage'
-import type { OutreachDetails, SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { ApplicationRecord, OutreachDetails, SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 const STATUSES: TrackerStatus[] = [
   'Saved',
@@ -91,6 +93,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
   const [expandedWhyId, setExpandedWhyId] = useState<string | null>(null)
+  const [expandedRecordId, setExpandedRecordId] = useState<string | null>(null)
   const [expandedOutreachId, setExpandedOutreachId] = useState<string | null>(null)
   const notesTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
   const actionMessageTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -256,6 +259,9 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     <button className="button secondary" type="button" onClick={() => setExpandedOutreachId((current) => current === job.id ? null : job.id)}>
                       {expandedOutreachId === job.id ? 'Hide outreach' : 'Outreach'}
                     </button>
+                    <button className="button secondary" type="button" onClick={() => setExpandedRecordId((current) => current === job.id ? null : job.id)}>
+                      {expandedRecordId === job.id ? 'Hide application record' : 'Application record'}
+                    </button>
                     {isFollowUpOverdue(job.outreach) && <p className="notice error">Follow-up overdue</p>}
                   </td>
                   <td>
@@ -324,7 +330,12 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     </button>
                   </td>
                   </tr>
-                  {expandedOutreachId === job.id && (
+                  {expandedRecordId === job.id && (
+                    <tr><td colSpan={7}><h3>Submitted application evidence</h3><ApplicationRecordEditor job={job}
+                      onChange={(applicationRecord: ApplicationRecord) => setJobs((current) => current.map((item) => item.id === job.id ? {...item, applicationRecord} : item))}
+                      onSave={(applicationRecord: ApplicationRecord) => updateApplicationRecord(job.id, {...EMPTY_APPLICATION_RECORD,...applicationRecord}).then(() => flashActionMessage('Application record saved.','success')).catch(() => flashActionMessage('Could not save application record.','error'))}/>
+                    </td></tr>
+                  )}                  {expandedOutreachId === job.id && (
                     <tr>
                       <td colSpan={7}>
                         <h3>Recruiter, hiring-manager and referral outreach</h3>

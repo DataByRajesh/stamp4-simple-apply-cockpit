@@ -129,6 +129,18 @@ export interface OutreachDetails {
   messageDraft: string
 }
 
+export interface ApplicationRecord {
+  cvVersion: string
+  coverLetterVersion: string
+  jdSnapshot: string
+  submittedAt: string
+  confirmationNumber: string
+  portalUrl: string
+  deadline: string
+  proofPoints: string
+  missingActions: string
+  interviewMaterialsUrl: string
+}
 export interface TrackedJob {
   id: string
   company: string
@@ -147,6 +159,7 @@ export interface TrackedJob {
   sponsorshipStatus?: SponsorshipStatus
   sponsorshipEvidence?: string
   outreach?: OutreachDetails
+  applicationRecord?: ApplicationRecord
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]
