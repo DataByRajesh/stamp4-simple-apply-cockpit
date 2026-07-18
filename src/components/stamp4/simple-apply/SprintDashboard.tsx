@@ -57,6 +57,16 @@ function actionFor(job: TrackedJob): { rank: number; label: string; why: string;
   return null
 }
 
+function PlanningFields({ job, onSave }: { job: TrackedJob; onSave: (url: string, deadline: string) => Promise<void> }) {
+  const [url, setUrl] = useState(job.applicationUrl ?? '')
+  const [deadline, setDeadline] = useState(job.applicationDeadline ?? '')
+  return (
+    <div className="grid two-grid">
+      <label className="stack compact-stack"><span className="eyebrow">Application link</span><input className="input" type="url" value={url} placeholder="https://company.com/jobs/..." onChange={(event) => setUrl(event.target.value)} onBlur={() => void onSave(url, deadline)} /></label>
+      <label className="stack compact-stack"><span className="eyebrow">Deadline</span><input className="input" type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} onBlur={() => void onSave(url, deadline)} /></label>
+    </div>
+  )
+}
 export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
   const [jobs, setJobs] = useState<TrackedJob[]>([])
   const [loading, setLoading] = useState(true)
@@ -149,7 +159,7 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
                   <div className="toolbar">
                     <div>
                       <span className={'badge ' + (index === 0 ? 'high' : action.label.includes('follow') ? 'medium' : 'ok')}>#{index + 1} {action.label}</span>
-                      <h3>{job.roleTitle} · {job.company}</h3>
+                      <h3>{job.roleTitle} Â· {job.company}</h3>
                       <p className="muted">{action.why}</p>
                     </div>
                     <div className="source-actions">
@@ -158,16 +168,7 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
                       {action.nextStatus && <button className="button" type="button" disabled={updatingId === job.id} onClick={() => advance(job, action.nextStatus!)}>{updatingId === job.id ? 'Saving...' : 'Mark ' + action.nextStatus}</button>}
                     </div>
                   </div>
-                  <div className="grid two-grid">
-                    <label className="stack compact-stack">
-                      <span className="eyebrow">Application link</span>
-                      <input className="input" type="url" defaultValue={job.applicationUrl ?? ''} placeholder="https://company.com/jobs/..." onBlur={(event) => void savePlanning(job, event.target.value, job.applicationDeadline ?? '')} />
-                    </label>
-                    <label className="stack compact-stack">
-                      <span className="eyebrow">Deadline</span>
-                      <input className="input" type="date" defaultValue={job.applicationDeadline ?? ''} onBlur={(event) => void savePlanning(job, job.applicationUrl ?? '', event.target.value)} />
-                    </label>
-                  </div>
+                  <PlanningFields job={job} onSave={(url, deadline) => savePlanning(job, url, deadline)} />
                 </article>
               ))}
             </div>

@@ -41,6 +41,9 @@ function isAuthorized(request: Request): boolean {
 export async function GET(request: Request) {
   if (!isAuthorized(request)) return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
 
+  const londonHour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', hour12: false }).format(new Date()))
+  if (londonHour !== 8) return NextResponse.json({ skipped: true, reason: 'Outside 08:00 Europe/London window' })
+
   const supabase = getSupabaseServer()
 
   const { data: customRows, error: customError } = await supabase
