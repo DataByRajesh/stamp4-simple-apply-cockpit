@@ -1,0 +1,4 @@
+import { describe,expect,it } from 'vitest'
+import { dedupeImports,parseTrackerImport } from './trackerImport'
+
+describe('tracker import',()=>{it('normalizes CSV and safely defaults status',()=>{const jobs=parseTrackerImport('Company,Role Title,Country,Status,Score\nAcme,Analyst,IE,Applied,4','jobs.csv');expect(jobs[0]).toMatchObject({company:'Acme',roleTitle:'Analyst',country:'Ireland',status:'Applied',score:4})});it('deduplicates case-insensitively',()=>{const jobs=parseTrackerImport('Company,Role Title,Country\nAcme,Analyst,Ireland\nACME,ANALYST,IRELAND','jobs.csv');expect(dedupeImports(jobs,[])).toMatchObject({duplicates:1});});it('reads full backup JSON',()=>{const row={company:'A',roleTitle:'B',country:'Germany'};expect(parseTrackerImport(JSON.stringify({trackedJobs:[row]}),'backup.json')).toEqual([row])})})

@@ -3,6 +3,7 @@
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { explainScore } from '@/lib/stamp4/simple-apply/scoreExplainer'
+import { TrackerImporter } from './TrackerImporter'
 import { EMPTY_OFFER_DECISION, offerDeadlineUrgent, OfferDecisionEditor } from './OfferDecisionEditor'
 import { EMPTY_INTERVIEW_EXECUTION, interviewNeedsAttention, InterviewExecutionEditor } from './InterviewExecutionEditor'
 import { ApplicationRecordEditor, EMPTY_APPLICATION_RECORD } from './ApplicationRecordEditor'
@@ -199,6 +200,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
           <h2>Interview conversion funnel</h2>
         </div>
         <div className="source-actions">
+          <TrackerImporter existing={jobs} onImported={refresh} />
           <select className="select" value={sortBy} onChange={(event) => setSortBy(event.target.value as 'date' | 'score')}>
             <option value="date">Sort by date</option>
             <option value="score">Sort by score</option>
