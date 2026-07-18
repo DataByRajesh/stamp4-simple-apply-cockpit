@@ -1,4 +1,4 @@
-export interface ParsedJob {
+﻿export interface ParsedJob {
   roleTitle: string
   company: string
   country: string
@@ -80,9 +80,14 @@ export interface CorrectionAction {
 
 export type TrackerStatus =
   | 'Saved'
+  | 'Qualified'
+  | 'Contacted'
   | 'Applied'
   | 'Follow-up'
+  | 'Recruiter Screen'
   | 'Interview'
+  | 'Final Stage'
+  | 'Offer'
   | 'Rejected'
   | 'Archived'
 
@@ -127,3 +132,4 @@ export interface TrackedJob {
   correctionActions: CorrectionAction[]
   parsedJob?: ParsedJob
 }
+

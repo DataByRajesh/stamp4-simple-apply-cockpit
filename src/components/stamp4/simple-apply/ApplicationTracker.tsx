@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
@@ -12,7 +12,19 @@ import {
 } from '@/lib/stamp4/simple-apply/storage'
 import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
-const STATUSES: TrackerStatus[] = ['Saved', 'Applied', 'Follow-up', 'Interview', 'Rejected', 'Archived']
+const STATUSES: TrackerStatus[] = [
+  'Saved',
+  'Qualified',
+  'Contacted',
+  'Applied',
+  'Follow-up',
+  'Recruiter Screen',
+  'Interview',
+  'Final Stage',
+  'Offer',
+  'Rejected',
+  'Archived',
+]
 const NOTES_SAVE_DELAY_MS = 600
 
 function sanitizeCsvField(value: string): string {
@@ -170,7 +182,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
       <div className="toolbar">
         <div>
           <p className="eyebrow">Tracker</p>
-          <h2>Saved applications</h2>
+          <h2>Interview conversion funnel</h2>
         </div>
         <div className="source-actions">
           <select className="select" value={sortBy} onChange={(event) => setSortBy(event.target.value as 'date' | 'score')}>
@@ -320,3 +332,4 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
     </section>
   )
 }
+
