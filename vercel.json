@@ -2,7 +2,11 @@
     "crons":  [
                   {
                       "path":  "/api/stamp4/simple-apply/cron/poll-sponsors",
-                      "schedule":  "0 7,8 * * *"
+                      "schedule":  "0 7 * * *"
+                  },
+                  {
+                      "path":  "/api/stamp4/simple-apply/cron/poll-sponsors",
+                      "schedule":  "0 8 * * *"
                   }
               ]
 }
