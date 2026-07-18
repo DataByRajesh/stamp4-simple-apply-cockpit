@@ -111,6 +111,8 @@ export interface SeenSponsorPosting {
   firstSeenAt: string
 }
 
+export type SponsorshipStatus = 'Unknown' | 'Confirmed' | 'Likely' | 'Recruiter confirmation required' | 'Authorised candidates only' | 'No sponsorship'
+
 export interface TrackedJob {
   id: string
   company: string
@@ -126,10 +128,14 @@ export interface TrackedJob {
   updatedAt?: string
   applicationUrl?: string
   applicationDeadline?: string
+  sponsorshipStatus?: SponsorshipStatus
+  sponsorshipEvidence?: string
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]
   correctionActions: CorrectionAction[]
   parsedJob?: ParsedJob
 }
+
+
 

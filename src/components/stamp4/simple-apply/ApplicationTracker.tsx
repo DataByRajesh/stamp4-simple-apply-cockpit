@@ -9,8 +9,9 @@ import {
   getAllTrackedJobs,
   updateJobNotes,
   updateJobStatus,
+  updateSponsorship,
 } from '@/lib/stamp4/simple-apply/storage'
-import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 const STATUSES: TrackerStatus[] = [
   'Saved',
@@ -25,6 +26,7 @@ const STATUSES: TrackerStatus[] = [
   'Rejected',
   'Archived',
 ]
+const SPONSORSHIP_STATUSES: SponsorshipStatus[] = ['Unknown', 'Confirmed', 'Likely', 'Recruiter confirmation required', 'Authorised candidates only', 'No sponsorship']
 const NOTES_SAVE_DELAY_MS = 600
 
 function sanitizeCsvField(value: string): string {
@@ -220,6 +222,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                 <th>Company</th>
                 <th>Score</th>
                 <th>Status</th>
+                <th>Sponsorship</th>
                 <th>Notes</th>
                 <th>Delete</th>
               </tr>
@@ -274,6 +277,19 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     </select>
                   </td>
                   <td>
+                    <select className="select" value={job.sponsorshipStatus ?? 'Unknown'} onChange={async (event) => {
+                      const sponsorshipStatus = event.target.value as SponsorshipStatus
+                      setJobs((current) => current.map((item) => item.id === job.id ? { ...item, sponsorshipStatus } : item))
+                      await updateSponsorship(job.id, sponsorshipStatus, job.sponsorshipEvidence ?? '').catch(() => flashActionMessage('Could not save sponsorship status.', 'error'))
+                    }}>
+                      {SPONSORSHIP_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}
+                    </select>
+                    <input className="input" placeholder="Evidence or recruiter confirmation" value={job.sponsorshipEvidence ?? ''}
+                      onChange={(event) => { const sponsorshipEvidence = event.target.value; setJobs((current) => current.map((item) => item.id === job.id ? { ...item, sponsorshipEvidence } : item)) }}
+                      onBlur={() => updateSponsorship(job.id, job.sponsorshipStatus ?? 'Unknown', job.sponsorshipEvidence ?? '').catch(() => flashActionMessage('Could not save sponsorship evidence.', 'error'))}
+                    />
+                  </td>
+                  <td>
                     <input
                       className="input"
                       value={job.notes}
@@ -302,7 +318,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                   </tr>
                   {expandedWhyId === job.id && (
                     <tr>
-                      <td colSpan={6}>
+                      <td colSpan={7}>
                         {job.scoreBreakdown && job.parsedJob ? (
                           <ul className="stack compact-stack">
                             {explainScore(job.scoreBreakdown, job.parsedJob, job.proofMap).map((explanation) => (

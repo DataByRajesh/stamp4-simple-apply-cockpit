@@ -1,4 +1,4 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
 import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
@@ -20,6 +20,8 @@ type TrackedJobRow = {
   updated_at: string | null
   application_url: string | null
   application_deadline: string | null
+  sponsorship_status: import('@/lib/stamp4/simple-apply/types').SponsorshipStatus | null
+  sponsorship_evidence: string | null
   notes: string | null
   generated_pack: TrackedJob['generatedPack'] | null
   proof_map: TrackedJob['proofMap'] | null
@@ -43,6 +45,8 @@ function rowToJob(row: TrackedJobRow): TrackedJob {
     updatedAt: row.updated_at ?? row.date_added,
     applicationUrl: row.application_url ?? undefined,
     applicationDeadline: row.application_deadline ?? undefined,
+    sponsorshipStatus: row.sponsorship_status ?? 'Unknown',
+    sponsorshipEvidence: row.sponsorship_evidence ?? '',
     notes: row.notes ?? '',
     generatedPack: row.generated_pack ?? EMPTY_APPLICATION_PACK,
     proofMap: row.proof_map ?? [],
@@ -102,14 +106,16 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string }>(request)
+  const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string; sponsorshipStatus?: TrackedJob['sponsorshipStatus']; sponsorshipEvidence?: string }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
   if (!body.id) return Response.json({ error: 'Missing id' }, { status: 400 })
 
-  const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; updated_at: string } = { updated_at: new Date().toISOString() }
+  const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; sponsorship_status?: TrackedJob['sponsorshipStatus']; sponsorship_evidence?: string; updated_at: string } = { updated_at: new Date().toISOString() }
   if (body.status) update.status = body.status
   if (body.notes !== undefined) update.notes = body.notes
+  if (body.sponsorshipStatus !== undefined) update.sponsorship_status = body.sponsorshipStatus
+  if (body.sponsorshipEvidence !== undefined) update.sponsorship_evidence = body.sponsorshipEvidence
 
   const { error } = await getSupabaseServer().from('tracked_jobs').update(update).eq('id', body.id)
 
@@ -128,3 +134,5 @@ export async function DELETE(request: Request) {
   if (error) return Response.json({ error: error.message }, { status: 500 })
   return Response.json({ ok: true })
 }
+
+
