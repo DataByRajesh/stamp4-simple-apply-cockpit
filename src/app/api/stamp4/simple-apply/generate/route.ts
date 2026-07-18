@@ -7,6 +7,7 @@ import {
   type AIGenerationOutput,
 } from '@/lib/stamp4/simple-apply/generator'
 import { callOpenAIJson } from '@/lib/stamp4/simple-apply/openai'
+import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
@@ -100,10 +101,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid generation request' }, { status: 400 })
   }
 
+  const { data: profileRow } = await getSupabaseServer().from('app_settings').select('value').eq('key', 'candidate_evidence_profile').maybeSingle()
+  const candidateEvidence = profileRow?.value && typeof profileRow.value === 'object'
+    ? Object.entries(profileRow.value as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\\n').slice(0, 30_000)
+    : ''
+
   const input = {
     parsed: body.parsed,
     score: body.score,
     proofs: body.proofs,
+    candidateEvidence,
   }
 
   try {

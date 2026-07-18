@@ -14,6 +14,7 @@ import type {
 } from './types'
 
 export interface AIGenerationInput {
+  candidateEvidence?: string
   parsed: ParsedJob
   score: ScoreBreakdown
   proofs: ProofMapping[]
@@ -79,6 +80,9 @@ export function buildAIUserPrompt(input: AIGenerationInput) {
 - Permit or sponsorship signals: ${input.parsed.sponsorshipSignals.join(', ') || 'none'}
 - Seniority signals: ${input.parsed.senioritySignals.join(', ') || 'none'}
 
+Candidate evidence library (verified by the candidate; use only these claims and the fixed verified facts):
+${input.candidateEvidence || '- No additional candidate evidence saved.'}
+
 Relevant proof mappings for this JD:
 ${proofLines(input.proofs)}
 
@@ -143,6 +147,9 @@ export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
 - Matched skills: ${input.parsed.requiredSkills.join(', ') || 'none'}
 - Tools: ${input.parsed.tools.join(', ') || 'none'}
 - Seniority signals: ${input.parsed.senioritySignals.join(', ') || 'none'}
+
+Candidate evidence library (verified by the candidate; use only these claims and the fixed verified facts):
+${input.candidateEvidence || '- No additional candidate evidence saved.'}
 
 Relevant proof mappings for this JD:
 ${proofLines(input.proofs)}

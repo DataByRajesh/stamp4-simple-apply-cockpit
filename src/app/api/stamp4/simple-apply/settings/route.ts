@@ -20,7 +20,8 @@ export async function POST(request: Request) {
   const parsed = await parseJsonBody<{ key?: string; value?: unknown }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
-  if (!body.key) return Response.json({ error: 'Missing key' }, { status: 400 })
+  if (!body.key || !/^[a-z0-9_-]{1,100}$/i.test(body.key)) return Response.json({ error: 'Missing or invalid key' }, { status: 400 })
+  if (JSON.stringify(body.value).length > 100_000) return Response.json({ error: 'Setting value is too large' }, { status: 413 })
 
   const { error } = await getSupabaseServer().from('app_settings').upsert(
     {

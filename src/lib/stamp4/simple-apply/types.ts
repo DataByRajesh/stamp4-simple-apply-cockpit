@@ -1,3 +1,14 @@
+export interface CandidateEvidenceProfile {
+  careerSummary: string
+  achievements: string
+  projects: string
+  toolsAndDomains: string
+  starStories: string
+  permitAndAvailability: string
+  salaryAndRelocation: string
+  cvBulletLibrary: string
+  evidenceGaps: string
+}
 export interface ParsedJob {
   roleTitle: string
   company: string
