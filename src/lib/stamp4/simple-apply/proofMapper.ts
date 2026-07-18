@@ -29,7 +29,7 @@ export function mapProofs(parsed: ParsedJob): ProofMapping[] {
   if (hasAny(text, ['uat', 'jira', 'testing', 'defect'])) {
     mappings.push({
       jdRequirement: 'UAT/testing',
-      proofAsset: `FIS UAT experience + ${RAJ_PROFILE.proofAssets.payGuardIE}`,
+      proofAsset: `FIS/Yalamanchili software testing experience + ${RAJ_PROFILE.proofAssets.payGuardIE}`,
       howToUse: 'Reference the 40-case UAT test pack and defect log built for PayGuard IE.',
     })
   }
@@ -37,7 +37,7 @@ export function mapProofs(parsed: ParsedJob): ProofMapping[] {
   if (hasAny(text, ['incident', 'application support', 'logs', 'monitoring'])) {
     mappings.push({
       jdRequirement: 'Application support/incident investigation',
-      proofAsset: 'FIS application support experience',
+      proofAsset: 'FIS/Yalamanchili banking and payment application maintenance/support experience',
       howToUse:
         'Describe a real or scenario-based incident investigation: checking logs, database records, and reporting values.',
     })

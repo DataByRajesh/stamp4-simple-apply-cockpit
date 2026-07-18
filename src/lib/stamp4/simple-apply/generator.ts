@@ -46,7 +46,7 @@ export const SYSTEM_PROMPT = `You are helping Raj, a FinTech systems/application
 Tone: UK English, practical, no hype, no fake claims, no invented experience. Only use the facts provided below. Raj will personally review and edit every output before use.
 
 Raj's background, verified facts only:
-- About 3 years software engineering at FIS in a regulated FinTech/banking environment
+- About 3 years across regulated banking and payment software at FIS and Yalamanchili (approximately 1 year at FIS and 2 years at Yalamanchili)
 - SQL/data validation, UAT, application support and incident investigation
 - Portfolio projects: PayGuard IE for payment reconciliation, SQL validation, UAT and defect evidence; RegPulse for EU FinTech regulatory readiness around DORA/PSD3/FiDA
 - Founder of AutoTime AI, an AI automation product for jobseekers/SMEs`.trim()
@@ -334,7 +334,7 @@ export function generateApplicationPackFallback(parsed: ParsedJob, proofs: Proof
   const proofNames = proofs.slice(0, 2).map((proof) => proof.jdRequirement.toLowerCase())
   const summaryTail = proofNames.length ? ` Strongest proof areas: ${proofNames.join(' and ')}.` : ''
   const tailoredCvSummary =
-    'FinTech systems/application analyst with FIS banking software experience, SQL/data validation exposure, UAT/application quality understanding, and practical payment workflow knowledge.' +
+    'FinTech systems/application analyst with regulated FIS and Yalamanchili banking/payment software experience, SQL/data validation exposure, testing/application quality understanding, and practical payment workflow knowledge.' +
     summaryTail
 
   const bulletBank = [
@@ -380,9 +380,9 @@ export function generateApplicationPackFallback(parsed: ParsedJob, proofs: Proof
   return {
     tailoredCvSummary,
     topCvBullets,
-    coverMessage: `Hello ${company} team,\n\nI am interested in the ${roleTitle} position because it sits close to my target lane: FinTech systems/application analysis, payment workflow understanding, SQL/data validation and UAT-quality evidence. My FIS banking software background and focused PayGuard IE/RegPulse project work give me practical proof for the system investigation, validation and stakeholder-facing parts of this role.\n\nI would welcome the chance to discuss where my experience can support the team while I continue building in the Ireland/EU FinTech systems space.`,
-    recruiterLinkedInMessage: `Hi, I saw the ${roleTitle} role at ${company}. My background is FIS banking software plus SQL/data validation, UAT and payment workflow proof through PayGuard IE. I am focusing on Ireland/EU FinTech systems/application analyst roles and would be glad to discuss fit.`,
-    whyMeAnswer: `My fit is strongest where the role needs practical system investigation rather than generic business analysis. I can connect ${primaryProof} with ${secondaryProof}, and explain the evidence clearly through PayGuard IE or RegPulse. I would still review the exact product context, but the core lane matches my FIS banking software and application-quality background.`,
+    coverMessage: `Hello ${company} team,\n\nI am interested in the ${roleTitle} position because it sits close to my target lane: FinTech systems/application analysis, payment workflow understanding, SQL/data validation and UAT-quality evidence. My FIS and Yalamanchili banking/payment software background and focused PayGuard IE/RegPulse project work give me practical proof for the system investigation, validation and stakeholder-facing parts of this role.\n\nI would welcome the chance to discuss where my experience can support the team while I continue building in the Ireland/EU FinTech systems space.`,
+    recruiterLinkedInMessage: `Hi, I saw the ${roleTitle} role at ${company}. My background includes FIS and Yalamanchili banking/payment software, SQL and testing, plus UAT and payment-workflow proof through PayGuard IE. I am focusing on Ireland/EU FinTech systems/application analyst roles and would be glad to discuss fit.`,
+    whyMeAnswer: `My fit is strongest where the role needs practical system investigation rather than generic business analysis. I can connect ${primaryProof} with ${secondaryProof}, and explain the evidence clearly through PayGuard IE or RegPulse. I would still review the exact product context, but the core lane matches my FIS and Yalamanchili banking/payment software and application-quality background.`,
     projectProofParagraph:
       hasRequirement(proofs, 'regulatory') &&
       !hasRequirement(proofs, 'payment') &&
