@@ -157,6 +157,24 @@ export interface InterviewExecution {
   feedback: string
   lessonsLearned: string
 }
+export interface OfferDecision {
+  baseSalary: string
+  bonusEquityBenefits: string
+  estimatedNetPay: string
+  monthlyLivingCost: string
+  sponsorshipCommitment: string
+  permitRoute: string
+  contractRisks: string
+  relocationSupport: string
+  relocationExpenses: string
+  offerDeadline: string
+  negotiationStatus: string
+  documentChecklist: string
+  weightedScore: string
+  decision: string
+  decisionReason: string
+  onboardingTimeline: string
+}
 export interface TrackedJob {
   id: string
   company: string
@@ -177,6 +195,7 @@ export interface TrackedJob {
   outreach?: OutreachDetails
   applicationRecord?: ApplicationRecord
   interviewExecution?: InterviewExecution
+  offerDecision?: OfferDecision
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]

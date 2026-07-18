@@ -3,6 +3,7 @@
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { explainScore } from '@/lib/stamp4/simple-apply/scoreExplainer'
+import { EMPTY_OFFER_DECISION, offerDeadlineUrgent, OfferDecisionEditor } from './OfferDecisionEditor'
 import { EMPTY_INTERVIEW_EXECUTION, interviewNeedsAttention, InterviewExecutionEditor } from './InterviewExecutionEditor'
 import { ApplicationRecordEditor, EMPTY_APPLICATION_RECORD } from './ApplicationRecordEditor'
 import { EMPTY_OUTREACH, isFollowUpOverdue, OutreachEditor } from './OutreachEditor'
@@ -14,10 +15,11 @@ import {
   updateOutreach,
   updateApplicationRecord,
   updateInterviewExecution,
+  updateOfferDecision,
   updateJobStatus,
   updateSponsorship,
 } from '@/lib/stamp4/simple-apply/storage'
-import type { ApplicationRecord, InterviewExecution, OutreachDetails, SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { ApplicationRecord, InterviewExecution, OfferDecision, OutreachDetails, SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 const STATUSES: TrackerStatus[] = [
   'Saved',
@@ -95,6 +97,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
   const [expandedWhyId, setExpandedWhyId] = useState<string | null>(null)
+  const [expandedOfferId, setExpandedOfferId] = useState<string | null>(null)
   const [expandedInterviewId, setExpandedInterviewId] = useState<string | null>(null)
   const [expandedRecordId, setExpandedRecordId] = useState<string | null>(null)
   const [expandedOutreachId, setExpandedOutreachId] = useState<string | null>(null)
@@ -266,6 +269,8 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                       {expandedRecordId === job.id ? 'Hide application record' : 'Application record'}
                     </button>
                     <button className="button secondary" type="button" onClick={() => setExpandedInterviewId((current) => current === job.id ? null : job.id)}>{expandedInterviewId === job.id ? 'Hide interview plan' : 'Interview plan'}</button>
+                    <button className="button secondary" type="button" onClick={() => setExpandedOfferId((current) => current === job.id ? null : job.id)}>{expandedOfferId === job.id ? 'Hide offer decision' : 'Offer decision'}</button>
+                    {offerDeadlineUrgent(job.offerDecision) && <p className="notice error">Offer decision due soon</p>}
                     {interviewNeedsAttention(job.interviewExecution) && <p className="notice error">Interview preparation due</p>}
                     {isFollowUpOverdue(job.outreach) && <p className="notice error">Follow-up overdue</p>}
                   </td>
@@ -335,7 +340,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     </button>
                   </td>
                   </tr>
-                  {expandedInterviewId === job.id && (<tr><td colSpan={7}><h3>Interview execution</h3><InterviewExecutionEditor job={job} onChange={(interviewExecution: InterviewExecution)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,interviewExecution}:item))} onSave={(interviewExecution: InterviewExecution)=>updateInterviewExecution(job.id,{...EMPTY_INTERVIEW_EXECUTION,...interviewExecution}).then(()=>flashActionMessage('Interview plan saved.','success')).catch(()=>flashActionMessage('Could not save interview plan.','error'))}/></td></tr>)}                  {expandedRecordId === job.id && (
+                  {expandedOfferId === job.id && (<tr><td colSpan={7}><h3>Offer, permit and relocation decision</h3><OfferDecisionEditor job={job} onChange={(offerDecision: OfferDecision)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,offerDecision}:item))} onSave={(offerDecision: OfferDecision)=>updateOfferDecision(job.id,{...EMPTY_OFFER_DECISION,...offerDecision}).then(()=>flashActionMessage('Offer decision saved.','success')).catch(()=>flashActionMessage('Could not save offer decision.','error'))}/></td></tr>)}                  {expandedInterviewId === job.id && (<tr><td colSpan={7}><h3>Interview execution</h3><InterviewExecutionEditor job={job} onChange={(interviewExecution: InterviewExecution)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,interviewExecution}:item))} onSave={(interviewExecution: InterviewExecution)=>updateInterviewExecution(job.id,{...EMPTY_INTERVIEW_EXECUTION,...interviewExecution}).then(()=>flashActionMessage('Interview plan saved.','success')).catch(()=>flashActionMessage('Could not save interview plan.','error'))}/></td></tr>)}                  {expandedRecordId === job.id && (
                     <tr><td colSpan={7}><h3>Submitted application evidence</h3><ApplicationRecordEditor job={job}
                       onChange={(applicationRecord: ApplicationRecord) => setJobs((current) => current.map((item) => item.id === job.id ? {...item, applicationRecord} : item))}
                       onSave={(applicationRecord: ApplicationRecord) => updateApplicationRecord(job.id, {...EMPTY_APPLICATION_RECORD,...applicationRecord}).then(() => flashActionMessage('Application record saved.','success')).catch(() => flashActionMessage('Could not save application record.','error'))}/>

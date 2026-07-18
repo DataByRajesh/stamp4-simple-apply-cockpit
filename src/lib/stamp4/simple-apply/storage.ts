@@ -1,4 +1,4 @@
-import type { ApplicationRecord, BackupPayload, InterviewExecution, OutreachDetails, TrackedJob, TrackerStatus } from './types'
+import type { ApplicationRecord, BackupPayload, InterviewExecution, OfferDecision, OutreachDetails, TrackedJob, TrackerStatus } from './types'
 
 const STAMP4_SECRET = process.env.NEXT_PUBLIC_STAMP4_ACCESS_SECRET ?? ''
 
@@ -49,6 +49,9 @@ export async function updateApplicationRecord(id: string, applicationRecord: App
 }
 export async function updateInterviewExecution(id: string, interviewExecution: InterviewExecution): Promise<void> {
   await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, interviewExecution }) })
+}
+export async function updateOfferDecision(id: string, offerDecision: OfferDecision): Promise<void> {
+  await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, offerDecision }) })
 }
 export async function deleteJobFromTracker(id: string): Promise<void> {
   await apiCall<{ ok: true }>(`tracker?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
