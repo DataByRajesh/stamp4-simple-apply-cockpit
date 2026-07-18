@@ -291,7 +291,6 @@ async function generateWithAI(input: AIGenerationInput): Promise<AIGenerationOut
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-stamp4-secret': process.env.NEXT_PUBLIC_STAMP4_ACCESS_SECRET ?? '',
     },
     body: JSON.stringify({ parsed: input.parsed, score: input.score, proofs: input.proofs }),
   })

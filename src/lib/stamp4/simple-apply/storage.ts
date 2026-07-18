@@ -1,18 +1,16 @@
 import type { ApplicationRecord, BackupPayload, InterviewExecution, OfferDecision, OutreachDetails, TrackedJob, TrackerStatus } from './types'
 
-const STAMP4_SECRET = process.env.NEXT_PUBLIC_STAMP4_ACCESS_SECRET ?? ''
-
 export async function apiCall<T>(path: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`/api/stamp4/simple-apply/${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      'x-stamp4-secret': STAMP4_SECRET,
       ...options.headers,
     },
   })
 
   if (!response.ok) {
+    if (response.status === 401 && typeof window !== 'undefined') window.location.assign('/stamp4/login')
     const body = await response.json().catch(() => null) as { error?: string } | null
     throw new Error(body?.error ?? `Stamp4 API call failed: ${response.status}`)
   }

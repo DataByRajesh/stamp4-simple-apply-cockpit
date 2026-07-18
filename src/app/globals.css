@@ -749,6 +749,8 @@ details p + p {
 }
 
 /* 2026 product design system */
+.auth-shell { min-height: 100vh; display: grid; place-items: center; }
+.auth-panel { width: min(100%, 440px); padding: clamp(28px, 5vw, 48px); }
 html { color-scheme: light dark; scroll-behavior: smooth; }
 body {
   min-height: 100vh;

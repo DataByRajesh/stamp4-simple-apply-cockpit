@@ -17,6 +17,11 @@ const NAV_LINKS = [
 export function TopNav() {
   const pathname = usePathname()
 
+  async function signOut() {
+    await fetch('/api/stamp4/auth/logout', { method: 'POST' })
+    window.location.assign('/stamp4/login')
+  }
+
   return (
     <nav className="top-nav">
       <div className="top-nav-inner">
@@ -35,6 +40,7 @@ export function TopNav() {
             </Link>
           ))}
         </div>
+        <button className="top-nav-link" type="button" onClick={signOut}>Sign out</button>
       </div>
     </nav>
   )
