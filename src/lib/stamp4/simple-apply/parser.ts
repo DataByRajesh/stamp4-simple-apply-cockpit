@@ -30,6 +30,11 @@ const BROADER_LOCATIONS = [
   'england',
   'europe',
   'eu',
+  'germany',
+  'berlin',
+  'munich',
+  'frankfurt',
+  'hamburg',
 ]
 
 const TITLE_PATTERNS = [
@@ -105,6 +110,10 @@ function extractLocation(rawText: string) {
     matches.some((place) => ['netherlands', 'amsterdam', 'rotterdam', 'utrecht'].includes(place))
   ) {
     country = 'Netherlands'
+  } else if (
+    matches.some((place) => ['germany', 'berlin', 'munich', 'frankfurt', 'hamburg'].includes(place))
+  ) {
+    country = 'Germany'
   } else if (
     matches.some((place) => ['uk', 'united kingdom', 'england', 'london', 'manchester', 'birmingham'].includes(place))
   ) {

@@ -13,6 +13,12 @@ export interface MobilityProfile {
   remotePreference: string
   lastVerifiedAt: string
 }
+export type SponsorshipReadinessStatus = 'Eligible' | 'Likely' | 'Confirmation Required' | 'Unlikely' | 'Ineligible'
+export interface SponsorshipReadiness {
+  status: SponsorshipReadinessStatus; jurisdiction: string; pathway: string; occupationCode: string; occupationConfidence: 'High' | 'Medium' | 'Low'
+  salaryDetectedEUR: number | null; salaryThresholdEUR: number | null; legalEligibility: number; employerProbability: number; evidenceStrength: number; interviewConversion: number
+  blockers: string[]; confirmations: string[]; nextActions: string[]; recruiterQuestions: string[]; evidence: string[]
+}
 export interface CandidateEvidenceProfile {
   careerSummary: string
   achievements: string

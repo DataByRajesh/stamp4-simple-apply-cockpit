@@ -1,23 +1,3 @@
-import type { ParsedJob } from '@/lib/stamp4/simple-apply/types'
-
-export function PermitRiskCard({ parsed }: { parsed: ParsedJob }) {
-  const signals = parsed.sponsorshipSignals.length ? parsed.sponsorshipSignals : ['No explicit permit-risk phrase detected']
-
-  return (
-    <section className="card stack">
-      <div>
-        <p className="eyebrow">Permit risk</p>
-        <h2>{parsed.country || 'Country unclear'}</h2>
-        <p>{parsed.location || 'No location signal found'} {parsed.workPattern ? `- ${parsed.workPattern}` : ''}</p>
-      </div>
-      <div className="stack">
-        {signals.map((signal) => (
-          <span className={parsed.sponsorshipSignals.length ? 'badge high' : 'badge ok'} key={signal}>
-            {signal}
-          </span>
-        ))}
-      </div>
-      {parsed.redFlags.length > 0 && <p>Red flags: {parsed.redFlags.join(', ')}</p>}
-    </section>
-  )
-}
+'use client'
+import {useEffect,useMemo,useState} from 'react';import {assessSponsorshipReadiness} from '@/lib/stamp4/simple-apply/sponsorshipReadiness';import {apiCall} from '@/lib/stamp4/simple-apply/storage';import type {MobilityProfile,ParsedJob} from '@/lib/stamp4/simple-apply/types'
+export function PermitRiskCard({parsed}:{parsed:ParsedJob}){const[mobility,setMobility]=useState<Partial<MobilityProfile>>({});useEffect(()=>{apiCall<{value:MobilityProfile|null}>('settings?key=mobility_profile').then(r=>setMobility(r.value??{})).catch(()=>undefined)},[]);const result=useMemo(()=>assessSponsorshipReadiness(parsed,mobility),[parsed,mobility]);const metrics=[['Legal eligibility',result.legalEligibility],['Employer probability',result.employerProbability],['Evidence strength',result.evidenceStrength],['Interview conversion',result.interviewConversion]] as const;return <section className="card stack sponsorship-readiness"><div><p className="eyebrow">Sponsorship readiness</p><h2>{result.status}</h2><p>{result.pathway}</p></div><div className="stack compact-stack"><span className={`badge ${result.status==='Eligible'||result.status==='Likely'?'ok':result.status==='Confirmation Required'?'medium':'high'}`}>{result.jurisdiction} · {result.occupationCode} · {result.occupationConfidence} confidence</span>{result.salaryThresholdEUR&&<span className="muted">Salary: {result.salaryDetectedEUR?`€${result.salaryDetectedEUR.toLocaleString()} detected`:'not stated'} · default threshold €{result.salaryThresholdEUR.toLocaleString()}</span>}</div><div className="readiness-metrics">{metrics.map(([label,value])=><div key={label}><strong>{value}%</strong><span>{label}</span></div>)}</div>{result.blockers.length>0&&<div className="notice error"><strong>Blockers</strong><ul>{result.blockers.map(i=><li key={i}>{i}</li>)}</ul></div>}<details open><summary>Confirm before applying ({result.confirmations.length})</summary><ul>{result.confirmations.map(i=><li key={i}>{i}</li>)}</ul></details><details><summary>Recruiter questions</summary><ul>{result.recruiterQuestions.map(i=><li key={i}>{i}</li>)}</ul></details><details><summary>Next actions</summary><ol>{result.nextActions.map(i=><li key={i}>{i}</li>)}</ol></details><p className="muted">Decision support only. Verify current rules with the immigration authority or a qualified adviser.</p></section>}
