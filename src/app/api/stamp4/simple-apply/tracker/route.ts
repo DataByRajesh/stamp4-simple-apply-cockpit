@@ -2,6 +2,7 @@ import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-app
 import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import { validateTrackerPatch, validateTrackerPost } from '@/lib/stamp4/simple-apply/trackerValidation'
 import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
@@ -112,6 +113,8 @@ export async function POST(request: Request) {
   const parsed = await parseJsonBody<TrackedJob>(request)
   if (!parsed.ok) return parsed.response
   const job = parsed.body
+  const validationError = validateTrackerPost(job)
+  if (validationError) return Response.json({ error: validationError }, { status: 400 })
 
   const { error } = await getSupabaseServer().from('tracked_jobs').upsert(jobToInsert(job), { onConflict: 'id' })
 
@@ -125,6 +128,8 @@ export async function PATCH(request: Request) {
   const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string; sponsorshipStatus?: TrackedJob['sponsorshipStatus']; sponsorshipEvidence?: string; outreach?: TrackedJob['outreach']; applicationRecord?: TrackedJob['applicationRecord']; interviewExecution?: TrackedJob['interviewExecution']; offerDecision?: TrackedJob['offerDecision'] }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
+  const validationError = validateTrackerPatch(body)
+  if (validationError) return Response.json({ error: validationError }, { status: 400 })
   if (!body.id) return Response.json({ error: 'Missing id' }, { status: 400 })
 
   const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; sponsorship_status?: TrackedJob['sponsorshipStatus']; sponsorship_evidence?: string; outreach?: TrackedJob['outreach']; application_record?: TrackedJob['applicationRecord']; interview_execution?: TrackedJob['interviewExecution']; offer_decision?: TrackedJob['offerDecision']; updated_at: string } = { updated_at: new Date().toISOString() }

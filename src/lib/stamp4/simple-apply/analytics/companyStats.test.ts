@@ -32,6 +32,7 @@ function job(overrides: Partial<TrackedJob> = {}): TrackedJob {
 function posting(overrides: Partial<SeenSponsorPosting> = {}): SeenSponsorPosting {
   return {
     companyName: 'Adyen',
+    externalId: 'test-posting',
     title: 'Application Analyst',
     url: 'https://example.com',
     location: 'Amsterdam',
