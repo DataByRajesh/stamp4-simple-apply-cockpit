@@ -2,6 +2,7 @@
 import { SponsorCompaniesPanel } from '@/components/stamp4/simple-apply/SponsorCompaniesPanel'
 import { PermitEmployerUniverse } from '@/components/stamp4/simple-apply/PermitEmployerUniverse'
 import { NetherlandsSponsorUniverse } from '@/components/stamp4/simple-apply/NetherlandsSponsorUniverse'
+import { GermanyEmployerUniverse } from '@/components/stamp4/simple-apply/GermanyEmployerUniverse'
 
 export default function SponsorCompaniesPage() {
   return (
@@ -18,10 +19,12 @@ export default function SponsorCompaniesPage() {
 
       <PermitEmployerUniverse />
       <NetherlandsSponsorUniverse />
+      <GermanyEmployerUniverse />
       <SponsorCompaniesPanel />
       <SeenPostingsTable />
     </main>
   )
 }
+
 
 
