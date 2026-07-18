@@ -24,6 +24,7 @@ type TrackedJobRow = {
   sponsorship_evidence: string | null
   outreach: TrackedJob['outreach'] | null
   application_record: TrackedJob['applicationRecord'] | null
+  interview_execution: TrackedJob['interviewExecution'] | null
   notes: string | null
   generated_pack: TrackedJob['generatedPack'] | null
   proof_map: TrackedJob['proofMap'] | null
@@ -51,6 +52,7 @@ function rowToJob(row: TrackedJobRow): TrackedJob {
     sponsorshipEvidence: row.sponsorship_evidence ?? '',
     outreach: row.outreach ?? undefined,
     applicationRecord: row.application_record ?? undefined,
+    interviewExecution: row.interview_execution ?? undefined,
     notes: row.notes ?? '',
     generatedPack: row.generated_pack ?? EMPTY_APPLICATION_PACK,
     proofMap: row.proof_map ?? [],
@@ -78,6 +80,7 @@ function jobToInsert(job: TrackedJob) {
     sponsorship_evidence: job.sponsorshipEvidence ?? '',
     outreach: job.outreach ?? {},
     application_record: job.applicationRecord ?? {},
+    interview_execution: job.interviewExecution ?? {},
     notes: job.notes,
     generated_pack: job.generatedPack,
     proof_map: job.proofMap,
@@ -116,12 +119,12 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   if (!checkAccessSecret(request)) return unauthorizedResponse()
 
-  const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string; sponsorshipStatus?: TrackedJob['sponsorshipStatus']; sponsorshipEvidence?: string; outreach?: TrackedJob['outreach']; applicationRecord?: TrackedJob['applicationRecord'] }>(request)
+  const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string; sponsorshipStatus?: TrackedJob['sponsorshipStatus']; sponsorshipEvidence?: string; outreach?: TrackedJob['outreach']; applicationRecord?: TrackedJob['applicationRecord']; interviewExecution?: TrackedJob['interviewExecution'] }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
   if (!body.id) return Response.json({ error: 'Missing id' }, { status: 400 })
 
-  const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; sponsorship_status?: TrackedJob['sponsorshipStatus']; sponsorship_evidence?: string; outreach?: TrackedJob['outreach']; application_record?: TrackedJob['applicationRecord']; updated_at: string } = { updated_at: new Date().toISOString() }
+  const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; sponsorship_status?: TrackedJob['sponsorshipStatus']; sponsorship_evidence?: string; outreach?: TrackedJob['outreach']; application_record?: TrackedJob['applicationRecord']; interview_execution?: TrackedJob['interviewExecution']; updated_at: string } = { updated_at: new Date().toISOString() }
   if (body.status) update.status = body.status
   if (body.notes !== undefined) update.notes = body.notes
   if (body.sponsorshipStatus !== undefined) update.sponsorship_status = body.sponsorshipStatus
@@ -130,6 +133,7 @@ export async function PATCH(request: Request) {
   if (body.applicationDeadline !== undefined) update.application_deadline = body.applicationDeadline || null
   if (body.outreach !== undefined) update.outreach = body.outreach
   if (body.applicationRecord !== undefined) update.application_record = body.applicationRecord
+  if (body.interviewExecution !== undefined) update.interview_execution = body.interviewExecution
 
   const { error } = await getSupabaseServer().from('tracked_jobs').update(update).eq('id', body.id)
 

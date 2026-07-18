@@ -141,6 +141,22 @@ export interface ApplicationRecord {
   missingActions: string
   interviewMaterialsUrl: string
 }
+export interface InterviewExecution {
+  scheduledAt: string
+  timezone: string
+  stage: string
+  format: string
+  interviewers: string
+  preparationChecklist: string
+  starStories: string
+  sponsorshipAnswer: string
+  salaryAnswer: string
+  thankYouSentAt: string
+  followUpDate: string
+  outcome: string
+  feedback: string
+  lessonsLearned: string
+}
 export interface TrackedJob {
   id: string
   company: string
@@ -160,6 +176,7 @@ export interface TrackedJob {
   sponsorshipEvidence?: string
   outreach?: OutreachDetails
   applicationRecord?: ApplicationRecord
+  interviewExecution?: InterviewExecution
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]
