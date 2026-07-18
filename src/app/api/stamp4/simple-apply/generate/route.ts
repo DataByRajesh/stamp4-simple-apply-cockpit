@@ -101,10 +101,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid generation request' }, { status: 400 })
   }
 
-  const { data: profileRow } = await getSupabaseServer().from('app_settings').select('value').eq('key', 'candidate_evidence_profile').maybeSingle()
-  const candidateEvidence = profileRow?.value && typeof profileRow.value === 'object'
-    ? Object.entries(profileRow.value as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\\n').slice(0, 30_000)
-    : ''
+  const { data: settingsRows } = await getSupabaseServer().from('app_settings').select('key,value').in('key', ['candidate_evidence_profile', 'mobility_profile'])
+  const settings = Object.fromEntries((settingsRows ?? []).map((row) => [row.key, row.value]))
+  const evidenceProfile = settings.candidate_evidence_profile
+  const mobilityProfile = settings.mobility_profile
+  const candidateEvidence = [
+    evidenceProfile && typeof evidenceProfile === 'object' ? 'Permanent evidence:\n' + Object.entries(evidenceProfile as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\n') : '',
+    mobilityProfile && typeof mobilityProfile === 'object' ? 'Current mobility and sponsorship settings:\n' + Object.entries(mobilityProfile as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\n') : '',
+  ].filter(Boolean).join('\n\n').slice(0, 30_000)
 
   const input = {
     parsed: body.parsed,

@@ -1,3 +1,18 @@
+export interface MobilityProfile {
+  ukPermissionType: string
+  ukPermissionExpiry: string
+  irelandSponsorship: string
+  netherlandsSponsorship: string
+  germanySponsorship: string
+  noticePeriod: string
+  earliestStartDate: string
+  salaryMinimumEUR: string
+  salaryTargetEUR: string
+  relocationCountries: string
+  relocationConstraints: string
+  remotePreference: string
+  lastVerifiedAt: string
+}
 export interface CandidateEvidenceProfile {
   careerSummary: string
   achievements: string

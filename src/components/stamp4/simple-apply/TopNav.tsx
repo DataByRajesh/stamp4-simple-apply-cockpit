@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 const NAV_LINKS = [
   { href: '/stamp4/simple-apply', label: 'Cockpit' },
   { href: '/stamp4/simple-apply/sources-alerts', label: 'Job Sources & Alerts' },
+  { href: '/stamp4/simple-apply/mobility-profile', label: 'Mobility & Sponsorship' },
   { href: '/stamp4/simple-apply/evidence-library', label: 'Evidence Library' },
   { href: '/stamp4/simple-apply/interview-prep', label: 'Interview Prep' },
   { href: '/stamp4/simple-apply/sponsor-companies', label: 'Sponsor Companies' },
