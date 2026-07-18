@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: '/stamp4/simple-apply/sources-alerts', label: 'Job Sources & Alerts' },
   { href: '/stamp4/simple-apply/interview-prep', label: 'Interview Prep' },
   { href: '/stamp4/simple-apply/sponsor-companies', label: 'Sponsor Companies' },
+  { href: '/stamp4/simple-apply/eu-explorer', label: 'EU Explorer' },
   { href: '/stamp4/simple-apply/analytics', label: 'Analytics' },
 ]
 
@@ -30,3 +31,4 @@ export function TopNav() {
     </nav>
   )
 }
+
