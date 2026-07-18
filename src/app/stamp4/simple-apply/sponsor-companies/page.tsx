@@ -1,6 +1,7 @@
-import { SeenPostingsTable } from '@/components/stamp4/simple-apply/SeenPostingsTable'
+﻿import { SeenPostingsTable } from '@/components/stamp4/simple-apply/SeenPostingsTable'
 import { SponsorCompaniesPanel } from '@/components/stamp4/simple-apply/SponsorCompaniesPanel'
 import { PermitEmployerUniverse } from '@/components/stamp4/simple-apply/PermitEmployerUniverse'
+import { NetherlandsSponsorUniverse } from '@/components/stamp4/simple-apply/NetherlandsSponsorUniverse'
 
 export default function SponsorCompaniesPage() {
   return (
@@ -16,9 +17,11 @@ export default function SponsorCompaniesPage() {
       </section>
 
       <PermitEmployerUniverse />
+      <NetherlandsSponsorUniverse />
       <SponsorCompaniesPanel />
       <SeenPostingsTable />
     </main>
   )
 }
+
 

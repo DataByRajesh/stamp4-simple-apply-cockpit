@@ -1,0 +1,5530 @@
+{
+  "metadata": {
+    "country": "Netherlands",
+    "registerUpdated": "2026-07-01",
+    "sourcePage": "https://ind.nl/en/public-register-recognised-sponsors/public-register-work",
+    "generatedAt": "2026-07-18T00:00:00Z",
+    "method": "500 highest role-relevance scores from the official IND recognised-sponsor register; relevance uses transparent company-name signals and known target matches.",
+    "disclaimer": "IND recognition is strong sponsorship evidence, but does not guarantee sponsorship for every vacancy.",
+    "totalRecognisedSponsors": 12883
+  },
+  "employers": [
+    {
+      "name": "ABN AMRO Asset Based Finance N.V.",
+      "kvkNumber": "30099465",
+      "relevanceScore": 66,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: finance, asset"
+      ],
+      "relevanceRank": 1
+    },
+    {
+      "name": "ABN AMRO Bank N.V.",
+      "kvkNumber": "34334259",
+      "relevanceScore": 55,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 2
+    },
+    {
+      "name": "ING Bank N.V.",
+      "kvkNumber": "33031431",
+      "relevanceScore": 55,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 3
+    },
+    {
+      "name": "ING Bank Personeel B.V.",
+      "kvkNumber": "27193847",
+      "relevanceScore": 55,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 4
+    },
+    {
+      "name": "Uber Payments B.V.",
+      "kvkNumber": "71201157",
+      "relevanceScore": 52,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 5
+    },
+    {
+      "name": "Amazon Data Services Netherlands N.V.",
+      "kvkNumber": "61925926",
+      "relevanceScore": 47,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: data, services"
+      ],
+      "relevanceRank": 6
+    },
+    {
+      "name": "Philips Medical Systems Nederland B.V.",
+      "kvkNumber": "17060498",
+      "relevanceScore": 44,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: systems"
+      ],
+      "relevanceRank": 7
+    },
+    {
+      "name": "Oracle Financial Services Software B.V.",
+      "kvkNumber": "34134447",
+      "relevanceScore": 42,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, software, services"
+      ],
+      "relevanceRank": 8
+    },
+    {
+      "name": "Booking.com International Services B.V.",
+      "kvkNumber": "60025018",
+      "relevanceScore": 38,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services, international"
+      ],
+      "relevanceRank": 9
+    },
+    {
+      "name": "Financial Access Capital Management B.V.",
+      "kvkNumber": "34357920",
+      "relevanceScore": 38,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, capital"
+      ],
+      "relevanceRank": 10
+    },
+    {
+      "name": "FAST (Financial Administration Service and Technology)",
+      "kvkNumber": "28086092",
+      "relevanceScore": 37,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, technology"
+      ],
+      "relevanceRank": 11
+    },
+    {
+      "name": "Infront Financial Technology B.V.",
+      "kvkNumber": "33289369",
+      "relevanceScore": 37,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, technology"
+      ],
+      "relevanceRank": 12
+    },
+    {
+      "name": "African Asset Finance Company Holdings B.V.",
+      "kvkNumber": "71321446",
+      "relevanceScore": 36,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, asset"
+      ],
+      "relevanceRank": 13
+    },
+    {
+      "name": "Amazon Web Services EMEA SARL, Dutch Branch",
+      "kvkNumber": "68579780",
+      "relevanceScore": 35,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services"
+      ],
+      "relevanceRank": 14
+    },
+    {
+      "name": "Booking.com IT Services B.V.",
+      "kvkNumber": "60025360",
+      "relevanceScore": 35,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services"
+      ],
+      "relevanceRank": 15
+    },
+    {
+      "name": "Deloitte Consultative Services B.V.",
+      "kvkNumber": "33259541",
+      "relevanceScore": 35,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services"
+      ],
+      "relevanceRank": 16
+    },
+    {
+      "name": "KPMG Staffing & Facility Services B.V.",
+      "kvkNumber": "34153861",
+      "relevanceScore": 35,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services"
+      ],
+      "relevanceRank": 17
+    },
+    {
+      "name": "Optiver Services B.V.",
+      "kvkNumber": "61090891",
+      "relevanceScore": 35,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: services"
+      ],
+      "relevanceRank": 18
+    },
+    {
+      "name": "Booking.com International B.V.",
+      "kvkNumber": "57988218",
+      "relevanceScore": 33,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: international"
+      ],
+      "relevanceRank": 19
+    },
+    {
+      "name": "Philips International B.V.",
+      "kvkNumber": "17047664",
+      "relevanceScore": 33,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: international"
+      ],
+      "relevanceRank": 20
+    },
+    {
+      "name": "TomTom International B.V.",
+      "kvkNumber": "34076599",
+      "relevanceScore": 33,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: international"
+      ],
+      "relevanceRank": 21
+    },
+    {
+      "name": "Uber International B.V.",
+      "kvkNumber": "55808646",
+      "relevanceScore": 33,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match",
+        "Name signals: international"
+      ],
+      "relevanceRank": 22
+    },
+    {
+      "name": "Alpha Financial Markets Consulting Netherlands B.V.",
+      "kvkNumber": "61668451",
+      "relevanceScore": 32,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, consulting"
+      ],
+      "relevanceRank": 23
+    },
+    {
+      "name": "Staan Finance & Consultancy",
+      "kvkNumber": "34267301",
+      "relevanceScore": 32,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, consultancy"
+      ],
+      "relevanceRank": 24
+    },
+    {
+      "name": "Triple A - Risk Finance B.V.",
+      "kvkNumber": "34251771",
+      "relevanceScore": 32,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, risk"
+      ],
+      "relevanceRank": 25
+    },
+    {
+      "name": "Accenture B.V.",
+      "kvkNumber": "34156015",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 26
+    },
+    {
+      "name": "Adyen N.V.",
+      "kvkNumber": "34259528",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 27
+    },
+    {
+      "name": "Adyen Netherlands B.V.",
+      "kvkNumber": "98924397",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 28
+    },
+    {
+      "name": "Amazon CS Netherlands B.V.",
+      "kvkNumber": "77956311",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 29
+    },
+    {
+      "name": "Amazon Development Center (Netherlands) B.V.",
+      "kvkNumber": "56869649",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 30
+    },
+    {
+      "name": "Amazon EU SARL, Dutch Branch",
+      "kvkNumber": "74430661",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 31
+    },
+    {
+      "name": "Amazon Online Netherlands B.V.",
+      "kvkNumber": "76926605",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 32
+    },
+    {
+      "name": "Amazon Transport Netherlands B.V.",
+      "kvkNumber": "34227844",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 33
+    },
+    {
+      "name": "Backbase B.V.",
+      "kvkNumber": "34192943",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 34
+    },
+    {
+      "name": "Backbase Europe B.V.",
+      "kvkNumber": "34274514",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 35
+    },
+    {
+      "name": "Backbase R&D B.V.",
+      "kvkNumber": "34274511",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 36
+    },
+    {
+      "name": "Booking.com B.V.",
+      "kvkNumber": "31047344",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 37
+    },
+    {
+      "name": "Booking.com Customer Service Center (Netherlands)",
+      "kvkNumber": "57989168",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 38
+    },
+    {
+      "name": "Booking.com Customer Service Holding",
+      "kvkNumber": "57988358",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 39
+    },
+    {
+      "name": "Booking.com Distribution B.V.",
+      "kvkNumber": "80456243",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 40
+    },
+    {
+      "name": "Booking.com Holding",
+      "kvkNumber": "57987823",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 41
+    },
+    {
+      "name": "bunq B.V.",
+      "kvkNumber": "54992060",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 42
+    },
+    {
+      "name": "Databricks",
+      "kvkNumber": "51208121",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 43
+    },
+    {
+      "name": "Deloitte Accountancy & Advies B.V.",
+      "kvkNumber": "57666954",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 44
+    },
+    {
+      "name": "Deloitte Accountants",
+      "kvkNumber": "24362853",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 45
+    },
+    {
+      "name": "Deloitte Group Support Center B.V.",
+      "kvkNumber": "24362837",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 46
+    },
+    {
+      "name": "Deloitte Tax & Legal B.V.",
+      "kvkNumber": "24362840",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 47
+    },
+    {
+      "name": "Ernst & Young Accountants LLP",
+      "kvkNumber": "24432944",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 48
+    },
+    {
+      "name": "Ernst & Young Actuarissen B.V.",
+      "kvkNumber": "24334354",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 49
+    },
+    {
+      "name": "Ernst & Young Belastingadviseurs LLP",
+      "kvkNumber": "24432939",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 50
+    },
+    {
+      "name": "Ernst & Young Nederland LLP",
+      "kvkNumber": "24432942",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 51
+    },
+    {
+      "name": "Google Netherlands B.V.",
+      "kvkNumber": "34198589",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 52
+    },
+    {
+      "name": "Koninklijke Philips N.V.",
+      "kvkNumber": "17001910",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 53
+    },
+    {
+      "name": "Mambu B.V.",
+      "kvkNumber": "81685181",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 54
+    },
+    {
+      "name": "Mambu Tech B.V.",
+      "kvkNumber": "70283737",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 55
+    },
+    {
+      "name": "Microsoft B.V.",
+      "kvkNumber": "34061536",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 56
+    },
+    {
+      "name": "Microsoft Datacenter Netherlands B.V.",
+      "kvkNumber": "34143486",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 57
+    },
+    {
+      "name": "Mollie B.V.",
+      "kvkNumber": "30204462",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 58
+    },
+    {
+      "name": "Mollie Business B.V.",
+      "kvkNumber": "99776006",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 59
+    },
+    {
+      "name": "Optiver Holding B.V.",
+      "kvkNumber": "33186961",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 60
+    },
+    {
+      "name": "PayPal Limited",
+      "kvkNumber": "34318455",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 61
+    },
+    {
+      "name": "Philips Consumer Lifestyle B.V.",
+      "kvkNumber": "17066875",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 62
+    },
+    {
+      "name": "Philips Electronics Nederland B.V.",
+      "kvkNumber": "17008551",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 63
+    },
+    {
+      "name": "Philips Nederland B.V.",
+      "kvkNumber": "17039420",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 64
+    },
+    {
+      "name": "Philips Oral Healthcare B.V.",
+      "kvkNumber": "83042091",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 65
+    },
+    {
+      "name": "Stripe Netherlands B.V.",
+      "kvkNumber": "66626641",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 66
+    },
+    {
+      "name": "TomTom Global Content B.V.",
+      "kvkNumber": "16079560",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 67
+    },
+    {
+      "name": "TomTom Navigation B.V.",
+      "kvkNumber": "63035669",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 68
+    },
+    {
+      "name": "TomTom Sales B.V.",
+      "kvkNumber": "34236439",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 69
+    },
+    {
+      "name": "TomTom Traffic B.V.",
+      "kvkNumber": "63030764",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 70
+    },
+    {
+      "name": "Uber B.V.",
+      "kvkNumber": "56317441",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 71
+    },
+    {
+      "name": "Uber Freight Europe Holdings B.V.",
+      "kvkNumber": "77320409",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 72
+    },
+    {
+      "name": "Uber Netherlands B.V.",
+      "kvkNumber": "56193386",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 73
+    },
+    {
+      "name": "Uber Portier B.V.",
+      "kvkNumber": "65851307",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 74
+    },
+    {
+      "name": "Visa Europe (Netherlands) B.V.",
+      "kvkNumber": "34304949",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 75
+    },
+    {
+      "name": "Visa Service Desk Beheer B.V.",
+      "kvkNumber": "74421174",
+      "relevanceScore": 30,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Known target employer match"
+      ],
+      "relevanceRank": 76
+    },
+    {
+      "name": "Anthos Fund & Asset Management B.V.",
+      "kvkNumber": "34258108",
+      "relevanceScore": 28,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: asset, fund"
+      ],
+      "relevanceRank": 77
+    },
+    {
+      "name": "Mega International Commercial Bank CO., Limited",
+      "kvkNumber": "33223354",
+      "relevanceScore": 28,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank, international"
+      ],
+      "relevanceRank": 78
+    },
+    {
+      "name": "State Street Bank International GmbH Amsterdam Branch",
+      "kvkNumber": "58459235",
+      "relevanceScore": 28,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank, international"
+      ],
+      "relevanceRank": 79
+    },
+    {
+      "name": "Access Financial Services Sàrl",
+      "kvkNumber": "30198546",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 80
+    },
+    {
+      "name": "ACT Financial Solutions B.V.",
+      "kvkNumber": "68344864",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, solutions"
+      ],
+      "relevanceRank": 81
+    },
+    {
+      "name": "Ananda Digital Technologies B.V.",
+      "kvkNumber": "71017216",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, digital"
+      ],
+      "relevanceRank": 82
+    },
+    {
+      "name": "Apex Financial Services B.V.",
+      "kvkNumber": "28065255",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 83
+    },
+    {
+      "name": "BMW Financial Services Nederland B.V.",
+      "kvkNumber": "16036186",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 84
+    },
+    {
+      "name": "CBTJ Financial Services B.V.",
+      "kvkNumber": "34181848",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 85
+    },
+    {
+      "name": "Damen Financial Services Holding B.V.",
+      "kvkNumber": "82093601",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 86
+    },
+    {
+      "name": "DHL Finance Services B.V.",
+      "kvkNumber": "14064670",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, services"
+      ],
+      "relevanceRank": 87
+    },
+    {
+      "name": "Digital Power Technologies B.V.",
+      "kvkNumber": "83373616",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, digital"
+      ],
+      "relevanceRank": 88
+    },
+    {
+      "name": "Dufry Financial Services B.V",
+      "kvkNumber": "60704993",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 89
+    },
+    {
+      "name": "Financial Transaction Services B.V.",
+      "kvkNumber": "68914016",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 90
+    },
+    {
+      "name": "Frontier Finance Solutions B.V.",
+      "kvkNumber": "63401959",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, solutions"
+      ],
+      "relevanceRank": 91
+    },
+    {
+      "name": "Lestrade Financial Services B.V.",
+      "kvkNumber": "59668237",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 92
+    },
+    {
+      "name": "Maxol Finance Services B.V.",
+      "kvkNumber": "85989509",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, services"
+      ],
+      "relevanceRank": 93
+    },
+    {
+      "name": "Mercedes-Benz Financial Services Nederland B.V.",
+      "kvkNumber": "30079040",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 94
+    },
+    {
+      "name": "Mobile Payments Solutions B.V.",
+      "kvkNumber": "34155422",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments, solutions"
+      ],
+      "relevanceRank": 95
+    },
+    {
+      "name": "Mondu Financial Services B.V.",
+      "kvkNumber": "86653938",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 96
+    },
+    {
+      "name": "RSM Netherlands Financial Advisory Services B.V.",
+      "kvkNumber": "65164113",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 97
+    },
+    {
+      "name": "Stellantis Financial Services Nederland B.V.",
+      "kvkNumber": "64256766",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 98
+    },
+    {
+      "name": "Terra Payment Services (Netherlands) B.V.",
+      "kvkNumber": "63673746",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payment, services"
+      ],
+      "relevanceRank": 99
+    },
+    {
+      "name": "Tesla Financial Services Holdings B.V.",
+      "kvkNumber": "61192066",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 100
+    },
+    {
+      "name": "Volkswagen Financial Services N.V.",
+      "kvkNumber": "33172400",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 101
+    },
+    {
+      "name": "Volkswagen Pon Financial Services B.V.",
+      "kvkNumber": "20073305",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 102
+    },
+    {
+      "name": "Wolters Kluwer Financial Services Netherlands B.V.",
+      "kvkNumber": "24250145",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 103
+    },
+    {
+      "name": "XXImo Financial Services B.V.",
+      "kvkNumber": "84501901",
+      "relevanceScore": 27,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial, services"
+      ],
+      "relevanceRank": 104
+    },
+    {
+      "name": "Petrotechnical Data Systems B.V.",
+      "kvkNumber": "27146868",
+      "relevanceScore": 26,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: systems, data"
+      ],
+      "relevanceRank": 105
+    },
+    {
+      "name": "Asmi Technology Consulting B.V.",
+      "kvkNumber": "89396693",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, consulting"
+      ],
+      "relevanceRank": 106
+    },
+    {
+      "name": "ASN Bank N.V.",
+      "kvkNumber": "16062338",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 107
+    },
+    {
+      "name": "Bank of Beijing",
+      "kvkNumber": "50585843",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 108
+    },
+    {
+      "name": "Bank of China (Europe) S.A. Rotterdam Branch",
+      "kvkNumber": "24404193",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 109
+    },
+    {
+      "name": "Barclays Bank Ireland Plc, Netherlands branch",
+      "kvkNumber": "73040398",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 110
+    },
+    {
+      "name": "BNG Bank N.V.",
+      "kvkNumber": "27008387",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 111
+    },
+    {
+      "name": "Brand New Day Bank N.V.",
+      "kvkNumber": "30067102",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 112
+    },
+    {
+      "name": "CACEIS Bank, Netherlands Branch",
+      "kvkNumber": "67323944",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 113
+    },
+    {
+      "name": "China Construction Bank (Europe) S.A. Amsterdam Branch",
+      "kvkNumber": "62538519",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 114
+    },
+    {
+      "name": "Citco Bank Nederland N.V.",
+      "kvkNumber": "33185291",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 115
+    },
+    {
+      "name": "Cloud Software Group Netherlands B.V.",
+      "kvkNumber": "56282885",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, cloud"
+      ],
+      "relevanceRank": 116
+    },
+    {
+      "name": "Commonwealth Bank of Australia (Europe) N.V.",
+      "kvkNumber": "72946520",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 117
+    },
+    {
+      "name": "De Nederlandsche Bank N.V.",
+      "kvkNumber": "33003396",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 118
+    },
+    {
+      "name": "Demir-Halk Bank (Nederland) N.V.",
+      "kvkNumber": "24199853",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 119
+    },
+    {
+      "name": "Deutsche Bank",
+      "kvkNumber": "33304583",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 120
+    },
+    {
+      "name": "flatex DEGIRO Bank Dutch Branch",
+      "kvkNumber": "82510245",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 121
+    },
+    {
+      "name": "Goldman Sachs Bank Europe SE, Amsterdam Branch",
+      "kvkNumber": "72785500",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 122
+    },
+    {
+      "name": "HLTech Legal Technology & Consulting B.V.",
+      "kvkNumber": "84721200",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, consulting"
+      ],
+      "relevanceRank": 123
+    },
+    {
+      "name": "Inolent Consulting and Software B.V.",
+      "kvkNumber": "89534174",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, consulting"
+      ],
+      "relevanceRank": 124
+    },
+    {
+      "name": "InsingerGilissen, a Quintet Private Bank (Europe) S.A. branch",
+      "kvkNumber": "80510132",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 125
+    },
+    {
+      "name": "KEB Hana Bank",
+      "kvkNumber": "33157495",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 126
+    },
+    {
+      "name": "Lloyds Bank GmbH",
+      "kvkNumber": "72211342",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 127
+    },
+    {
+      "name": "Mizuho Bank Europe N.V.",
+      "kvkNumber": "33138252",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 128
+    },
+    {
+      "name": "MUFG Bank (Europe) N.V.",
+      "kvkNumber": "33132501",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 129
+    },
+    {
+      "name": "Nexent Bank N.V.",
+      "kvkNumber": "33256675",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 130
+    },
+    {
+      "name": "NIBC Bank N.V.",
+      "kvkNumber": "27032036",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 131
+    },
+    {
+      "name": "Norinchukin Bank Europe N.V.",
+      "kvkNumber": "72676094",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 132
+    },
+    {
+      "name": "PA Team Software Consulting Ltd.",
+      "kvkNumber": "75107600",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, consulting"
+      ],
+      "relevanceRank": 133
+    },
+    {
+      "name": "PT Bank Negara Indonesia (Persero) Tbk",
+      "kvkNumber": "84983434",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 134
+    },
+    {
+      "name": "Saxo Bank A/S",
+      "kvkNumber": "34357130",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 135
+    },
+    {
+      "name": "SMBC Bank EU AG",
+      "kvkNumber": "74151851",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 136
+    },
+    {
+      "name": "Suzano International Finance B.V.",
+      "kvkNumber": "88736210",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, international"
+      ],
+      "relevanceRank": 137
+    },
+    {
+      "name": "The Bank of New York Mellon SA/NV",
+      "kvkNumber": "34363596",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 138
+    },
+    {
+      "name": "Triodos Bank N.V.",
+      "kvkNumber": "30062415",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 139
+    },
+    {
+      "name": "Volkswagen International Finance N.V.",
+      "kvkNumber": "33148825",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, international"
+      ],
+      "relevanceRank": 140
+    },
+    {
+      "name": "Whale Cloud Technology Netherlands B.V.",
+      "kvkNumber": "63774801",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, cloud"
+      ],
+      "relevanceRank": 141
+    },
+    {
+      "name": "Wurth Finance International B.V.",
+      "kvkNumber": "16077661",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance, international"
+      ],
+      "relevanceRank": 142
+    },
+    {
+      "name": "Yapi Kredi Bank Nederland N.V.",
+      "kvkNumber": "33278349",
+      "relevanceScore": 25,
+      "tier": "aligned",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: bank"
+      ],
+      "relevanceRank": 143
+    },
+    {
+      "name": "AB Sciex Finance B.V.",
+      "kvkNumber": "34220135",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 144
+    },
+    {
+      "name": "ABB Finance B.V.",
+      "kvkNumber": "33232125",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 145
+    },
+    {
+      "name": "AbbVie Central Finance B.V.",
+      "kvkNumber": "69571627",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 146
+    },
+    {
+      "name": "AbbVie Finance B.V.",
+      "kvkNumber": "59116218",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 147
+    },
+    {
+      "name": "Accuracy Corporate Financial Advisory",
+      "kvkNumber": "16075440",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial"
+      ],
+      "relevanceRank": 148
+    },
+    {
+      "name": "Advision Finance B.V.",
+      "kvkNumber": "58981314",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 149
+    },
+    {
+      "name": "Allshare Finance B.V.",
+      "kvkNumber": "30096365",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 150
+    },
+    {
+      "name": "American Express Payments Europe, S.L. (Netherlands branch)",
+      "kvkNumber": "71767126",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 151
+    },
+    {
+      "name": "Baker Tilly Corporate Finance (Netherlands) B.V.",
+      "kvkNumber": "24384456",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 152
+    },
+    {
+      "name": "Bejo Finance B.V.",
+      "kvkNumber": "37083070",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 153
+    },
+    {
+      "name": "BMW Finance N.V.",
+      "kvkNumber": "27106340",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 154
+    },
+    {
+      "name": "BNP Paribas Personal Finance B.V.",
+      "kvkNumber": "33235784",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 155
+    },
+    {
+      "name": "Braskem Netherlands Finance B.V.",
+      "kvkNumber": "61905771",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 156
+    },
+    {
+      "name": "Cheddar Payments B.V.",
+      "kvkNumber": "78307635",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 157
+    },
+    {
+      "name": "Cloetta Finance Holland B.V.",
+      "kvkNumber": "20078943",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 158
+    },
+    {
+      "name": "Coca-Cola HBC Finance B.V.",
+      "kvkNumber": "34154633",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 159
+    },
+    {
+      "name": "Crédit Agricole Consumer Finance Nederland B.V.",
+      "kvkNumber": "33183520",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 160
+    },
+    {
+      "name": "DLM Finance B.V.",
+      "kvkNumber": "56689276",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 161
+    },
+    {
+      "name": "DTEK RENEWABLES FINANCE B.V.",
+      "kvkNumber": "34389118",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 162
+    },
+    {
+      "name": "ekaterra Group Finance B.V.",
+      "kvkNumber": "81615353",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 163
+    },
+    {
+      "name": "Ekofine Holding & Finance N.V.",
+      "kvkNumber": "34211941",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 164
+    },
+    {
+      "name": "FINOM Payments B.V.",
+      "kvkNumber": "78680751",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 165
+    },
+    {
+      "name": "Floyd Davis Finance B.V.",
+      "kvkNumber": "24306935",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 166
+    },
+    {
+      "name": "Fung Payments B.V.",
+      "kvkNumber": "85548413",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 167
+    },
+    {
+      "name": "Global TIP Finance B.V.",
+      "kvkNumber": "58178260",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 168
+    },
+    {
+      "name": "Grain Finance B.V.",
+      "kvkNumber": "89212797",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 169
+    },
+    {
+      "name": "Hoist Finance AB",
+      "kvkNumber": "68342616",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 170
+    },
+    {
+      "name": "Huhtamaki Finance B.V.",
+      "kvkNumber": "33148484",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 171
+    },
+    {
+      "name": "Intel Finance B.V.",
+      "kvkNumber": "57978972",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 172
+    },
+    {
+      "name": "JX Nippon Finance Netherlands B.V.",
+      "kvkNumber": "52597318",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 173
+    },
+    {
+      "name": "KazMunaiGaz Finance Sub B.V.",
+      "kvkNumber": "34249875",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 174
+    },
+    {
+      "name": "Lowell Financial Limited",
+      "kvkNumber": "73389579",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial"
+      ],
+      "relevanceRank": 175
+    },
+    {
+      "name": "LUKOIL Finance B.V.",
+      "kvkNumber": "24272301",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 176
+    },
+    {
+      "name": "Magnum ICC Finance B.V.",
+      "kvkNumber": "96401133",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 177
+    },
+    {
+      "name": "Marble Finance B.V.",
+      "kvkNumber": "82936943",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 178
+    },
+    {
+      "name": "Masters in Finance B.V.",
+      "kvkNumber": "58039589",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 179
+    },
+    {
+      "name": "MIH Fintech Holdings B.V.",
+      "kvkNumber": "78070902",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: fintech"
+      ],
+      "relevanceRank": 180
+    },
+    {
+      "name": "Modulr Finance B.V.",
+      "kvkNumber": "81852401",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 181
+    },
+    {
+      "name": "Neplus Financial Service",
+      "kvkNumber": "66378311",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial"
+      ],
+      "relevanceRank": 182
+    },
+    {
+      "name": "Nomura Europe Finance N.V.",
+      "kvkNumber": "33221661",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 183
+    },
+    {
+      "name": "Nomura Financial Products Europe GmbH",
+      "kvkNumber": "73668281",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial"
+      ],
+      "relevanceRank": 184
+    },
+    {
+      "name": "Online Payment Platform",
+      "kvkNumber": "50124498",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payment"
+      ],
+      "relevanceRank": 185
+    },
+    {
+      "name": "ORTEC Finance B.V.",
+      "kvkNumber": "24421148",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 186
+    },
+    {
+      "name": "Payments & Cards Network B.V.",
+      "kvkNumber": "67852815",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 187
+    },
+    {
+      "name": "Planet Payment Netherlands B.V.",
+      "kvkNumber": "33216013",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payment"
+      ],
+      "relevanceRank": 188
+    },
+    {
+      "name": "PNL Fintech B.V.",
+      "kvkNumber": "74178784",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: fintech"
+      ],
+      "relevanceRank": 189
+    },
+    {
+      "name": "Quantoz Payments B.V.",
+      "kvkNumber": "84071745",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 190
+    },
+    {
+      "name": "RE Finance B.V.",
+      "kvkNumber": "73784532",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 191
+    },
+    {
+      "name": "Rebel Payments, Mobility & Insights NL B.V.",
+      "kvkNumber": "64761967",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 192
+    },
+    {
+      "name": "Resources Management & Finance B.V.",
+      "kvkNumber": "30128212",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 193
+    },
+    {
+      "name": "S.W.I.F.T.(Society for Worldwide Interbank Financial Telecommunication SCRL)",
+      "kvkNumber": "28029574",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: financial"
+      ],
+      "relevanceRank": 194
+    },
+    {
+      "name": "Santander Consumer Finance S.A., Branche Nederland",
+      "kvkNumber": "84418966",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 195
+    },
+    {
+      "name": "Scania Finance Nederland B.V.",
+      "kvkNumber": "27004973",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 196
+    },
+    {
+      "name": "Schlumberger Finance B.V.",
+      "kvkNumber": "27243825",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 197
+    },
+    {
+      "name": "Schuiteman Corporate Finance B.V.",
+      "kvkNumber": "69363951",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 198
+    },
+    {
+      "name": "Siemens Energy Finance B.V.",
+      "kvkNumber": "77784073",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 199
+    },
+    {
+      "name": "Siemens Finance B.V.",
+      "kvkNumber": "27196108",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 200
+    },
+    {
+      "name": "Social Finance NL B.V.",
+      "kvkNumber": "71759735",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 201
+    },
+    {
+      "name": "Sonoco Metal Packaging EMEA Finance B.V.",
+      "kvkNumber": "82029393",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 202
+    },
+    {
+      "name": "Stichting P.R.I.M.E. Finance Disputes Center",
+      "kvkNumber": "52998614",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 203
+    },
+    {
+      "name": "Takeaway.com Payments B.V.",
+      "kvkNumber": "67982778",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 204
+    },
+    {
+      "name": "Topicus.Finance B.V.",
+      "kvkNumber": "63423715",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 205
+    },
+    {
+      "name": "Toyota Motor Finance (Netherlands) B.V.",
+      "kvkNumber": "33194984",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 206
+    },
+    {
+      "name": "Verifone Payments B.V.",
+      "kvkNumber": "34246766",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: payments"
+      ],
+      "relevanceRank": 207
+    },
+    {
+      "name": "Wave Corporate Finance B.V.",
+      "kvkNumber": "68049528",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 208
+    },
+    {
+      "name": "Wexford Finance B.V.",
+      "kvkNumber": "27124941",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 209
+    },
+    {
+      "name": "ZV Control & Finance B.V.",
+      "kvkNumber": "81608195",
+      "relevanceScore": 22,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: finance"
+      ],
+      "relevanceRank": 210
+    },
+    {
+      "name": "Apollo Capital Solutions Europe B.V.",
+      "kvkNumber": "85881678",
+      "relevanceScore": 21,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital, solutions"
+      ],
+      "relevanceRank": 211
+    },
+    {
+      "name": "J. de Jonge Human Capital Services B.V.",
+      "kvkNumber": "24181046",
+      "relevanceScore": 21,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital, services"
+      ],
+      "relevanceRank": 212
+    },
+    {
+      "name": "ARAM Technology Services",
+      "kvkNumber": "24328120",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 213
+    },
+    {
+      "name": "Assai Software Services B.V.",
+      "kvkNumber": "11025854",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, services"
+      ],
+      "relevanceRank": 214
+    },
+    {
+      "name": "Cofano Software Solutions B.V.",
+      "kvkNumber": "50684183",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 215
+    },
+    {
+      "name": "Cognizant Technology Solutions Benelux B.V.",
+      "kvkNumber": "17101092",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 216
+    },
+    {
+      "name": "Colt Technology Services B.V.",
+      "kvkNumber": "33303165",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 217
+    },
+    {
+      "name": "CropIn Technology Solutions B.V.",
+      "kvkNumber": "77306724",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 218
+    },
+    {
+      "name": "DX Technology Services and Investment B.V.",
+      "kvkNumber": "85006785",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 219
+    },
+    {
+      "name": "ECI Software Solutions B.V.",
+      "kvkNumber": "08017472",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 220
+    },
+    {
+      "name": "Every Angle Software Solutions B.V.",
+      "kvkNumber": "24327140",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 221
+    },
+    {
+      "name": "Fujitsu Technology Solutions B.V.",
+      "kvkNumber": "30089204",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 222
+    },
+    {
+      "name": "GIDARA Energy Technology Solutions B.V.",
+      "kvkNumber": "27372897",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 223
+    },
+    {
+      "name": "Hendrix Genetics Research, Technology & Services B.V.",
+      "kvkNumber": "51618923",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 224
+    },
+    {
+      "name": "Inpaqt Technology Solutions B.V.",
+      "kvkNumber": "27356793",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 225
+    },
+    {
+      "name": "Ivy Technology Support Services Netherlands B.V.",
+      "kvkNumber": "59119454",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 226
+    },
+    {
+      "name": "K3 Software Solutions B.V.",
+      "kvkNumber": "50227580",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 227
+    },
+    {
+      "name": "L&T Technology Services Limited",
+      "kvkNumber": "58425632",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 228
+    },
+    {
+      "name": "Liberty Global Technology Services B.V.",
+      "kvkNumber": "80203582",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 229
+    },
+    {
+      "name": "NTT DATA Services International Holdings B.V.",
+      "kvkNumber": "65942353",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: data, services, international"
+      ],
+      "relevanceRank": 230
+    },
+    {
+      "name": "Paradigm Technology Services B.V.",
+      "kvkNumber": "14635067",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 231
+    },
+    {
+      "name": "Prodrive Technologies Innovation Services B.V.",
+      "kvkNumber": "17105740",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, services"
+      ],
+      "relevanceRank": 232
+    },
+    {
+      "name": "Prodrive Technologies Services B.V.",
+      "kvkNumber": "17141529",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, services"
+      ],
+      "relevanceRank": 233
+    },
+    {
+      "name": "RAD Information Technology Services B.V.",
+      "kvkNumber": "73287504",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, services"
+      ],
+      "relevanceRank": 234
+    },
+    {
+      "name": "Saimatrix Technology Solutions B.V.",
+      "kvkNumber": "77929845",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, solutions"
+      ],
+      "relevanceRank": 235
+    },
+    {
+      "name": "Simtech Cloud Consulting B.V.",
+      "kvkNumber": "62586432",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: consulting, cloud"
+      ],
+      "relevanceRank": 236
+    },
+    {
+      "name": "Sparck Technologies Services B.V.",
+      "kvkNumber": "85910740",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, services"
+      ],
+      "relevanceRank": 237
+    },
+    {
+      "name": "SUSE Software Solutions Netherlands B.V.",
+      "kvkNumber": "72913983",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 238
+    },
+    {
+      "name": "Test Yantra Software Solutions B.V.",
+      "kvkNumber": "73203017",
+      "relevanceScore": 20,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, solutions"
+      ],
+      "relevanceRank": 239
+    },
+    {
+      "name": "Citco Fund Services (Europe) B.V.",
+      "kvkNumber": "33205112",
+      "relevanceScore": 19,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: fund, services"
+      ],
+      "relevanceRank": 240
+    },
+    {
+      "name": "Invest International Capital B.V.",
+      "kvkNumber": "83526471",
+      "relevanceScore": 19,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital, international"
+      ],
+      "relevanceRank": 241
+    },
+    {
+      "name": "Smart Asset Integrity Solutions B.V.",
+      "kvkNumber": "24314380",
+      "relevanceScore": 19,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: asset, solutions"
+      ],
+      "relevanceRank": 242
+    },
+    {
+      "name": "Alicia Insurance B.V.",
+      "kvkNumber": "75354608",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 243
+    },
+    {
+      "name": "China Taiping Insurance (UK) Co Ltd, the Netherlands Branch",
+      "kvkNumber": "24355743",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 244
+    },
+    {
+      "name": "ConXys Technologies International B.V.",
+      "kvkNumber": "32103773",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies, international"
+      ],
+      "relevanceRank": 245
+    },
+    {
+      "name": "Eesysoft Software International B.V.",
+      "kvkNumber": "34375588",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, international"
+      ],
+      "relevanceRank": 246
+    },
+    {
+      "name": "FM Insurance Europe S.A.",
+      "kvkNumber": "68307438",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 247
+    },
+    {
+      "name": "International Development of Technology B.V.",
+      "kvkNumber": "20119511",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, international"
+      ],
+      "relevanceRank": 248
+    },
+    {
+      "name": "Kaijet Technology International B.V.",
+      "kvkNumber": "66986117",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, international"
+      ],
+      "relevanceRank": 249
+    },
+    {
+      "name": "LearnWise Software International B.V.",
+      "kvkNumber": "90064011",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software, international"
+      ],
+      "relevanceRank": 250
+    },
+    {
+      "name": "NN Insurance Eurasia N.V.",
+      "kvkNumber": "52403424",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 251
+    },
+    {
+      "name": "Renger Insurance B.V.",
+      "kvkNumber": "64350614",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 252
+    },
+    {
+      "name": "SHELL Information Technology International B.V.",
+      "kvkNumber": "27146204",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology, international"
+      ],
+      "relevanceRank": 253
+    },
+    {
+      "name": "Zurich Insurance Europe AG",
+      "kvkNumber": "27293233",
+      "relevanceScore": 18,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: insurance"
+      ],
+      "relevanceRank": 254
+    },
+    {
+      "name": "Asset Control International B.V.",
+      "kvkNumber": "01060543",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: asset, international"
+      ],
+      "relevanceRank": 255
+    },
+    {
+      "name": "Carpro Systems International B.V.",
+      "kvkNumber": "20128404",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: systems, international"
+      ],
+      "relevanceRank": 256
+    },
+    {
+      "name": "Censo Data Solutions B.V.",
+      "kvkNumber": "09171892",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: data, solutions"
+      ],
+      "relevanceRank": 257
+    },
+    {
+      "name": "Cisco Systems International B.V.",
+      "kvkNumber": "33283209",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: systems, international"
+      ],
+      "relevanceRank": 258
+    },
+    {
+      "name": "EOM Data Solutions B.V.",
+      "kvkNumber": "32070030",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: data, solutions"
+      ],
+      "relevanceRank": 259
+    },
+    {
+      "name": "LNRS Data Services B.V.",
+      "kvkNumber": "33293475",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: data, services"
+      ],
+      "relevanceRank": 260
+    },
+    {
+      "name": "MPG Digital Solutions B.V.",
+      "kvkNumber": "54705347",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: digital, solutions"
+      ],
+      "relevanceRank": 261
+    },
+    {
+      "name": "NTT DATA Business Solutions B.V.",
+      "kvkNumber": "17263186",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: data, solutions"
+      ],
+      "relevanceRank": 262
+    },
+    {
+      "name": "Palladyne International Asset Management B.V.",
+      "kvkNumber": "32116875",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: asset, international"
+      ],
+      "relevanceRank": 263
+    },
+    {
+      "name": "Senkron Energy Digital Services B.V.",
+      "kvkNumber": "89494180",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: digital, services"
+      ],
+      "relevanceRank": 264
+    },
+    {
+      "name": "Synergy International Systems Netherlands B.V.",
+      "kvkNumber": "70137064",
+      "relevanceScore": 17,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: systems, international"
+      ],
+      "relevanceRank": 265
+    },
+    {
+      "name": "Affinius Capital Europe B.V.",
+      "kvkNumber": "67464300",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 266
+    },
+    {
+      "name": "All Capital Holding B.V.",
+      "kvkNumber": "24236419",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 267
+    },
+    {
+      "name": "Amsterdam Capital Partners B.V.",
+      "kvkNumber": "61570982",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 268
+    },
+    {
+      "name": "Anterra Capital B.V.",
+      "kvkNumber": "58012281",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 269
+    },
+    {
+      "name": "Archer Hotel Capital B.V.",
+      "kvkNumber": "50342762",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 270
+    },
+    {
+      "name": "Arena Aviation Capital B.V.",
+      "kvkNumber": "60274050",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 271
+    },
+    {
+      "name": "Avedon Capital Partners B.V.",
+      "kvkNumber": "27318150",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 272
+    },
+    {
+      "name": "Avignon Capital Netherlands B.V.",
+      "kvkNumber": "75010445",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 273
+    },
+    {
+      "name": "Barak Capital Market Making B.V.",
+      "kvkNumber": "81697201",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 274
+    },
+    {
+      "name": "Blockrise Capital B.V.",
+      "kvkNumber": "74879782",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 275
+    },
+    {
+      "name": "Blue Owl Capital Netherlands B.V.",
+      "kvkNumber": "82565589",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 276
+    },
+    {
+      "name": "Brack Capital Properties N.V.",
+      "kvkNumber": "34250659",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 277
+    },
+    {
+      "name": "Clouds Capital B.V.",
+      "kvkNumber": "80886523",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 278
+    },
+    {
+      "name": "Colesco Capital B.V.",
+      "kvkNumber": "85666548",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 279
+    },
+    {
+      "name": "Curiosity Venture Capital B.V.",
+      "kvkNumber": "83446168",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 280
+    },
+    {
+      "name": "Cygnum Capital B.V.",
+      "kvkNumber": "82981590",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 281
+    },
+    {
+      "name": "Deep Blue Capital B.V.",
+      "kvkNumber": "34296402",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 282
+    },
+    {
+      "name": "Fairtree Capital Europe",
+      "kvkNumber": "71802312",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 283
+    },
+    {
+      "name": "Fiba Capital Investments B.V.",
+      "kvkNumber": "34239251",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 284
+    },
+    {
+      "name": "Finch Capital Partners, B.V.",
+      "kvkNumber": "67035752",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 285
+    },
+    {
+      "name": "Five Rings Capital B.V.",
+      "kvkNumber": "90117905",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 286
+    },
+    {
+      "name": "Green Giraffe Capital Partners B.V.",
+      "kvkNumber": "34354124",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 287
+    },
+    {
+      "name": "Haerlem Capital B.V.",
+      "kvkNumber": "68202873",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 288
+    },
+    {
+      "name": "Ice Lake Capital Management B.V.",
+      "kvkNumber": "72242337",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 289
+    },
+    {
+      "name": "INKEF Capital B.V.",
+      "kvkNumber": "50127837",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 290
+    },
+    {
+      "name": "Main Capital Partners B.V.",
+      "kvkNumber": "33294313",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 291
+    },
+    {
+      "name": "Marktlink Capital Management Coöperatief U.A.",
+      "kvkNumber": "80340180",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 292
+    },
+    {
+      "name": "Mediterra Capital B.V.",
+      "kvkNumber": "73015253",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 293
+    },
+    {
+      "name": "Mentha Capital B.V.",
+      "kvkNumber": "32119772",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 294
+    },
+    {
+      "name": "Mercedes-Benz Capital Investments B.V.",
+      "kvkNumber": "59229594",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 295
+    },
+    {
+      "name": "Meridian Capital NL B.V.",
+      "kvkNumber": "53569660",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 296
+    },
+    {
+      "name": "Mitsui Rail Capital Europe B.V.",
+      "kvkNumber": "34214164",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 297
+    },
+    {
+      "name": "NXT Capital B.V.",
+      "kvkNumber": "75312026",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 298
+    },
+    {
+      "name": "Ownership Capital B.V.",
+      "kvkNumber": "56076932",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 299
+    },
+    {
+      "name": "OYAK Capital Investments B.V.",
+      "kvkNumber": "74990209",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 300
+    },
+    {
+      "name": "Piton Capital Investments Coöperatief B.A.",
+      "kvkNumber": "56607636",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 301
+    },
+    {
+      "name": "QStone Capital B.V.",
+      "kvkNumber": "65523857",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 302
+    },
+    {
+      "name": "Rivoir Capital B.V.",
+      "kvkNumber": "70830118",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 303
+    },
+    {
+      "name": "SABIC Capital B.V.",
+      "kvkNumber": "14105349",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 304
+    },
+    {
+      "name": "Schroders Capital Real Estate Netherlands B.V.",
+      "kvkNumber": "08149727",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 305
+    },
+    {
+      "name": "SMB Capital B.V.",
+      "kvkNumber": "24345275",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 306
+    },
+    {
+      "name": "Sustainable Capital Group B.V.",
+      "kvkNumber": "81140800",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 307
+    },
+    {
+      "name": "Theta Capital Management B.V.",
+      "kvkNumber": "27198870",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 308
+    },
+    {
+      "name": "Thuja Capital Management B.V.",
+      "kvkNumber": "30213645",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 309
+    },
+    {
+      "name": "Total Impact Capital Europe B.V.",
+      "kvkNumber": "80784216",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 310
+    },
+    {
+      "name": "Tower Research Capital Europe B.V.",
+      "kvkNumber": "71179569",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 311
+    },
+    {
+      "name": "True Partner Capital Netherlands B.V.",
+      "kvkNumber": "81893434",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 312
+    },
+    {
+      "name": "Valery Capital B.V.",
+      "kvkNumber": "34311430",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 313
+    },
+    {
+      "name": "Velocity Capital B.V.",
+      "kvkNumber": "32071954",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 314
+    },
+    {
+      "name": "Venti Capital B.V.",
+      "kvkNumber": "62648586",
+      "relevanceScore": 16,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: capital"
+      ],
+      "relevanceRank": 315
+    },
+    {
+      "name": "8vance Matching Technologies B.V.",
+      "kvkNumber": "55679218",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 316
+    },
+    {
+      "name": "AAEON Technology (Europe) B.V.",
+      "kvkNumber": "17170435",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 317
+    },
+    {
+      "name": "Acorel Technology B.V.",
+      "kvkNumber": "63532697",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 318
+    },
+    {
+      "name": "ACP Technology B.V.",
+      "kvkNumber": "39072086",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 319
+    },
+    {
+      "name": "Actuator Technology Company B.V.",
+      "kvkNumber": "28094787",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 320
+    },
+    {
+      "name": "ADATA Technology B.V.",
+      "kvkNumber": "34259092",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 321
+    },
+    {
+      "name": "Addverb Technologies B.V.",
+      "kvkNumber": "82068364",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 322
+    },
+    {
+      "name": "Adept Technologies B.V.",
+      "kvkNumber": "78766915",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 323
+    },
+    {
+      "name": "Advanced Encryption Technology Europe B.V.",
+      "kvkNumber": "09114089",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 324
+    },
+    {
+      "name": "Advise Technologies Netherlands B.V.",
+      "kvkNumber": "63318245",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 325
+    },
+    {
+      "name": "AG Neovo Technology B.V.",
+      "kvkNumber": "24308102",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 326
+    },
+    {
+      "name": "Agenor Technology B.V.",
+      "kvkNumber": "61953555",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 327
+    },
+    {
+      "name": "Agga Technologies B.V.",
+      "kvkNumber": "71083073",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 328
+    },
+    {
+      "name": "Agilent Technologies Netherlands B.V.",
+      "kvkNumber": "34115690",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 329
+    },
+    {
+      "name": "Akamai Technologies Netherlands B.V.",
+      "kvkNumber": "34153909",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 330
+    },
+    {
+      "name": "Align Technology B.V.",
+      "kvkNumber": "34207531",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 331
+    },
+    {
+      "name": "Allianz Technology SE",
+      "kvkNumber": "72029854",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 332
+    },
+    {
+      "name": "AMMP Technologies B.V.",
+      "kvkNumber": "73076872",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 333
+    },
+    {
+      "name": "Amsterdam Institute of Technology B.V.",
+      "kvkNumber": "64758958",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 334
+    },
+    {
+      "name": "Amsterdam Software B.V.",
+      "kvkNumber": "34143911",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 335
+    },
+    {
+      "name": "Anachron Technology B.V.",
+      "kvkNumber": "51497190",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 336
+    },
+    {
+      "name": "Anna Technology B.V.",
+      "kvkNumber": "81123272",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 337
+    },
+    {
+      "name": "Apacer Technology B.V.",
+      "kvkNumber": "17102989",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 338
+    },
+    {
+      "name": "Applied Value Technologies B.V.",
+      "kvkNumber": "87625784",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 339
+    },
+    {
+      "name": "Arkoil Technologies Nederland B.V.",
+      "kvkNumber": "55123465",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 340
+    },
+    {
+      "name": "Armflow Pump Technologies B.V.",
+      "kvkNumber": "64125920",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 341
+    },
+    {
+      "name": "ARS Traffic & Transport Technology B.V.",
+      "kvkNumber": "27168565",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 342
+    },
+    {
+      "name": "ASICS Technology B.V.",
+      "kvkNumber": "87169347",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 343
+    },
+    {
+      "name": "Aster Technology Holland B.V.",
+      "kvkNumber": "52726509",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 344
+    },
+    {
+      "name": "Asus Technology Holland",
+      "kvkNumber": "30224127",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 345
+    },
+    {
+      "name": "Attendi Technology B.V.",
+      "kvkNumber": "75868733",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 346
+    },
+    {
+      "name": "Aurora Technology B.V.",
+      "kvkNumber": "28076579",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 347
+    },
+    {
+      "name": "Avago Technologies Holdings B.V.",
+      "kvkNumber": "34233872",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 348
+    },
+    {
+      "name": "Avast Software B.V.",
+      "kvkNumber": "59827874",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 349
+    },
+    {
+      "name": "AVEVA Software Netherlands B.V.",
+      "kvkNumber": "68293747",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 350
+    },
+    {
+      "name": "Avito Technologies B.V.",
+      "kvkNumber": "73099988",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 351
+    },
+    {
+      "name": "Azerion Technology B.V.",
+      "kvkNumber": "20139757",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 352
+    },
+    {
+      "name": "B-ware Business Software B.V.",
+      "kvkNumber": "06061893",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 353
+    },
+    {
+      "name": "Baker Hughes Reservoir Software B.V.",
+      "kvkNumber": "27271490",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 354
+    },
+    {
+      "name": "Basis Expert Consulting Services B.V.",
+      "kvkNumber": "74298917",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: consulting, services"
+      ],
+      "relevanceRank": 355
+    },
+    {
+      "name": "BauWatch Technology B.V.",
+      "kvkNumber": "52934969",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 356
+    },
+    {
+      "name": "BBD Software B.V.",
+      "kvkNumber": "76547264",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 357
+    },
+    {
+      "name": "Bekaert Combustion Technology B.V.",
+      "kvkNumber": "04024852",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 358
+    },
+    {
+      "name": "BESTMIX Software B.V.",
+      "kvkNumber": "09062575",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 359
+    },
+    {
+      "name": "Bilgeadam Technologies B.V.",
+      "kvkNumber": "72797517",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 360
+    },
+    {
+      "name": "Blockbax Technology B.V.",
+      "kvkNumber": "70370281",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 361
+    },
+    {
+      "name": "BLOXS Software B.V.",
+      "kvkNumber": "62076957",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 362
+    },
+    {
+      "name": "Blue Rose Technologies B.V.",
+      "kvkNumber": "73901415",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 363
+    },
+    {
+      "name": "BMC Software Distribution B.V.",
+      "kvkNumber": "30106755",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 364
+    },
+    {
+      "name": "Bold Security Technology B.V.",
+      "kvkNumber": "65757319",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 365
+    },
+    {
+      "name": "Bosch Transmission Technology B.V.",
+      "kvkNumber": "18018770",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 366
+    },
+    {
+      "name": "Boschman Technologies B.V.",
+      "kvkNumber": "09138178",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 367
+    },
+    {
+      "name": "BPC Software Labs B.V.",
+      "kvkNumber": "62228935",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 368
+    },
+    {
+      "name": "BrightContact Technology B.V.",
+      "kvkNumber": "53534050",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 369
+    },
+    {
+      "name": "Brookhuis Applied Technologies B.V.",
+      "kvkNumber": "06000507",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 370
+    },
+    {
+      "name": "BUX Technology B.V.",
+      "kvkNumber": "58403787",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 371
+    },
+    {
+      "name": "C2CA Technology B.V.",
+      "kvkNumber": "66509424",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 372
+    },
+    {
+      "name": "CA Software Holding B.V.",
+      "kvkNumber": "24242191",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 373
+    },
+    {
+      "name": "CALIBER TECHNOLOGIES B.V.",
+      "kvkNumber": "86572911",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 374
+    },
+    {
+      "name": "CarUX Technology Europe B.V.",
+      "kvkNumber": "14088784",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 375
+    },
+    {
+      "name": "Cassini Technologies B.V.",
+      "kvkNumber": "70847932",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 376
+    },
+    {
+      "name": "Cell Signaling Technology Europe B.V.",
+      "kvkNumber": "28100442",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 377
+    },
+    {
+      "name": "Check Technologies B.V.",
+      "kvkNumber": "74034057",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 378
+    },
+    {
+      "name": "Chevron Oronite Technology B.V.",
+      "kvkNumber": "27058602",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 379
+    },
+    {
+      "name": "Circolide Technologies B.V.",
+      "kvkNumber": "93525621",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 380
+    },
+    {
+      "name": "ClimAd Technology B.V.",
+      "kvkNumber": "76599671",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 381
+    },
+    {
+      "name": "Climate Risk Services B.V.",
+      "kvkNumber": "76608670",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: risk, services"
+      ],
+      "relevanceRank": 382
+    },
+    {
+      "name": "Cloud Solutions Nederland B.V.",
+      "kvkNumber": "73818046",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: cloud, solutions"
+      ],
+      "relevanceRank": 383
+    },
+    {
+      "name": "Collab Consulting Services B.V.",
+      "kvkNumber": "91803659",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: consulting, services"
+      ],
+      "relevanceRank": 384
+    },
+    {
+      "name": "Comviva Technologies B.V.",
+      "kvkNumber": "63223767",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 385
+    },
+    {
+      "name": "Currency Cloud Services B.V.",
+      "kvkNumber": "76606619",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: cloud, services"
+      ],
+      "relevanceRank": 386
+    },
+    {
+      "name": "Cybage Software B.V.",
+      "kvkNumber": "58413715",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 387
+    },
+    {
+      "name": "Datavideo Technologies Europe B.V.",
+      "kvkNumber": "24194095",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 388
+    },
+    {
+      "name": "Decos Software Development B.V.",
+      "kvkNumber": "51814617",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 389
+    },
+    {
+      "name": "Decos Software Engineering B.V.",
+      "kvkNumber": "28054540",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 390
+    },
+    {
+      "name": "Dept Design & Technology B.V.",
+      "kvkNumber": "27239483",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 391
+    },
+    {
+      "name": "Dream Chip Technologies B.V.",
+      "kvkNumber": "74318535",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 392
+    },
+    {
+      "name": "Durapower Technology Group B.V.",
+      "kvkNumber": "73778036",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 393
+    },
+    {
+      "name": "Dutchview information technology B.V.",
+      "kvkNumber": "53977599",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 394
+    },
+    {
+      "name": "DXC Technology",
+      "kvkNumber": "33239071",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 395
+    },
+    {
+      "name": "DXC Technology",
+      "kvkNumber": "66332745",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 396
+    },
+    {
+      "name": "Dynamic Visual Technologies B.V.",
+      "kvkNumber": "87551977",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 397
+    },
+    {
+      "name": "Dyson Technology B.V.",
+      "kvkNumber": "80177565",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 398
+    },
+    {
+      "name": "E Ink Technology B.V.",
+      "kvkNumber": "84837632",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 399
+    },
+    {
+      "name": "E2M Technologies B.V.",
+      "kvkNumber": "34264483",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 400
+    },
+    {
+      "name": "Easthouse Electronics Technology B.V.",
+      "kvkNumber": "64595609",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 401
+    },
+    {
+      "name": "EcoChain Technologies B.V.",
+      "kvkNumber": "53518314",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 402
+    },
+    {
+      "name": "Eddy Technologies B.V.",
+      "kvkNumber": "89767330",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 403
+    },
+    {
+      "name": "Edge Technologies Contract B.V.",
+      "kvkNumber": "71183272",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 404
+    },
+    {
+      "name": "Eekels Technology B.V.",
+      "kvkNumber": "02309166",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 405
+    },
+    {
+      "name": "Einride Technologies Netherlands B.V.",
+      "kvkNumber": "85545295",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 406
+    },
+    {
+      "name": "Electron Technologies B.V.",
+      "kvkNumber": "29034307",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 407
+    },
+    {
+      "name": "Element Materials Technology Rotterdam B.V.",
+      "kvkNumber": "24170257",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 408
+    },
+    {
+      "name": "ELEO Technologies B.V.",
+      "kvkNumber": "69705623",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 409
+    },
+    {
+      "name": "Eliyan Technology Netherlands B.V.",
+      "kvkNumber": "97996491",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 410
+    },
+    {
+      "name": "Envision Technologies B.V.",
+      "kvkNumber": "69833214",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 411
+    },
+    {
+      "name": "Eraze Computer Software B.V.",
+      "kvkNumber": "27164810",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 412
+    },
+    {
+      "name": "European Portwell Technology B.V.",
+      "kvkNumber": "34268540",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 413
+    },
+    {
+      "name": "Evity Technologies B.V.",
+      "kvkNumber": "99075245",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 414
+    },
+    {
+      "name": "Exela Technologies B.V.",
+      "kvkNumber": "72638974",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 415
+    },
+    {
+      "name": "Exide Technologies B.V.",
+      "kvkNumber": "24176741",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 416
+    },
+    {
+      "name": "First Line Software B.V.",
+      "kvkNumber": "58362126",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 417
+    },
+    {
+      "name": "Flame Spray Technologies B.V.",
+      "kvkNumber": "09166683",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 418
+    },
+    {
+      "name": "fnCyber Security Consulting Services B.V.",
+      "kvkNumber": "90184106",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: consulting, services"
+      ],
+      "relevanceRank": 419
+    },
+    {
+      "name": "Focus Orange Technology B.V.",
+      "kvkNumber": "61307068",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 420
+    },
+    {
+      "name": "Forbon Technology Netherlands B.V.",
+      "kvkNumber": "63585685",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 421
+    },
+    {
+      "name": "Forescout Technologies B.V.",
+      "kvkNumber": "08214012",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 422
+    },
+    {
+      "name": "Fortaegis Technologies B.V.",
+      "kvkNumber": "91340500",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 423
+    },
+    {
+      "name": "Forward AM Technologies Netherlands B.V.",
+      "kvkNumber": "62066420",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 424
+    },
+    {
+      "name": "FPT Software Netherlands B.V.",
+      "kvkNumber": "86070401",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 425
+    },
+    {
+      "name": "Freshworks Technologies B.V.",
+      "kvkNumber": "73582166",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 426
+    },
+    {
+      "name": "FST Technology B.V.",
+      "kvkNumber": "81557280",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 427
+    },
+    {
+      "name": "Fugro Innovation & Technology B.V.",
+      "kvkNumber": "34048179",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 428
+    },
+    {
+      "name": "Fusion Engineering Technologies B.V.",
+      "kvkNumber": "70188289",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 429
+    },
+    {
+      "name": "Future Cleaning Technologies B.V.",
+      "kvkNumber": "17170863",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 430
+    },
+    {
+      "name": "GATT Technologies B.V.",
+      "kvkNumber": "52767329",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 431
+    },
+    {
+      "name": "Gemco Cast Metal Technology B.V.",
+      "kvkNumber": "17141349",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 432
+    },
+    {
+      "name": "Genesys Cloud Services B.V.",
+      "kvkNumber": "24293219",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: cloud, services"
+      ],
+      "relevanceRank": 433
+    },
+    {
+      "name": "Genetwister Technologies B.V.",
+      "kvkNumber": "11043533",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 434
+    },
+    {
+      "name": "Giada Technology B.V.",
+      "kvkNumber": "75489678",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 435
+    },
+    {
+      "name": "Giant Leap Technologies B.V.",
+      "kvkNumber": "34219450",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 436
+    },
+    {
+      "name": "Giesecke+Devrient Currency Technology Netherlands B.V.",
+      "kvkNumber": "30160202",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 437
+    },
+    {
+      "name": "Giga-Byte Technology B.V.",
+      "kvkNumber": "17136359",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 438
+    },
+    {
+      "name": "Global Consulting and Support Services B.V.",
+      "kvkNumber": "30220595",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: consulting, services"
+      ],
+      "relevanceRank": 439
+    },
+    {
+      "name": "Gomibo Platforms Technology B.V.",
+      "kvkNumber": "96169052",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 440
+    },
+    {
+      "name": "Goodix Technology (Netherlands) B.V.",
+      "kvkNumber": "76153029",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 441
+    },
+    {
+      "name": "GOT Technologies B.V.",
+      "kvkNumber": "58183973",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 442
+    },
+    {
+      "name": "Green Hills Software B.V.",
+      "kvkNumber": "32068508",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 443
+    },
+    {
+      "name": "H2Compute Software B.V.",
+      "kvkNumber": "62321102",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 444
+    },
+    {
+      "name": "Habets Industrial Components & Surface Technology B.V.",
+      "kvkNumber": "14037850",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 445
+    },
+    {
+      "name": "Hanab Installation Technology B.V.",
+      "kvkNumber": "30020926",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 446
+    },
+    {
+      "name": "Happiest Minds Technologies Pvt. Ltd.",
+      "kvkNumber": "58867910",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 447
+    },
+    {
+      "name": "Hawar Information Technology B.V.",
+      "kvkNumber": "01080176",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 448
+    },
+    {
+      "name": "HCL Technologies B.V.",
+      "kvkNumber": "58805206",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 449
+    },
+    {
+      "name": "Headlands Technologies Europe B.V.",
+      "kvkNumber": "72524804",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 450
+    },
+    {
+      "name": "Hitron Technologies Europe Holding B.V.",
+      "kvkNumber": "53063597",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 451
+    },
+    {
+      "name": "HOACO AUTOMATION TECHNOLOGY B.V.",
+      "kvkNumber": "77913671",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 452
+    },
+    {
+      "name": "Honor Technologies (Netherlands) B.V.",
+      "kvkNumber": "80907520",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 453
+    },
+    {
+      "name": "HORAIZON technology B.V.",
+      "kvkNumber": "62892789",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 454
+    },
+    {
+      "name": "Hotmart Technology Holding B.V.",
+      "kvkNumber": "60332433",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 455
+    },
+    {
+      "name": "Huawei Technologies (Netherlands) B.V.",
+      "kvkNumber": "34219858",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 456
+    },
+    {
+      "name": "Huawei Technologies Coöperatief U.A.",
+      "kvkNumber": "34270027",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 457
+    },
+    {
+      "name": "Huboo Technologies B.V.",
+      "kvkNumber": "82468575",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 458
+    },
+    {
+      "name": "Huhtamaki Molded Fiber Technology B.V.",
+      "kvkNumber": "01053692",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 459
+    },
+    {
+      "name": "HVR software B.V.",
+      "kvkNumber": "34137774",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 460
+    },
+    {
+      "name": "HyGro Technology B.V.",
+      "kvkNumber": "74457780",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 461
+    },
+    {
+      "name": "Hyperion Technologies B.V.",
+      "kvkNumber": "58607013",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 462
+    },
+    {
+      "name": "Ibis Technologies B.V.",
+      "kvkNumber": "30119428",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 463
+    },
+    {
+      "name": "IBS Software Europe Limited",
+      "kvkNumber": "61205850",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 464
+    },
+    {
+      "name": "Icron Technologies Europe B.V.",
+      "kvkNumber": "34233223",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 465
+    },
+    {
+      "name": "IM Efficiency Technologies B.V.",
+      "kvkNumber": "62117556",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 466
+    },
+    {
+      "name": "iMin Technology B.V.",
+      "kvkNumber": "82891559",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 467
+    },
+    {
+      "name": "Imou Network Technology Netherlands B.V.",
+      "kvkNumber": "81258054",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 468
+    },
+    {
+      "name": "Infineon Technologies Holding B.V.",
+      "kvkNumber": "27178800",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 469
+    },
+    {
+      "name": "Infineon Technologies Nijmegen B.V.",
+      "kvkNumber": "84491167",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 470
+    },
+    {
+      "name": "Infinitas Technology B.V.",
+      "kvkNumber": "76181103",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 471
+    },
+    {
+      "name": "InfoBridge Software B.V.",
+      "kvkNumber": "17272242",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 472
+    },
+    {
+      "name": "Infoplus Technologies (Netherlands) B.V.",
+      "kvkNumber": "58512152",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 473
+    },
+    {
+      "name": "Informatica Software Nederland B.V.",
+      "kvkNumber": "64688127",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 474
+    },
+    {
+      "name": "Inno Technology B.V.",
+      "kvkNumber": "86119958",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 475
+    },
+    {
+      "name": "InnoFlex Technologies B.V.",
+      "kvkNumber": "81277911",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 476
+    },
+    {
+      "name": "Integer Technologies B.V.",
+      "kvkNumber": "84670150",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 477
+    },
+    {
+      "name": "Is Technology Investments B.V.",
+      "kvkNumber": "94405603",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 478
+    },
+    {
+      "name": "iSolve Technologies Europe B.V.",
+      "kvkNumber": "75385953",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 479
+    },
+    {
+      "name": "Ivanti Software B.V.",
+      "kvkNumber": "32090058",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 480
+    },
+    {
+      "name": "Ivium Technologies B.V.",
+      "kvkNumber": "17154568",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 481
+    },
+    {
+      "name": "Jama Software",
+      "kvkNumber": "68289596",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 482
+    },
+    {
+      "name": "JAMF Software Atlantic, B.V.",
+      "kvkNumber": "56706987",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 483
+    },
+    {
+      "name": "JAVRA Software B.V.",
+      "kvkNumber": "34139083",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 484
+    },
+    {
+      "name": "JDA Software Netherlands B.V.",
+      "kvkNumber": "17123108",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 485
+    },
+    {
+      "name": "JLA Loading Technology B.V.",
+      "kvkNumber": "58922075",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 486
+    },
+    {
+      "name": "Joule Technologies B.V.",
+      "kvkNumber": "83463704",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 487
+    },
+    {
+      "name": "Jtag Technologies B.V.",
+      "kvkNumber": "17079262",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 488
+    },
+    {
+      "name": "JustGo Technologies B.V.",
+      "kvkNumber": "77227727",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 489
+    },
+    {
+      "name": "Keiron Printing Technologies B.V.",
+      "kvkNumber": "80101062",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 490
+    },
+    {
+      "name": "Key Technology B.V.",
+      "kvkNumber": "11026956",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 491
+    },
+    {
+      "name": "Keysight Technologies Netherlands B.V.",
+      "kvkNumber": "58724265",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 492
+    },
+    {
+      "name": "Keysight Technologies Netherlands Riscure B.V.",
+      "kvkNumber": "27287509",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 493
+    },
+    {
+      "name": "Klook Travel Technology B.V.",
+      "kvkNumber": "71097937",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 494
+    },
+    {
+      "name": "Koalitix Technology B.V.",
+      "kvkNumber": "84987715",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technology"
+      ],
+      "relevanceRank": 495
+    },
+    {
+      "name": "Konecranes Software B.V.",
+      "kvkNumber": "27197330",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: software"
+      ],
+      "relevanceRank": 496
+    },
+    {
+      "name": "KPIT Technologies Netherlands B.V.",
+      "kvkNumber": "54907144",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 497
+    },
+    {
+      "name": "KROHNE New Technologies",
+      "kvkNumber": "24395284",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 498
+    },
+    {
+      "name": "KrypC Technologies Europe B.V.",
+      "kvkNumber": "69531285",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 499
+    },
+    {
+      "name": "L3Harris Technologies Netherlands B.V.",
+      "kvkNumber": "91003601",
+      "relevanceScore": 15,
+      "tier": "review",
+      "reasons": [
+        "IND-recognised sponsor for work",
+        "Name signals: technologies"
+      ],
+      "relevanceRank": 500
+    }
+  ]
+}
