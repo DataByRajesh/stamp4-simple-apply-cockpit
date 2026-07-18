@@ -20,17 +20,22 @@ export function TopNav() {
   return (
     <nav className="top-nav">
       <div className="top-nav-inner">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`top-nav-link${pathname === link.href ? ' active' : ''}`}
-          >
-            {link.label}
-          </Link>
-        ))}
+        <Link className="top-nav-brand" href="/stamp4/simple-apply">
+          <span aria-hidden="true">S4</span>
+          <strong>Simple Apply</strong>
+        </Link>
+        <div className="top-nav-links" aria-label="Primary navigation">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`top-nav-link${pathname === link.href ? ' active' : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   )
 }
-
