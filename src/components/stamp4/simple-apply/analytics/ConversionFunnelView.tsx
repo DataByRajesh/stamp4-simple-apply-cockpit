@@ -4,8 +4,8 @@ import type { TrackedJob } from '@/lib/stamp4/simple-apply/types'
 import { AnalyticsEmptyState, MIN_JOBS_FOR_ANALYTICS } from './AnalyticsEmptyState'
 
 const GOOD_FIT_DECISIONS: TrackedJob['decision'][] = ['Apply Now', 'Apply with Proof Fix']
-const APPLIED_STATUSES: TrackedJob['status'][] = ['Applied', 'Follow-up', 'Interview', 'Rejected']
-const FOLLOW_UP_STATUSES: TrackedJob['status'][] = ['Follow-up', 'Interview']
+const APPLIED_STATUSES: TrackedJob['status'][] = ['Applied', 'Follow-up', 'Recruiter Screen', 'Interview', 'Final Stage', 'Offer', 'Rejected']
+const FOLLOW_UP_STATUSES: TrackedJob['status'][] = ['Follow-up', 'Recruiter Screen', 'Interview', 'Final Stage', 'Offer']
 
 function percent(part: number, whole: number): string {
   if (whole === 0) return '-'
@@ -19,7 +19,7 @@ export function ConversionFunnelView({ jobs }: { jobs: TrackedJob[] }) {
   const goodFit = jobs.filter((job) => GOOD_FIT_DECISIONS.includes(job.decision)).length
   const applied = jobs.filter((job) => APPLIED_STATUSES.includes(job.status)).length
   const followUp = jobs.filter((job) => FOLLOW_UP_STATUSES.includes(job.status)).length
-  const interview = jobs.filter((job) => job.status === 'Interview').length
+  const interview = jobs.filter((job) => ['Interview', 'Final Stage', 'Offer'].includes(job.status)).length
 
   const stages = [
     { label: 'Analysed', count: analysed, rate: percent(analysed, analysed) },

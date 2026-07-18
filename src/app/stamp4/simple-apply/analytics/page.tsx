@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnalyticsOverview } from '@/components/stamp4/simple-apply/analytics/AnalyticsOverview'
+import { BottleneckInsightsView } from '@/components/stamp4/simple-apply/analytics/BottleneckInsightsView'
 import { CompaniesSourcesView } from '@/components/stamp4/simple-apply/analytics/CompaniesSourcesView'
 import { ConversionFunnelView } from '@/components/stamp4/simple-apply/analytics/ConversionFunnelView'
 import { KeywordSignalsTable } from '@/components/stamp4/simple-apply/analytics/KeywordSignalsTable'
@@ -16,6 +17,7 @@ const SUB_VIEWS = [
   'Companies & Sources',
   'Score Breakdown Patterns',
   'Conversion Funnel',
+  'Bottlenecks & Actions',
   'Keyword Signals',
 ] as const
 
@@ -79,6 +81,7 @@ export default function AnalyticsPage() {
           )}
           {activeView === 'Score Breakdown Patterns' && <ScorePatternView jobs={jobs} />}
           {activeView === 'Conversion Funnel' && <ConversionFunnelView jobs={jobs} />}
+          {activeView === 'Bottlenecks & Actions' && <BottleneckInsightsView jobs={jobs} />}
           {activeView === 'Keyword Signals' && <KeywordSignalsTable jobs={jobs} />}
         </>
       )}
