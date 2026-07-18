@@ -1,17 +1,19 @@
-﻿'use client'
+'use client'
 
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { explainScore } from '@/lib/stamp4/simple-apply/scoreExplainer'
+import { EMPTY_OUTREACH, isFollowUpOverdue, OutreachEditor } from './OutreachEditor'
 import {
   deleteJobFromTracker,
   exportBackup,
   getAllTrackedJobs,
   updateJobNotes,
+  updateOutreach,
   updateJobStatus,
   updateSponsorship,
 } from '@/lib/stamp4/simple-apply/storage'
-import type { SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { OutreachDetails, SponsorshipStatus, TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
 
 const STATUSES: TrackerStatus[] = [
   'Saved',
@@ -89,6 +91,7 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [noteErrorId, setNoteErrorId] = useState<string | null>(null)
   const [expandedWhyId, setExpandedWhyId] = useState<string | null>(null)
+  const [expandedOutreachId, setExpandedOutreachId] = useState<string | null>(null)
   const notesTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
   const actionMessageTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -249,6 +252,11 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     >
                       {expandedWhyId === job.id ? 'Hide reasons' : 'Why this score?'}
                     </button>
+                    <br />
+                    <button className="button secondary" type="button" onClick={() => setExpandedOutreachId((current) => current === job.id ? null : job.id)}>
+                      {expandedOutreachId === job.id ? 'Hide outreach' : 'Outreach'}
+                    </button>
+                    {isFollowUpOverdue(job.outreach) && <p className="notice error">Follow-up overdue</p>}
                   </td>
                   <td>
                     <select
@@ -316,6 +324,18 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     </button>
                   </td>
                   </tr>
+                  {expandedOutreachId === job.id && (
+                    <tr>
+                      <td colSpan={7}>
+                        <h3>Recruiter, hiring-manager and referral outreach</h3>
+                        <OutreachEditor
+                          job={job}
+                          onChange={(outreach: OutreachDetails) => setJobs((current) => current.map((item) => item.id === job.id ? { ...item, outreach } : item))}
+                          onSave={(outreach: OutreachDetails) => updateOutreach(job.id, { ...EMPTY_OUTREACH, ...outreach }).then(() => flashActionMessage('Outreach saved.', 'success')).catch(() => flashActionMessage('Could not save outreach.', 'error'))}
+                        />
+                      </td>
+                    </tr>
+                  )}
                   {expandedWhyId === job.id && (
                     <tr>
                       <td colSpan={7}>

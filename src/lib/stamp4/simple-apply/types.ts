@@ -1,4 +1,4 @@
-﻿export interface ParsedJob {
+export interface ParsedJob {
   roleTitle: string
   company: string
   country: string
@@ -113,6 +113,22 @@ export interface SeenSponsorPosting {
 
 export type SponsorshipStatus = 'Unknown' | 'Confirmed' | 'Likely' | 'Recruiter confirmation required' | 'Authorised candidates only' | 'No sponsorship'
 
+export type OutreachType = 'Recruiter' | 'Hiring manager' | 'Referral' | 'Alumni' | 'Other'
+export type OutreachResponseStatus = 'Not contacted' | 'Sent' | 'Replied' | 'No response' | 'Declined'
+export type ReferralStatus = 'Not requested' | 'Requested' | 'Confirmed' | 'Declined'
+
+export interface OutreachDetails {
+  contactName: string
+  contactRole: string
+  contactUrl: string
+  outreachType: OutreachType
+  firstContactDate: string
+  followUpDate: string
+  responseStatus: OutreachResponseStatus
+  referralStatus: ReferralStatus
+  messageDraft: string
+}
+
 export interface TrackedJob {
   id: string
   company: string
@@ -130,6 +146,7 @@ export interface TrackedJob {
   applicationDeadline?: string
   sponsorshipStatus?: SponsorshipStatus
   sponsorshipEvidence?: string
+  outreach?: OutreachDetails
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]
