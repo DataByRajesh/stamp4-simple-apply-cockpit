@@ -22,6 +22,22 @@ function daysUntilDeadline(job: TrackedJob): number | null {
 }
 
 function actionFor(job: TrackedJob): { rank: number; label: string; why: string; nextStatus?: TrackerStatus } | null {
+  const today = new Date().toISOString().slice(0, 10)
+  const outreach = job.outreach
+  const interview = job.interviewExecution
+  const offer = job.offerDecision
+
+  if (offer?.offerDeadline && offer.decision === 'Undecided') {
+    const days = Math.ceil((new Date(offer.offerDeadline + 'T23:59:59').getTime() - Date.now()) / DAY_MS)
+    if (days >= 0 && days <= 3) return { rank: 130 - days, label: 'Decide or negotiate offer', why: `Offer deadline is ${days === 0 ? 'today' : `in ${days} day${days === 1 ? '' : 's'}`}.` }
+  }
+  if (interview?.scheduledAt) {
+    const hours = (new Date(interview.scheduledAt).getTime() - Date.now()) / 3_600_000
+    if (hours >= 0 && hours <= 72) return { rank: 120 - Math.floor(hours / 24), label: 'Prepare for interview', why: `${interview.stage} is within 72 hours (${interview.timezone}).` }
+  }
+  if (outreach?.followUpDate && outreach.followUpDate < today && !['Replied', 'Declined'].includes(outreach.responseStatus)) {
+    return { rank: 110, label: 'Send overdue outreach follow-up', why: `Follow-up was due ${outreach.followUpDate}.`, nextStatus: 'Follow-up' }
+  }
   const age = ageDays(job)
   const deadlineDays = daysUntilDeadline(job)
 
@@ -46,6 +62,7 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [updatingId, setUpdatingId] = useState<string | null>(null)
+  const [dashboardNow] = useState(() => Date.now())
 
   async function load() {
     setLoading(true)
@@ -80,6 +97,9 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
   const touchedThisWeek = jobs.filter((job) => new Date(job.updatedAt ?? job.dateAdded) >= weekStart)
   const applications = touchedThisWeek.filter((job) => isQualityFit(job) && ['Applied', 'Follow-up', 'Interview'].includes(job.status)).length
   const followUps = touchedThisWeek.filter((job) => job.status === 'Follow-up').length
+  const outreachDue = jobs.filter((job) => job.outreach?.followUpDate && job.outreach.followUpDate <= new Date().toISOString().slice(0, 10) && !['Replied', 'Declined'].includes(job.outreach.responseStatus)).length
+  const interviewPrepDue = jobs.filter((job) => { const at = job.interviewExecution?.scheduledAt; return at && new Date(at).getTime() >= dashboardNow && new Date(at).getTime() - dashboardNow <= 72 * 3_600_000 }).length
+  const offerDeadlines = jobs.filter((job) => job.offerDecision?.offerDeadline && job.offerDecision.decision === 'Undecided').length
   const interviews = touchedThisWeek.filter((job) => job.status === 'Interview').length
 
   async function advance(job: TrackedJob, status: TrackerStatus) {
@@ -107,8 +127,8 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
     <section className="panel stack">
       <div>
         <p className="eyebrow">Interview landing sprint</p>
-        <h2>Today&apos;s priority queue</h2>
-        <p className="muted">Interviews first, then closing deadlines, overdue follow-ups and strongest unapplied roles.</p>
+        <h2>8:00 London daily command centre</h2>
+        <p className="muted">One morning queue: offer deadlines, interviews, closing applications, recruiter follow-ups and strongest new targets.</p>
       </div>
       {loading ? <p>Loading sprint...</p> : error ? <p className="notice error">{error}</p> : jobs.length === 0 ? <p>No tracked jobs yet. Analyse and save a role to start the sprint.</p> : (
         <>
@@ -116,7 +136,11 @@ export function SprintDashboard({ refreshKey }: { refreshKey: number }) {
             <article className="card"><p className="eyebrow">Quality applications</p><div className="metric">{applications}/5</div><p className="muted">This week</p></article>
             <article className="card"><p className="eyebrow">Follow-ups</p><div className="metric">{followUps}/3</div><p className="muted">This week</p></article>
             <article className="card"><p className="eyebrow">Interviews</p><div className="metric">{interviews}/1</div><p className="muted">Weekly target</p></article>
-            <article className="card"><p className="eyebrow">Application rate</p><div className="metric">{stats.applicationRate}%</div><p className="muted">Tracked roles progressed</p></article>
+                        <article className="card"><p className="eyebrow">Application rate</p><div className="metric">{stats.applicationRate}%</div><p className="muted">Tracked roles progressed</p></article>
+            <article className="card"><p className="eyebrow">Outreach due</p><div className="metric">{outreachDue}</div><p className="muted">Follow up today</p></article>
+            <article className="card"><p className="eyebrow">Interview prep</p><div className="metric">{interviewPrepDue}</div><p className="muted">Within 72 hours</p></article>
+            <article className="card"><p className="eyebrow">Offer decisions</p><div className="metric">{offerDeadlines}</div><p className="muted">Open deadlines</p></article>
+            <article className="card"><p className="eyebrow">New sponsor roles</p><Link className="button secondary" href="/stamp4/simple-apply/sources-alerts">Review feed</Link><p className="muted">Ireland and target EU tiers</p></article>
           </div>
           {actions.length === 0 ? <p className="notice success">Queue clear. Use Job Sources &amp; Alerts to find the next strong role.</p> : (
             <div className="stack compact-stack">
