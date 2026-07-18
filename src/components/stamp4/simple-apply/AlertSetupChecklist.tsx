@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { Copy, ExternalLink } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'

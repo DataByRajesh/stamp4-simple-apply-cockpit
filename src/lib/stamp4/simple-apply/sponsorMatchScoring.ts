@@ -1,3 +1,4 @@
+import { matchesTargetRoles } from './atsFeeds'
 import { mapProofs } from './proofMapper'
 import { parseJobDescription } from './parser'
 import { scoreJob } from './scoring'
@@ -15,6 +16,10 @@ export interface ScoredPosting {
  */
 export function buildJdRawText(companyName: string, title: string, location: string | null, descriptionText: string): string {
   return `Job Title: ${title}\nCompany: ${companyName}\nLocation: ${location ?? 'Unknown'}\n\n${descriptionText}`
+}
+
+export function isEmailWorthyMatch(decision: string, title: string, targetRoleLane: readonly string[]): boolean {
+  return decision !== 'Skip' && matchesTargetRoles(title, targetRoleLane)
 }
 
 /**

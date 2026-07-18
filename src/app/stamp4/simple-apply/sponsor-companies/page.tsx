@@ -9,7 +9,7 @@ export default function SponsorCompaniesPage() {
         <h1>Sponsor companies</h1>
         <p>
           Ireland and Netherlands employers with a track record of work-permit/visa sponsorship. New roles from the
-          ones we can monitor live are run through the same scoring engine as the Cockpit before you're emailed -
+          ones we can monitor live are run through the same scoring engine as the Cockpit before you&apos;re emailed -
           Skip-tier matches are recorded but not sent.
         </p>
       </section>

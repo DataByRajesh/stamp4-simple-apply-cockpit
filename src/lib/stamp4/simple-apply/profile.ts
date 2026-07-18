@@ -1,4 +1,4 @@
-﻿// Named sector categories, mirroring how the sponsor-companies watchlist groups by sector -
+// Named sector categories, mirroring how the sponsor-companies watchlist groups by sector -
 // gives domain-fit scoring a legible "which sector(s) does this JD belong to" answer instead of
 // just a bag of matched keywords, and organises the vocabulary so it's easier to extend per sector.
 const DOMAIN_SECTORS = [

@@ -1,4 +1,4 @@
-﻿import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE } from './profile'
 import { mapProofs } from './proofMapper'
 import type { ParsedJob, ScoreBreakdown } from './types'
 

@@ -1,4 +1,4 @@
-﻿import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE } from './profile'
 import type {
   ApplicationPack,
   CorrectionAction,

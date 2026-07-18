@@ -55,7 +55,7 @@ export function SponsorCompaniesPanel() {
   }
 
   useEffect(() => {
-    void refresh()
+    queueMicrotask(() => void refresh())
     apiCall<{ value: PollSummary | null }>('settings?key=last_sponsor_poll')
       .then(({ value }) => setPollSummary(value))
       .catch(() => {})

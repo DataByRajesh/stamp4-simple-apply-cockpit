@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { Save } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -20,9 +20,10 @@ import type { TrackedJob } from '@/lib/stamp4/simple-apply/types'
 function makeTrackedJob(result: AnalysisResult): TrackedJob {
   return {
     id:
-      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      result.trackedJobId ??
+      (typeof crypto !== 'undefined' && 'randomUUID' in crypto
         ? crypto.randomUUID()
-        : `${Date.now()}-${result.parsed.company}-${result.parsed.roleTitle}`,
+        : `${Date.now()}-${result.parsed.company}-${result.parsed.roleTitle}`),
     company: result.parsed.company,
     roleTitle: result.parsed.roleTitle,
     country: result.parsed.country,

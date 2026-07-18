@@ -1,4 +1,4 @@
-﻿import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 

@@ -18,6 +18,49 @@ export interface SponsorCompany {
  * registers before relying on a specific company: Ireland's employment permit statistics/company
  * listings (enterprise.gov.ie) and the Netherlands IND public register of recognised sponsors
  * (ind.nl/en/public-register-recognised-sponsors). Government registers change monthly.
+ *
+ * AUTOMATED POLLING COVERAGE - DECISION LOG (2026-07-15)
+ * ---------------------------------------------------------------------------
+ * Automated ATS polling only works for companies on Greenhouse, Lever, or Ashby
+ * (see AtsProvider type + atsFeeds.ts) - these are the only three providers with
+ * a free, unauthenticated, public jobs API this poller can query directly.
+ *
+ * As of this date: 9/44 companies have a verified, working atsProvider + atsSlug.
+ * The other 35 were checked (systematic API probing across all 44, plus manual
+ * careers-page verification for ~17 of the highest-priority names) and found to
+ * sit on other platforms: Workday (often hidden behind a custom domain via CNAME,
+ * e.g. State Street, Mastercard), Oracle HCM (JPMorgan), iCIMS (AIB), Eightfold.ai
+ * (PayPal), HiBob (Corlytics), Teamtailor (TransferMate, Backbase), or fully
+ * custom-built career sites with no public API (AQMetrics, Revolut, Optiver).
+ * A handful of companies (Google, Meta, Microsoft, Amazon, Deloitte, Accenture,
+ * EY) were not checked - near-certain to be on enterprise HR platforms outside
+ * these three providers.
+ *
+ * DECISION: 9/44 is treated as the practical ceiling for this poller's current
+ * scope. No 4th provider integration is planned - no single alternative platform
+ * showed enough concentration across the watchlist to justify the build cost
+ * (Teamtailor was the closest, appearing on only 2 of the 35 non-pollable names).
+ * The remaining 35 companies require manual careers-page checks, same as any
+ * normal job search - the Cockpit's scoring/prep tooling still applies once a
+ * role is found manually, it just isn't surfaced automatically for these.
+ *
+ * IMPORTANT: a "200 OK" response from a provider's API is NOT sufficient proof
+ * of a valid slug. Verified false positives during this audit:
+ *   - lever.co/kpmg          -> resolves, but returns zero live jobs (dormant board)
+ *   - greenhouse.io/linkedin -> resolves, but is an internal "LI Test Company"
+ *                               QA/sandbox board, not LinkedIn's real listings
+ * Any new atsProvider/atsSlug addition MUST be confirmed by inspecting actual
+ * returned job titles/locations for plausibility, not just a successful HTTP
+ * response. Optiver's greenhouse.io/optiver board is a similar risk (0 jobs
+ * returned when tested) and was deliberately NOT added for this reason - its
+ * real careers site is custom-built, no public API available.
+ *
+ * If revisiting this decision: re-run scripts/detect-ats-slugs.ts (Greenhouse/
+ * Lever/Ashby) periodically, since companies do migrate ATS providers over time.
+ * A full Workday-behind-custom-domain sweep was not completed - if it becomes
+ * worth doing, capture each tenant via browser DevTools Network tab on the
+ * company's careers page (see conversation history, State Street example) since
+ * tenant-name guessing against myworkdayjobs.com directly returned 0/36 hits.
  */
 export const SPONSOR_COMPANIES: SponsorCompany[] = [
   {
@@ -305,8 +348,8 @@ export const SPONSOR_COMPANIES: SponsorCompany[] = [
     sector: 'Payments FinTech',
     whySponsorFriendly: 'Amsterdam-based payments FinTech serving 250,000+ merchants; regularly hires internationally.',
     careersUrl: 'https://jobs.mollie.com',
-    atsProvider: null,
-    atsSlug: null,
+    atsProvider: 'ashby',
+    atsSlug: 'mollie',
   },
   {
     name: 'Bunq',

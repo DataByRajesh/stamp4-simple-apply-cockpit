@@ -96,6 +96,7 @@ export interface BackupPayload {
 
 export interface SeenSponsorPosting {
   companyName: string
+  externalId: string
   title: string
   url: string
   location: string | null
@@ -117,6 +118,9 @@ export interface TrackedJob {
   scoreBreakdown?: ScoreBreakdown
   status: TrackerStatus
   dateAdded: string
+  updatedAt?: string
+  applicationUrl?: string
+  applicationDeadline?: string
   notes: string
   generatedPack: ApplicationPack
   proofMap: ProofMapping[]

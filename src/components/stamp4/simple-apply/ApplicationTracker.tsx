@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { Download, Trash2 } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'

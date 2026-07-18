@@ -1,4 +1,4 @@
-﻿create table tracked_jobs (
+create table tracked_jobs (
   id uuid primary key default gen_random_uuid(),
   company text not null,
   role_title text not null,

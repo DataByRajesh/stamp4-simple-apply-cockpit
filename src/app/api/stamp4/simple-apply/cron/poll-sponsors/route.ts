@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
+import { fetchAtsJobs } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
-import { scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
+import { isEmailWorthyMatch, scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 
 export const runtime = 'nodejs'
@@ -78,8 +78,6 @@ export async function GET(request: Request) {
       checkedCompanies.push(company.name)
 
       for (const job of jobs) {
-        if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
-
         const { score } = scorePosting(company.name, job.title, job.location, job.descriptionText)
 
         candidateRows.push({
@@ -120,8 +118,10 @@ export async function GET(request: Request) {
     }))
   }
 
-  // Skip-tier matches are still recorded (so they don't get rescored every poll) but not worth an email.
-  const emailWorthyMatches = newMatches.filter((match) => match.decision !== 'Skip')
+  // Non-target-lane and Skip-tier postings are recorded for transparency, but not worth an email.
+  const emailWorthyMatches = newMatches.filter(
+    (match) => isEmailWorthyMatch(match.decision, match.title, RAJ_PROFILE.targetRoleLane),
+  )
 
   let emailed = false
 

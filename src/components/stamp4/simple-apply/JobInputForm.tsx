@@ -27,6 +27,7 @@ export type AnalysisResult =
       questions: InterviewQuestion[]
       actions: CorrectionAction[]
       generationSource: GenerationSource
+      trackedJobId?: string
     }
   | {
       skipped: true
@@ -35,6 +36,7 @@ export type AnalysisResult =
       proofs: ProofMapping[]
       skipSummary: string
       skipDetails: string[]
+      trackedJobId?: string
     }
 
 type EditableField = 'roleTitle' | 'company' | 'country' | 'location' | 'salary'
@@ -53,6 +55,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
   const [parsedDraft, setParsedDraft] = useState<ParsedJob | null>(null)
   const [isAnalysing, setIsAnalysing] = useState(false)
   const [error, setError] = useState('')
+  const [pendingTrackedJobId, setPendingTrackedJobId] = useState<string | undefined>(undefined)
 
   const undetectedFields = useMemo(
     () => (parsedDraft ? findUndetectedFields(parsedDraft) : []),
@@ -64,8 +67,11 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
     // the confirm-before-scoring step instead of making the user re-paste the JD.
     const pending = takePendingJd()
     if (pending) {
-      setRawText(pending)
-      setParsedDraft(parseJobDescription(pending))
+      queueMicrotask(() => {
+        setRawText(pending.rawText)
+        setPendingTrackedJobId(pending.trackedJobId)
+        setParsedDraft(parseJobDescription(pending.rawText))
+      })
     }
   }, [])
 
@@ -102,6 +108,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
           proofs,
           skipSummary: reason.summary,
           skipDetails: reason.details,
+          trackedJobId: pendingTrackedJobId,
         })
         return
       }
@@ -117,6 +124,7 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
         questions: generated.questions,
         actions: generated.actions,
         generationSource: generated.source,
+        trackedJobId: pendingTrackedJobId,
       })
     } catch (err) {
       console.error('Failed to analyse job description', err)

@@ -4,6 +4,7 @@ import type { SeenSponsorPosting } from '@/lib/stamp4/simple-apply/types'
 
 type SeenPostingRow = {
   company_name: string
+  external_id: string
   title: string
   url: string
   location: string | null
@@ -16,6 +17,7 @@ type SeenPostingRow = {
 function rowToPosting(row: SeenPostingRow): SeenSponsorPosting {
   return {
     companyName: row.company_name,
+    externalId: row.external_id,
     title: row.title,
     url: row.url,
     location: row.location,
@@ -31,7 +33,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await getSupabaseServer()
     .from('seen_job_postings')
-    .select('company_name, title, url, location, score_total, decision, description_text, first_seen_at')
+    .select('company_name, external_id, title, url, location, score_total, decision, description_text, first_seen_at')
     .order('first_seen_at', { ascending: false })
     .limit(50)
 

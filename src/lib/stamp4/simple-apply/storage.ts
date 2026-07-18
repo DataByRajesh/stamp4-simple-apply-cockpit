@@ -1,4 +1,4 @@
-﻿import type { BackupPayload, TrackedJob, TrackerStatus } from './types'
+import type { BackupPayload, TrackedJob, TrackerStatus } from './types'
 
 const STAMP4_SECRET = process.env.NEXT_PUBLIC_STAMP4_ACCESS_SECRET ?? ''
 
@@ -30,6 +30,10 @@ export async function getAllTrackedJobs(): Promise<TrackedJob[]> {
 
 export async function updateJobStatus(id: string, status: TrackerStatus): Promise<void> {
   await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, status }) })
+}
+
+export async function updateJobPlanning(id: string, applicationUrl: string, applicationDeadline: string): Promise<void> {
+  await apiCall<{ ok: true }>('tracker', { method: 'PATCH', body: JSON.stringify({ id, applicationUrl, applicationDeadline }) })
 }
 
 export async function deleteJobFromTracker(id: string): Promise<void> {
