@@ -11,6 +11,7 @@ import type {
   QuestionToAsk,
   SalaryNegotiationPrep,
   ScoreBreakdown,
+  StarAnswerOutline,
 } from './types'
 
 export interface AIGenerationInput {
@@ -164,6 +165,13 @@ Generate a JSON object with this exact shape:
       "question": "interview question",
       "stage": "Phone Screen | Technical / Panel | Final Round",
       "answerDirection": "practical answer direction",
+      "starOutline": {
+        "situation": "1 short sentence: the specific context to open with, grounded in a named proof asset",
+        "task": "1 short sentence: what Raj was responsible for in that context",
+        "action": "1-2 short sentences: the concrete steps Raj took - this is the main substance of the answer",
+        "result": "1 short sentence: the outcome, ideally with a concrete detail (a number, a fix, a decision made)"
+      },
+      "likelyFollowUp": "the single most likely probing follow-up an interviewer would ask after hearing this answer, testing depth rather than repeating the original question",
       "proofToMention": "specific proof asset",
       "tamilAudioNote": "'Add to Tamil TTS revision script' if this question deserves extra spoken-answer practice, otherwise null"
     }
@@ -186,6 +194,8 @@ Rules:
 - Make exactly 8-10 interview questions - high-level and genuinely tailored to this JD, not generic filler.
 - Each question must reference at least one concrete detail from the job details above (a named responsibility, tool, domain keyword or proof asset) so it could not be reused unchanged for a different role.
 - Tag every question with the stage it is most likely to appear in. Use a reasonable spread across all three stages rather than putting everything in one.
+- Only build a starOutline when the question is answerable through a specific past example (most are). If a question is purely hypothetical/opinion-based with no natural STAR story (e.g. "what makes X different from Y"), still fill all four fields but keep them short and note the answer is more explanatory than story-based.
+- likelyFollowUp must be a genuine probe, not a rephrase - e.g. asking for a number, a harder edge case, what Raj would do differently, or how a stakeholder reacted.
 - If payment/reconciliation/settlement is relevant, include this exact question tagged "Technical / Panel": "How would you investigate a payment marked successful in the application but missing in settlement?"
 - Only set tamilAudioNote to the revision-script note for questions that genuinely warrant extra spoken-answer practice; set it to null for the rest.
 - Make 4-6 questionsToAsk - genuinely specific to this company/role, not generic ("What's the culture like?" is not acceptable).
@@ -197,8 +207,25 @@ function isInterviewStage(value: unknown): value is InterviewStage {
   return value === 'Phone Screen' || value === 'Technical / Panel' || value === 'Final Round'
 }
 
+function isStarAnswerOutline(value: unknown): value is StarAnswerOutline {
+  if (!value || typeof value !== 'object') return false
+  const outline = value as StarAnswerOutline
+  return (
+    typeof outline.situation === 'string' &&
+    typeof outline.task === 'string' &&
+    typeof outline.action === 'string' &&
+    typeof outline.result === 'string'
+  )
+}
+
 function isDeepInterviewQuestion(value: unknown): value is DeepInterviewQuestion {
-  return isInterviewQuestion(value) && isInterviewStage((value as DeepInterviewQuestion).stage)
+  if (!isInterviewQuestion(value)) return false
+  const question = value as DeepInterviewQuestion
+  return (
+    isInterviewStage(question.stage) &&
+    isStarAnswerOutline(question.starOutline) &&
+    typeof question.likelyFollowUp === 'string'
+  )
 }
 
 function isQuestionToAsk(value: unknown): value is QuestionToAsk {
@@ -390,6 +417,41 @@ export function generateApplicationPackFallback(parsed: ParsedJob, proofs: Proof
         ? 'RegPulse is my EU FinTech regulatory readiness dashboard. It organises DORA/PSD3/FiDA themes into control evidence, readiness status and stakeholder review notes, which helps show structured compliance thinking without claiming direct regulatory ownership.'
         : 'PayGuard IE is my payment reconciliation proof project. It models payment versus settlement records and checks mismatches across ID, amount, status and timestamp, with SQL validation thinking, UAT cases and defect-style evidence that can be discussed in application analyst interviews.',
   }
+}
+
+export function buildCompanyResearchChecklist(company: string, roleTitle: string, domainKeywords: string[]): string[] {
+  const name = companyName(company)
+  const role = roleTitle || 'this role'
+  const hasPaymentsDomain = domainKeywords.some((keyword) =>
+    ['payment', 'payments', 'reconciliation', 'settlement', 'fintech'].includes(keyword.toLowerCase()),
+  )
+  const hasComplianceDomain = domainKeywords.some((keyword) =>
+    ['dora', 'psd3', 'fida', 'compliance', 'regulatory'].includes(keyword.toLowerCase()),
+  )
+
+  const checklist = [
+    `What ${name} actually builds or sells - read the product/homepage copy yourself rather than relying on the job title alone.`,
+    `Any recent funding round, acquisition or public news in the last 6 months - search "${name} news" and check the company's own blog or press page.`,
+    `Their engineering or tech blog if one exists - gives real signal on tools, architecture and priorities beyond what the JD lists.`,
+    `Why this role exists now - is it new headcount, backfill, a new market entry, or a specific known pain point? Worth asking directly if unclear.`,
+    `Who is likely on the panel - check LinkedIn for the hiring manager or team, and note anything relevant to bring up (shared background, a project they posted about).`,
+  ]
+
+  if (hasPaymentsDomain) {
+    checklist.push(
+      `${name}'s specific position in the payments chain - are they a PSP, an issuer, a merchant, or infrastructure - since this changes what "reconciliation" and "settlement" mean in their context.`,
+    )
+  }
+
+  if (hasComplianceDomain) {
+    checklist.push(
+      `Any public statement from ${name} on DORA, PSD3 or FiDA readiness - regulators and larger FinTechs often publish compliance posture updates worth referencing.`,
+    )
+  }
+
+  checklist.push(`Reread the ${role} JD itself immediately before the interview - note two lines you have not yet prepared an answer for.`)
+
+  return checklist
 }
 
 export function generateInterviewQuestionsFallback(parsed: ParsedJob, proofs: ProofMapping[]): InterviewQuestion[] {

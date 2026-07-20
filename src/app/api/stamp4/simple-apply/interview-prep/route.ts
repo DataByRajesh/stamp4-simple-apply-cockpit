@@ -28,11 +28,23 @@ const INTERVIEW_PREP_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['question', 'stage', 'answerDirection', 'proofToMention', 'tamilAudioNote'],
+        required: ['question', 'stage', 'answerDirection', 'starOutline', 'likelyFollowUp', 'proofToMention', 'tamilAudioNote'],
         properties: {
           question: { type: 'string' },
           stage: { type: 'string', enum: ['Phone Screen', 'Technical / Panel', 'Final Round'] },
           answerDirection: { type: 'string' },
+          starOutline: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['situation', 'task', 'action', 'result'],
+            properties: {
+              situation: { type: 'string' },
+              task: { type: 'string' },
+              action: { type: 'string' },
+              result: { type: 'string' },
+            },
+          },
+          likelyFollowUp: { type: 'string' },
           proofToMention: { type: 'string' },
           tamilAudioNote: { type: ['string', 'null'] },
         },

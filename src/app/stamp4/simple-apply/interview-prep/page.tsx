@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { DeepInterviewPrep } from '@/components/stamp4/simple-apply/DeepInterviewPrep'
+import { buildCompanyResearchChecklist } from '@/lib/stamp4/simple-apply/generator'
 import { apiCall, getAllTrackedJobs } from '@/lib/stamp4/simple-apply/storage'
 import type { InterviewPrepBundle, TrackedJob } from '@/lib/stamp4/simple-apply/types'
 
@@ -22,6 +23,11 @@ export default function InterviewPrepPage() {
   }, [])
 
   const selectedJob = useMemo(() => jobs.find((job) => job.id === selectedId) ?? null, [jobs, selectedId])
+  const researchChecklist = useMemo(() => {
+    const parsed = selectedJob?.parsedJob
+    if (!parsed) return []
+    return buildCompanyResearchChecklist(parsed.company, parsed.roleTitle, parsed.domainKeywords)
+  }, [selectedJob])
 
   async function generate() {
     if (!selectedJob?.parsedJob || !selectedJob.scoreBreakdown || generating) return
@@ -104,7 +110,7 @@ export default function InterviewPrepPage() {
         )}
       </section>
 
-      {bundle && <DeepInterviewPrep bundle={bundle} />}
+      {bundle && <DeepInterviewPrep bundle={bundle} researchChecklist={researchChecklist} />}
     </main>
   )
 }

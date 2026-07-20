@@ -83,8 +83,17 @@ export interface InterviewQuestion {
 
 export type InterviewStage = 'Phone Screen' | 'Technical / Panel' | 'Final Round'
 
+export interface StarAnswerOutline {
+  situation: string
+  task: string
+  action: string
+  result: string
+}
+
 export interface DeepInterviewQuestion extends InterviewQuestion {
   stage: InterviewStage
+  starOutline: StarAnswerOutline
+  likelyFollowUp: string
 }
 
 export interface QuestionToAsk {

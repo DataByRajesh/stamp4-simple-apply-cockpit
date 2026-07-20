@@ -2,7 +2,13 @@ import type { InterviewPrepBundle, InterviewStage } from '@/lib/stamp4/simple-ap
 
 const STAGES: InterviewStage[] = ['Phone Screen', 'Technical / Panel', 'Final Round']
 
-export function DeepInterviewPrep({ bundle }: { bundle: InterviewPrepBundle }) {
+export function DeepInterviewPrep({
+  bundle,
+  researchChecklist,
+}: {
+  bundle: InterviewPrepBundle
+  researchChecklist: string[]
+}) {
   return (
     <div className="stack">
       <section className="panel stack">
@@ -23,6 +29,15 @@ export function DeepInterviewPrep({ bundle }: { bundle: InterviewPrepBundle }) {
                     <details key={question.question}>
                       <summary>{question.question}</summary>
                       <p>{question.answerDirection}</p>
+                      <div className="text-block stack compact-stack">
+                        <p><strong>Situation:</strong> {question.starOutline.situation}</p>
+                        <p><strong>Task:</strong> {question.starOutline.task}</p>
+                        <p><strong>Action:</strong> {question.starOutline.action}</p>
+                        <p><strong>Result:</strong> {question.starOutline.result}</p>
+                      </div>
+                      <p>
+                        <strong>Likely follow-up:</strong> {question.likelyFollowUp}
+                      </p>
                       <p>
                         <strong>Proof:</strong> {question.proofToMention}
                       </p>
@@ -34,6 +49,19 @@ export function DeepInterviewPrep({ bundle }: { bundle: InterviewPrepBundle }) {
             )
           })}
         </div>
+      </section>
+
+      <section className="panel stack">
+        <div>
+          <p className="eyebrow">Before the interview</p>
+          <h2>Company research checklist</h2>
+          <p>Use these prompts to verify current facts yourself before the call.</p>
+        </div>
+        <ul className="stack compact-stack">
+          {researchChecklist.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </section>
 
       <section className="panel stack">
