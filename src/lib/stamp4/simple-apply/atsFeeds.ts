@@ -8,6 +8,12 @@ export interface NormalizedJobPosting {
   descriptionText: string
 }
 
+// Shape for feeds that aggregate across many employers (Arbeitnow, Adzuna) rather than a single
+// known watchlist company, so the company name has to travel with each posting.
+export interface AggregatorJobPosting extends NormalizedJobPosting {
+  companyName: string
+}
+
 interface GreenhouseJob {
   id: number | string
   title: string

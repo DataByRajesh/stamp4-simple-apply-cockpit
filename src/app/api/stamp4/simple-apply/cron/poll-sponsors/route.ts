@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
+import { fetchAdzunaJobs } from '@/lib/stamp4/simple-apply/adzunaFeed'
 import { fetchArbeitnowVisaSponsorshipJobs } from '@/lib/stamp4/simple-apply/arbeitnowFeed'
-import { fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
+import { type AggregatorJobPosting, fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
@@ -30,6 +31,30 @@ type SeenPostingInsert = {
   score_total: number
   decision: string
   description_text: string
+}
+
+// Shared by every aggregator feed (Arbeitnow, Adzuna): none of them are a curated sponsor-friendly
+// watchlist, so an off-lane role has no other reason to be worth recording - filtered to the
+// target role lane before scoring, rather than left to the email-worthy check alone. Each source
+// gets its own external_id prefix so a coincidental id collision across sources/watchlist can't
+// clobber a different posting in the shared seen_job_postings table.
+function collectAggregatorMatches(jobs: AggregatorJobPosting[], sourcePrefix: string, candidateRows: SeenPostingInsert[]) {
+  for (const job of jobs) {
+    if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
+
+    const { score } = scorePosting(job.companyName, job.title, job.location, job.descriptionText)
+
+    candidateRows.push({
+      company_name: job.companyName,
+      external_id: `${sourcePrefix}:${job.externalId}`,
+      title: job.title,
+      url: job.url,
+      location: job.location,
+      score_total: score.total,
+      decision: score.decision,
+      description_text: job.descriptionText,
+    })
+  }
 }
 
 function isAuthorized(request: Request): boolean {
@@ -100,32 +125,26 @@ export async function GET(request: Request) {
     }
   }
 
-  // Arbeitnow is a broad German job-board aggregator, not a curated sponsor-friendly watchlist -
-  // unlike the ATS-company loop above, an off-lane role here has no other reason to be worth
-  // recording, so it's filtered to the target role lane before scoring rather than left to the
-  // email-worthy check alone.
   try {
     const arbeitnowJobs = await fetchArbeitnowVisaSponsorshipJobs()
     checkedCompanies.push('Arbeitnow (Germany, visa-sponsorship filter)')
-
-    for (const job of arbeitnowJobs) {
-      if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
-
-      const { score } = scorePosting(job.companyName, job.title, job.location, job.descriptionText)
-
-      candidateRows.push({
-        company_name: job.companyName,
-        external_id: `arbeitnow:${job.externalId}`,
-        title: job.title,
-        url: job.url,
-        location: job.location,
-        score_total: score.total,
-        decision: score.decision,
-        description_text: job.descriptionText,
-      })
-    }
+    collectAggregatorMatches(arbeitnowJobs, 'arbeitnow', candidateRows)
   } catch (error) {
     failedCompanies.push({ name: 'Arbeitnow', error: error instanceof Error ? error.message : String(error) })
+  }
+
+  // Adzuna's own `what` search is a genuine (if fuzzy) full-text match, unlike Arbeitnow's broken
+  // `search` param - but role-lane filtering is still done client-side via
+  // collectAggregatorMatches for one consistent precision check across every aggregator source,
+  // rather than trusting each provider's own query semantics. Netherlands only: Adzuna does not
+  // support Ireland at all, and Germany already has better, sponsorship-specific coverage via
+  // Arbeitnow.
+  try {
+    const adzunaJobs = await fetchAdzunaJobs('nl', 'analyst')
+    checkedCompanies.push('Adzuna (Netherlands)')
+    collectAggregatorMatches(adzunaJobs, 'adzuna', candidateRows)
+  } catch (error) {
+    failedCompanies.push({ name: 'Adzuna', error: error instanceof Error ? error.message : String(error) })
   }
 
   let newMatches: SponsorAlertMatch[] = []
