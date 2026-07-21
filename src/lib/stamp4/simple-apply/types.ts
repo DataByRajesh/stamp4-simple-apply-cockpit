@@ -150,6 +150,9 @@ export interface SeenSponsorPosting {
   decision: string | null
   descriptionText: string | null
   firstSeenAt: string
+  // True only for Ireland/Jooble postings cross-checked against the government sponsor
+  // register; null for every other source (no equivalent register wired up for them).
+  verifiedSponsor: boolean | null
 }
 
 export type SponsorshipStatus = 'Unknown' | 'Confirmed' | 'Likely' | 'Recruiter confirmation required' | 'Authorised candidates only' | 'No sponsorship'

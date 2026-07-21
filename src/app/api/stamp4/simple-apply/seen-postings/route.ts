@@ -12,6 +12,7 @@ type SeenPostingRow = {
   decision: string | null
   description_text: string | null
   first_seen_at: string
+  verified_sponsor: boolean | null
 }
 
 function rowToPosting(row: SeenPostingRow): SeenSponsorPosting {
@@ -25,6 +26,7 @@ function rowToPosting(row: SeenPostingRow): SeenSponsorPosting {
     decision: row.decision,
     descriptionText: row.description_text,
     firstSeenAt: row.first_seen_at,
+    verifiedSponsor: row.verified_sponsor,
   }
 }
 
@@ -33,7 +35,9 @@ export async function GET(request: Request) {
 
   const { data, error } = await getSupabaseServer()
     .from('seen_job_postings')
-    .select('company_name, external_id, title, url, location, score_total, decision, description_text, first_seen_at')
+    .select(
+      'company_name, external_id, title, url, location, score_total, decision, description_text, first_seen_at, verified_sponsor',
+    )
     .order('first_seen_at', { ascending: false })
     .limit(50)
 

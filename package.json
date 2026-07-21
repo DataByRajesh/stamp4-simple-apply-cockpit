@@ -17,7 +17,8 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "recharts": "^3.9.2"
+    "recharts": "^3.9.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",

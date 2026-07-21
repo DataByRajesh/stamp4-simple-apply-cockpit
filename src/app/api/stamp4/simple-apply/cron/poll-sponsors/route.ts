@@ -3,6 +3,7 @@ import { fetchAdzunaJobs } from '@/lib/stamp4/simple-apply/adzunaFeed'
 import { fetchArbeitnowVisaSponsorshipJobs } from '@/lib/stamp4/simple-apply/arbeitnowFeed'
 import { type AggregatorJobPosting, fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
+import { buildNormalizedNameSet, isVerifiedSponsor } from '@/lib/stamp4/simple-apply/irelandSponsorRegister'
 import { fetchJoobleJobs } from '@/lib/stamp4/simple-apply/joobleFeed'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
@@ -32,6 +33,7 @@ type SeenPostingInsert = {
   score_total: number
   decision: string
   description_text: string
+  verified_sponsor?: boolean
 }
 
 // Shared by every aggregator feed (Arbeitnow, Adzuna): none of them are a curated sponsor-friendly
@@ -39,7 +41,12 @@ type SeenPostingInsert = {
 // target role lane before scoring, rather than left to the email-worthy check alone. Each source
 // gets its own external_id prefix so a coincidental id collision across sources/watchlist can't
 // clobber a different posting in the shared seen_job_postings table.
-function collectAggregatorMatches(jobs: AggregatorJobPosting[], sourcePrefix: string, candidateRows: SeenPostingInsert[]) {
+function collectAggregatorMatches(
+  jobs: AggregatorJobPosting[],
+  sourcePrefix: string,
+  candidateRows: SeenPostingInsert[],
+  verifiedNames?: ReadonlySet<string>,
+) {
   for (const job of jobs) {
     if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
 
@@ -54,6 +61,7 @@ function collectAggregatorMatches(jobs: AggregatorJobPosting[], sourcePrefix: st
       score_total: score.total,
       decision: score.decision,
       description_text: job.descriptionText,
+      ...(verifiedNames ? { verified_sponsor: isVerifiedSponsor(job.companyName, verifiedNames) } : {}),
     })
   }
 }
@@ -152,9 +160,19 @@ export async function GET(request: Request) {
   // Arbeitnow is Germany/Austria/Switzerland only). Free tier is capped at 500 requests total, so
   // this stays to a single daily call rather than paginating.
   try {
+    const { data: verifiedRows, error: verifiedError } = await supabase
+      .from('ireland_verified_sponsors')
+      .select('company_name')
+
+    if (verifiedError) throw new Error(verifiedError.message)
+
+    const irelandVerifiedNames = buildNormalizedNameSet(
+      ((verifiedRows ?? []) as { company_name: string }[]).map((row) => row.company_name),
+    )
+
     const joobleJobs = await fetchJoobleJobs('Ireland', 'analyst')
     checkedCompanies.push('Jooble (Ireland)')
-    collectAggregatorMatches(joobleJobs, 'jooble', candidateRows)
+    collectAggregatorMatches(joobleJobs, 'jooble', candidateRows, irelandVerifiedNames)
   } catch (error) {
     failedCompanies.push({ name: 'Jooble', error: error instanceof Error ? error.message : String(error) })
   }
