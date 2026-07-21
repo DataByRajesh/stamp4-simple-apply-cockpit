@@ -6,7 +6,7 @@ import { copyToClipboard } from '@/lib/stamp4/simple-apply/clipboard'
 import { buildSuggestedSearchQuery, JOB_SOURCES, type JobSource } from '@/lib/stamp4/simple-apply/jobSources'
 import { getAlertSetupStatus, setAlertSetupStatus } from '@/lib/stamp4/simple-apply/storage'
 
-const REGIONS: JobSource['region'][] = ['Ireland', 'Netherlands', 'EU-wide']
+const REGIONS: JobSource['region'][] = ['Ireland', 'Netherlands', 'Germany', 'EU-wide']
 
 function alertHref(source: JobSource) {
   return source.alertUrlHint ?? source.url
@@ -62,7 +62,7 @@ export function AlertSetupChecklist() {
       </div>
 
       <div className="grid two-grid">
-        {(['Ireland', 'Netherlands'] as const).map((region) => {
+        {(['Ireland', 'Netherlands', 'Germany'] as const).map((region) => {
           const query = buildSuggestedSearchQuery(region)
           return (
             <article className="card stack" key={region}>

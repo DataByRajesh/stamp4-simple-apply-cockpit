@@ -4,7 +4,7 @@ import { apiCall } from './storage'
 export interface JobSource {
   name: string
   url: string
-  region: 'Ireland' | 'Netherlands' | 'EU-wide'
+  region: 'Ireland' | 'Netherlands' | 'Germany' | 'EU-wide'
   bestFor: string
   fintechRelevant: boolean
   alertInstructions: string
@@ -14,7 +14,7 @@ export interface JobSource {
 export interface SuggestedSource {
   name: string
   url: string | null
-  region: 'Ireland' | 'Netherlands' | 'EU-wide'
+  region: 'Ireland' | 'Netherlands' | 'Germany' | 'EU-wide'
   reasoning: string
   confidence: 'high' | 'medium' | 'low'
 }
@@ -115,6 +115,51 @@ export const JOB_SOURCES: JobSource[] = [
     alertUrlHint: null,
   },
   {
+    name: 'LinkedIn Jobs - Germany',
+    url: 'https://de.linkedin.com/jobs',
+    region: 'Germany',
+    bestFor: 'Widest reach and direct company postings in Germany.',
+    fintechRelevant: true,
+    alertInstructions: 'Run your search, then toggle the job alert option and set frequency. Same pattern as LinkedIn Ireland.',
+    alertUrlHint: 'https://de.linkedin.com/jobs/search',
+  },
+  {
+    name: 'StepStone',
+    url: 'https://www.stepstone.de',
+    region: 'Germany',
+    bestFor: "Germany's largest general job board, strong for Business/Systems Analyst and banking roles.",
+    fintechRelevant: true,
+    alertInstructions: 'Run your search, then use the Job-Mail/Suchauftrag (saved-search email) option near the results.',
+    alertUrlHint: null,
+  },
+  {
+    name: 'Xing Jobs',
+    url: 'https://www.xing.com/jobs',
+    region: 'Germany',
+    bestFor: 'The dominant DACH-region professional network - direct company postings and recruiter reach.',
+    fintechRelevant: true,
+    alertInstructions: 'Run your search, then use the job alert/saved-search option and set email frequency.',
+    alertUrlHint: null,
+  },
+  {
+    name: 'Indeed Germany',
+    url: 'https://de.indeed.com',
+    region: 'Germany',
+    bestFor: 'Broad German market coverage, useful as a secondary source.',
+    fintechRelevant: false,
+    alertInstructions: GENERIC_ALERT_INSTRUCTIONS,
+    alertUrlHint: null,
+  },
+  {
+    name: 'Built In Berlin',
+    url: 'https://builtin.com/jobs/eu/germany/berlin',
+    region: 'Germany',
+    bestFor: 'Tech-company listings, useful for Berlin-based FinTech/RegTech scaleups.',
+    fintechRelevant: true,
+    alertInstructions: 'Run your search and use the platform alert or saved-search option if available.',
+    alertUrlHint: null,
+  },
+  {
     name: 'eFinancialCareers (EU-wide)',
     url: 'https://www.efinancialcareers.com',
     region: 'EU-wide',
@@ -190,11 +235,20 @@ export async function getRelevantSources(country: string | null): Promise<JobSou
     return sources.filter((source) => source.region === 'Netherlands' || source.region === 'EU-wide')
   }
 
+  if (normalised.includes('germany')) {
+    return sources.filter((source) => source.region === 'Germany' || source.region === 'EU-wide')
+  }
+
   return sources
 }
 
-export function buildSuggestedSearchQuery(region: 'Ireland' | 'Netherlands'): string {
+const REGION_HUB_CITY: Record<'Ireland' | 'Netherlands' | 'Germany', string> = {
+  Ireland: 'Dublin',
+  Netherlands: 'Amsterdam',
+  Germany: 'Berlin',
+}
+
+export function buildSuggestedSearchQuery(region: 'Ireland' | 'Netherlands' | 'Germany'): string {
   const roles = RAJ_PROFILE.targetRoleLane.slice(0, 3).join(' OR ')
-  const location = region === 'Ireland' ? 'Dublin' : 'Amsterdam'
-  return `(${roles}) ${location}`
+  return `(${roles}) ${REGION_HUB_CITY[region]}`
 }
