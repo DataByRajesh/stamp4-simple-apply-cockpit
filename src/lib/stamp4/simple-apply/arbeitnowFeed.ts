@@ -1,13 +1,4 @@
-import { stripHtml } from './atsFeeds'
-
-export interface AggregatorJobPosting {
-  externalId: string
-  companyName: string
-  title: string
-  url: string
-  location: string | null
-  descriptionText: string
-}
+import { stripHtml, type AggregatorJobPosting } from './atsFeeds'
 
 interface ArbeitnowJob {
   slug: string
