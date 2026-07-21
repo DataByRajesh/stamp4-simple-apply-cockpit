@@ -342,12 +342,15 @@ export function ApplicationTracker({ refreshKey }: { refreshKey: number }) {
                     </button>
                   </td>
                   </tr>
-                  {expandedOfferId === job.id && (<tr><td colSpan={7}><h3>Offer, permit and relocation decision</h3><OfferDecisionEditor job={job} onChange={(offerDecision: OfferDecision)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,offerDecision}:item))} onSave={(offerDecision: OfferDecision)=>updateOfferDecision(job.id,{...EMPTY_OFFER_DECISION,...offerDecision}).then(()=>flashActionMessage('Offer decision saved.','success')).catch(()=>flashActionMessage('Could not save offer decision.','error'))}/></td></tr>)}                  {expandedInterviewId === job.id && (<tr><td colSpan={7}><h3>Interview execution</h3><InterviewExecutionEditor job={job} onChange={(interviewExecution: InterviewExecution)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,interviewExecution}:item))} onSave={(interviewExecution: InterviewExecution)=>updateInterviewExecution(job.id,{...EMPTY_INTERVIEW_EXECUTION,...interviewExecution}).then(()=>flashActionMessage('Interview plan saved.','success')).catch(()=>flashActionMessage('Could not save interview plan.','error'))}/></td></tr>)}                  {expandedRecordId === job.id && (
+                  {expandedOfferId === job.id && (<tr><td colSpan={7}><h3>Offer, permit and relocation decision</h3><OfferDecisionEditor job={job} onChange={(offerDecision: OfferDecision)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,offerDecision}:item))} onSave={(offerDecision: OfferDecision)=>updateOfferDecision(job.id,{...EMPTY_OFFER_DECISION,...offerDecision}).then(()=>flashActionMessage('Offer decision saved.','success')).catch(()=>flashActionMessage('Could not save offer decision.','error'))}/></td></tr>)}
+                  {expandedInterviewId === job.id && (<tr><td colSpan={7}><h3>Interview execution</h3><InterviewExecutionEditor job={job} onChange={(interviewExecution: InterviewExecution)=>setJobs((current)=>current.map((item)=>item.id===job.id?{...item,interviewExecution}:item))} onSave={(interviewExecution: InterviewExecution)=>updateInterviewExecution(job.id,{...EMPTY_INTERVIEW_EXECUTION,...interviewExecution}).then(()=>flashActionMessage('Interview plan saved.','success')).catch(()=>flashActionMessage('Could not save interview plan.','error'))}/></td></tr>)}
+                  {expandedRecordId === job.id && (
                     <tr><td colSpan={7}><h3>Submitted application evidence</h3><ApplicationRecordEditor job={job}
                       onChange={(applicationRecord: ApplicationRecord) => setJobs((current) => current.map((item) => item.id === job.id ? {...item, applicationRecord} : item))}
                       onSave={(applicationRecord: ApplicationRecord) => updateApplicationRecord(job.id, {...EMPTY_APPLICATION_RECORD,...applicationRecord}).then(() => flashActionMessage('Application record saved.','success')).catch(() => flashActionMessage('Could not save application record.','error'))}/>
                     </td></tr>
-                  )}                  {expandedOutreachId === job.id && (
+                  )}
+                  {expandedOutreachId === job.id && (
                     <tr>
                       <td colSpan={7}>
                         <h3>Recruiter, hiring-manager and referral outreach</h3>
