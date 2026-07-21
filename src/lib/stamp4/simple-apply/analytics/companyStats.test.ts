@@ -40,6 +40,7 @@ function posting(overrides: Partial<SeenSponsorPosting> = {}): SeenSponsorPostin
     decision: 'Apply Now',
     descriptionText: null,
     firstSeenAt: new Date().toISOString(),
+    verifiedSponsor: null,
     ...overrides,
   }
 }

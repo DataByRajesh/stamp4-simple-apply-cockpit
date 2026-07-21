@@ -109,7 +109,17 @@ export function SeenPostingsTable() {
                       <ExternalLink size={14} aria-hidden="true" />
                     </a>
                   </td>
-                  <td>{posting.companyName}</td>
+                  <td>
+                    {posting.companyName}
+                    {posting.verifiedSponsor && (
+                      <span
+                        className="badge ok"
+                        title="Matched against the Irish government's employment permit register"
+                      >
+                        Verified sponsor
+                      </span>
+                    )}
+                  </td>
                   <td>{posting.location ?? '-'}</td>
                   <td>{postingExplanation(posting)}</td>
                   <td className="muted">{new Date(posting.firstSeenAt).toLocaleDateString()}</td>
