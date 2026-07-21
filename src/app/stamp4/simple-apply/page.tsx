@@ -13,6 +13,7 @@ import type { AnalysisResult } from '@/components/stamp4/simple-apply/JobInputFo
 import { PermitRiskCard } from '@/components/stamp4/simple-apply/PermitRiskCard'
 import { ProofMapperTable } from '@/components/stamp4/simple-apply/ProofMapperTable'
 import { ScoreBreakdown } from '@/components/stamp4/simple-apply/ScoreBreakdown'
+import { SeniorityFitCard } from '@/components/stamp4/simple-apply/SeniorityFitCard'
 import { SprintDashboard } from '@/components/stamp4/simple-apply/SprintDashboard'
 import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { saveJobToTracker } from '@/lib/stamp4/simple-apply/storage'
@@ -105,6 +106,7 @@ export default function SimpleApplyPage() {
           <section className="grid summary-grid">
             <FitVerdictCard parsed={analysis.parsed} score={analysis.score} />
             <ScoreBreakdown score={analysis.score} parsed={analysis.parsed} proofs={analysis.proofs} />
+            <SeniorityFitCard parsed={analysis.parsed} score={analysis.score} />
             <PermitRiskCard parsed={analysis.parsed} />
           </section>
 
