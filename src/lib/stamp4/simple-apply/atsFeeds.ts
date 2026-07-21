@@ -44,7 +44,7 @@ function decodeHtmlEntities(text: string): string {
     .replace(/&amp;/g, '&')
 }
 
-function stripHtml(html: string): string {
+export function stripHtml(html: string): string {
   // Some ATS boards (observed on Greenhouse) return the content field HTML-entity-encoded
   // (literal "&lt;p&gt;" instead of "<p>"), so entities must be decoded before tags can be
   // stripped - decoding first is also safe for plain HTML with inline entities like "&amp;".

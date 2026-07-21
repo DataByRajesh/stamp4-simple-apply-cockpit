@@ -110,7 +110,7 @@ export function SponsorCompaniesPanel() {
       {pollSummary && (
         <p className="notice info">
           Last automated check: {new Date(pollSummary.at).toLocaleString()} - {pollSummary.checkedCompanyCount}{' '}
-          companies checked, {pollSummary.newMatchCount} new matching role
+          companies/sources checked, {pollSummary.newMatchCount} new matching role
           {pollSummary.newMatchCount === 1 ? '' : 's'} pre-scored, {pollSummary.emailedMatchCount} worth emailing
           {pollSummary.emailed ? ' (email sent)' : ''}.
         </p>

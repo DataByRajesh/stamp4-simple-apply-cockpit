@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { fetchAtsJobs } from '@/lib/stamp4/simple-apply/atsFeeds'
+import { fetchArbeitnowVisaSponsorshipJobs } from '@/lib/stamp4/simple-apply/arbeitnowFeed'
+import { fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
@@ -97,6 +98,34 @@ export async function GET(request: Request) {
     } catch (error) {
       failedCompanies.push({ name: company.name, error: error instanceof Error ? error.message : String(error) })
     }
+  }
+
+  // Arbeitnow is a broad German job-board aggregator, not a curated sponsor-friendly watchlist -
+  // unlike the ATS-company loop above, an off-lane role here has no other reason to be worth
+  // recording, so it's filtered to the target role lane before scoring rather than left to the
+  // email-worthy check alone.
+  try {
+    const arbeitnowJobs = await fetchArbeitnowVisaSponsorshipJobs()
+    checkedCompanies.push('Arbeitnow (Germany, visa-sponsorship filter)')
+
+    for (const job of arbeitnowJobs) {
+      if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
+
+      const { score } = scorePosting(job.companyName, job.title, job.location, job.descriptionText)
+
+      candidateRows.push({
+        company_name: job.companyName,
+        external_id: `arbeitnow:${job.externalId}`,
+        title: job.title,
+        url: job.url,
+        location: job.location,
+        score_total: score.total,
+        decision: score.decision,
+        description_text: job.descriptionText,
+      })
+    }
+  } catch (error) {
+    failedCompanies.push({ name: 'Arbeitnow', error: error instanceof Error ? error.message : String(error) })
   }
 
   let newMatches: SponsorAlertMatch[] = []
