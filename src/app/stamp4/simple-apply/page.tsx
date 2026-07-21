@@ -84,9 +84,9 @@ export default function SimpleApplyPage() {
         <p className="eyebrow">Stamp4 Simple Apply</p>
         <h1>Permit-aware FinTech role cockpit</h1>
         <p>
-          Built for Raj&apos;s Ireland/EU Financial Systems Analyst and Application Analyst lane. Deterministic,
-          explainable scoring with AI-generated application content - skipped automatically for poor-fit roles to
-          save cost - saved to your own cloud tracker. No scraping, no auto-import.
+          Paste a role description and see whether it moves Raj closer to an Ireland/EU FinTech systems analyst
+          lane - deterministic, explainable scoring with AI-generated application content for good fits only,
+          saved straight to your own cloud tracker.
         </p>
       </section>
 
