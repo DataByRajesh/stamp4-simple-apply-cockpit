@@ -211,4 +211,25 @@ describe('scoreJob - decision thresholds', () => {
     expect(result.total).toBe(4.2) // would be well into Apply Now territory without the cap
     expect(result.decision).toBe('Save / Low Priority')
   })
+
+  it('caps a severe seniority mismatch below Apply Now, even when every other dimension is strong', () => {
+    // Same strong signals as the "Apply Now" case above, but a Senior-titled role requiring far
+    // more years than Raj has - without the cap, averaging would otherwise still clear this to
+    // Apply Now, sending him into an interview pitched well above his actual level.
+    const overReach = job({
+      roleTitle: 'Senior Systems Analyst', // still a real title match, roleFit unaffected
+      domainKeywords: ['fintech', 'banking', 'payments', 'risk', 'compliance'],
+      requiredSkills: ['sql', 'uat', 'jira', 'testing', 'defect', 'incident', 'production support', 'application support'],
+      country: 'Ireland',
+      salary: '50000',
+      senioritySignals: ['senior', '8+ years'],
+      rawText:
+        'payment reconciliation settlement sql data validation uat testing incident application support logs ' +
+        'monitoring compliance regulatory kyc stakeholder business user requirements',
+    })
+    const result = scoreJob(overReach)
+    expect(result.seniorityFit).toBe(0)
+    expect(result.total).toBe(4.2) // same total as the wrongLane case above - would clear Apply Now without the cap
+    expect(result.decision).toBe('Apply with Proof Fix')
+  })
 })

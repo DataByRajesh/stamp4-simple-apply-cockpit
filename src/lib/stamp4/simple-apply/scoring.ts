@@ -94,6 +94,14 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
           ? 'Save / Low Priority'
           : 'Skip'
 
+  // A severe seniority mismatch (senior-titled or a large years-required gap) can otherwise be
+  // averaged away by strong domain/skill/proof signals alone, sending someone into an interview
+  // pitched well above their actual level - a bad outcome for both sides. Mirror the roleFit guard:
+  // cap the decision so it can't reach Apply Now on seniority alone being diluted out.
+  if (seniorityFit <= 1 && decision === 'Apply Now') {
+    decision = 'Apply with Proof Fix'
+  }
+
   // A title with zero relation to the target role lane can otherwise still get averaged up to an
   // Apply-tier verdict by strong domain/skill/proof signals alone (e.g. a Software Engineer JD that
   // happens to mention SQL and FinTech) - cap it at Save / Low Priority so role mismatch can't be
