@@ -3,6 +3,7 @@ import { fetchAdzunaJobs } from '@/lib/stamp4/simple-apply/adzunaFeed'
 import { fetchArbeitnowVisaSponsorshipJobs } from '@/lib/stamp4/simple-apply/arbeitnowFeed'
 import { type AggregatorJobPosting, fetchAtsJobs, matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { sendSponsorAlertEmail, type SponsorAlertMatch } from '@/lib/stamp4/simple-apply/email'
+import { fetchJoobleJobs } from '@/lib/stamp4/simple-apply/joobleFeed'
 import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
 import { SPONSOR_COMPANIES, type AtsProvider } from '@/lib/stamp4/simple-apply/sponsorCompanies'
 import { isEmailWorthyMatch, scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
@@ -145,6 +146,17 @@ export async function GET(request: Request) {
     collectAggregatorMatches(adzunaJobs, 'adzuna', candidateRows)
   } catch (error) {
     failedCompanies.push({ name: 'Adzuna', error: error instanceof Error ? error.message : String(error) })
+  }
+
+  // Jooble is the only aggregator confirmed to cover Ireland at all (Adzuna does not support it,
+  // Arbeitnow is Germany/Austria/Switzerland only). Free tier is capped at 500 requests total, so
+  // this stays to a single daily call rather than paginating.
+  try {
+    const joobleJobs = await fetchJoobleJobs('Ireland', 'analyst')
+    checkedCompanies.push('Jooble (Ireland)')
+    collectAggregatorMatches(joobleJobs, 'jooble', candidateRows)
+  } catch (error) {
+    failedCompanies.push({ name: 'Jooble', error: error instanceof Error ? error.message : String(error) })
   }
 
   let newMatches: SponsorAlertMatch[] = []
