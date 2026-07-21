@@ -1,5 +1,6 @@
 import { computeDashboardStats } from '@/lib/stamp4/simple-apply/dashboardStats'
 import { computePeriodComparison } from '@/lib/stamp4/simple-apply/analytics/timeSeriesStats'
+import { computeWeeklyApplicationPace } from '@/lib/stamp4/simple-apply/analytics/weeklyApplicationPace'
 import type { TrackedJob } from '@/lib/stamp4/simple-apply/types'
 import { AnalyticsEmptyState, MIN_JOBS_FOR_ANALYTICS } from './AnalyticsEmptyState'
 
@@ -7,7 +8,38 @@ const GOOD_FIT_DECISIONS: TrackedJob['decision'][] = ['Apply Now', 'Apply with P
 const APPLIED_STATUSES: TrackedJob['status'][] = ['Applied', 'Follow-up', 'Interview', 'Rejected']
 
 export function AnalyticsOverview({ jobs }: { jobs: TrackedJob[] }) {
-  if (jobs.length < MIN_JOBS_FOR_ANALYTICS) return <AnalyticsEmptyState jobCount={jobs.length} />
+  const pace = computeWeeklyApplicationPace(jobs)
+
+  const paceWidget = (
+    <article className={`card stack ${pace.onTrack ? 'notice success' : 'notice info'}`}>
+      <p className="eyebrow">Weekly application pace</p>
+      <p className="metric">
+        {pace.thisWeek.count} / {pace.targetPerWeek}
+      </p>
+      <p className="muted">
+        {pace.onTrack
+          ? 'On track for this week - keep the pace up.'
+          : `${pace.targetPerWeek - pace.thisWeek.count} more application${pace.targetPerWeek - pace.thisWeek.count === 1 ? '' : 's'} to hit this week's target.`}
+      </p>
+      <div className="toolbar">
+        {pace.recentWeeks.map((week) => (
+          <span key={week.weekLabel} className="muted" title={week.weekLabel}>
+            {week.count}
+          </span>
+        ))}
+      </div>
+      <p className="muted">{pace.totalApplied} total applications tracked. Volume matters more than tool tweaks at this stage.</p>
+    </article>
+  )
+
+  if (jobs.length < MIN_JOBS_FOR_ANALYTICS) {
+    return (
+      <div className="stack">
+        {paceWidget}
+        <AnalyticsEmptyState jobCount={jobs.length} />
+      </div>
+    )
+  }
 
   const stats = computeDashboardStats(jobs)
   const period = computePeriodComparison(jobs, 7)
@@ -17,6 +49,8 @@ export function AnalyticsOverview({ jobs }: { jobs: TrackedJob[] }) {
 
   return (
     <div className="stack">
+      {paceWidget}
+
       <div className="grid summary-grid">
         <article className="card stack">
           <p className="eyebrow">Total analysed</p>
