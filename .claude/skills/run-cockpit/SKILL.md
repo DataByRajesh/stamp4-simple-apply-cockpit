@@ -91,7 +91,7 @@ if ($conn) { Stop-Process -Id ($conn.OwningProcess | Sort-Object -Unique) -Force
 | `eval <js>` | evaluate in the page, print JSON |
 | `console --errors` | print every captured `console.error`/`pageerror` since launch |
 | `analyse <jd-text>` | project shortcut: fills the JD textarea, clicks Analyse, waits for the Confirm-before-scoring step. Multi-line JD text must use literal `\n` (the REPL is line-based) |
-| `confirm-generate` | project shortcut: clicks "Confirm & generate" (real AI call, up to ~60s), waits for the results grid |
+| `confirm-generate` | project shortcut: clicks "Confirm & generate" (real AI call, up to ~90s worst case), waits for the results grid |
 | `quit` | close the browser |
 
 `login`/`nav` lazily launch the browser on first use - no separate `launch` command needed.
@@ -126,10 +126,16 @@ Gotchas.
 
 - **The JD analysis flow is two steps, not one.** Filling the JD textarea and clicking "Analyse"
   only parses the JD into a "Confirm before scoring" review step. You then have to click "Confirm
-  & generate" - which makes a real OpenAI call and can take 30-60s - before the results grid
+  & generate" - which makes a real AI call and can take up to ~90s - before the results grid
   (FitVerdictCard/ScoreBreakdown/SeniorityFitCard/PermitRiskCard) actually renders. Wait for a
   specific result-grid selector (`text=Seniority fit`), never a fixed timeout. The `analyse` /
-  `confirm-generate` driver commands already encode this.
+  `confirm-generate` driver commands already encode this (90s wait).
+
+- **NVIDIA (tried first, see `llm.ts`) genuinely takes ~50-65s for a full generation on its free
+  tier - it is not hanging, just slow under load (measured live: 690 completion tokens in 50.7s).**
+  It's bounded at 65s before falling back to OpenAI, so a single "Confirm & generate" click can
+  take up to ~90s total in the worst case (NVIDIA's 65s timeout + the OpenAI fallback call). This
+  is deliberate - see the comment above `callNvidia()` for the reasoning.
 
 - **`readline`'s `close` event fires as soon as stdin hits EOF - not when queued async commands
   finish.** For a piped heredoc, stdin closes almost immediately, well before a slow command like

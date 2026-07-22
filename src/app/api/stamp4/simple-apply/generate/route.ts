@@ -6,7 +6,7 @@ import {
   SYSTEM_PROMPT,
   type AIGenerationOutput,
 } from '@/lib/stamp4/simple-apply/generator'
-import { callOpenAIJson } from '@/lib/stamp4/simple-apply/openai'
+import { callStructuredLLM } from '@/lib/stamp4/simple-apply/llm'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const raw = await callOpenAIJson({
+    const raw = await callStructuredLLM({
       systemPrompt: SYSTEM_PROMPT,
       userPrompt: buildAIUserPrompt(input),
       schemaName: 'stamp4_simple_apply_generation',
