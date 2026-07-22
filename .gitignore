@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 .vite/
 .vercel
 .env*
+
+# run-cockpit skill's screenshots (verification artifacts, not source)
+.claude/skills/run-cockpit/screenshots/
