@@ -36,11 +36,18 @@ type SeenPostingInsert = {
   verified_sponsor?: boolean
 }
 
+// Both the narrow target lane and the genuinely-adjacent lane are recorded - the same two tiers
+// scoreJob()'s own roleFit() treats as legitimate (5/5 and 3.75/5 respectively, not zero).
+// Narrow-only would silently drop real, relevant roles before they're ever scored (verified live:
+// a Jooble "Analyst, Business Process Improvement" at Mastercard and an Adzuna "Senior Business
+// Systems Analyst" at Wolters Kluwer both matched only the adjacent lane, not the narrow one).
+const AGGREGATOR_ROLE_LANE = [...RAJ_PROFILE.targetRoleLane, ...RAJ_PROFILE.adjacentRoleLane]
+
 // Shared by every aggregator feed (Arbeitnow, Adzuna): none of them are a curated sponsor-friendly
 // watchlist, so an off-lane role has no other reason to be worth recording - filtered to the
-// target role lane before scoring, rather than left to the email-worthy check alone. Each source
-// gets its own external_id prefix so a coincidental id collision across sources/watchlist can't
-// clobber a different posting in the shared seen_job_postings table.
+// target/adjacent role lane before scoring, rather than left to the (narrower) email-worthy check
+// alone. Each source gets its own external_id prefix so a coincidental id collision across
+// sources/watchlist can't clobber a different posting in the shared seen_job_postings table.
 function collectAggregatorMatches(
   jobs: AggregatorJobPosting[],
   sourcePrefix: string,
@@ -48,7 +55,7 @@ function collectAggregatorMatches(
   verifiedNames?: ReadonlySet<string>,
 ) {
   for (const job of jobs) {
-    if (!matchesTargetRoles(job.title, RAJ_PROFILE.targetRoleLane)) continue
+    if (!matchesTargetRoles(job.title, AGGREGATOR_ROLE_LANE)) continue
 
     const { score } = scorePosting(job.companyName, job.title, job.location, job.descriptionText)
 
