@@ -1,6 +1,6 @@
 'use client'
 
-import { ClipboardCheck, Sparkles } from 'lucide-react'
+import { ClipboardCheck, Loader2, Sparkles } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { generateApplicationOutputs, type GenerationSource } from '@/lib/stamp4/simple-apply/generator'
 import { parseJobDescription } from '@/lib/stamp4/simple-apply/parser'
@@ -198,10 +198,20 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
             Back to JD text
           </button>
           <button className="button" type="button" onClick={handleGenerate} disabled={isAnalysing}>
-            <Sparkles size={18} aria-hidden="true" />
+            {isAnalysing ? (
+              <Loader2 size={18} className="spin" aria-hidden="true" />
+            ) : (
+              <Sparkles size={18} aria-hidden="true" />
+            )}
             {isAnalysing ? 'Generating...' : 'Confirm & generate'}
           </button>
         </div>
+        {isAnalysing && (
+          <p className="muted">
+            Generating your application pack - this can take up to 90 seconds, since it tries a fast AI
+            model first and falls back to a slower, more reliable one if needed. Please don&apos;t close this tab.
+          </p>
+        )}
         {error && <p className="notice error">{error}</p>}
       </section>
     )

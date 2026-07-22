@@ -18,6 +18,15 @@ interface StructuredLLMOptions {
   userPrompt: string
   schemaName: string
   schema: Record<string, unknown>
+  // Ireland-market findings (2026-07): NVIDIA's free tier had 0/5 real successes on one day of
+  // testing (repeated 503 ResourceExhausted rate-limits, plus one 87.8s timeout), and it has no
+  // structured-output enforcement the way OpenAI's `strict: true` json_schema does - schema drift
+  // is only caught by JSON.parse() here, not the API itself. Callers producing the actual
+  // applicant-facing content (CVs, cover messages, interview prep) should set this so a flaky
+  // free-tier call never gates something the user is about to submit to a real employer.
+  // Lower-stakes callers (e.g. source-discovery) should leave this false to keep using NVIDIA
+  // first for the cost savings.
+  preferOpenAI?: boolean
 }
 
 async function callOpenAI(options: StructuredLLMOptions): Promise<string> {
@@ -130,6 +139,16 @@ async function callNvidia(options: StructuredLLMOptions): Promise<string> {
 // callers JSON.parse() the returned string themselves and validate its shape, unchanged from
 // when this only ever called OpenAI.
 export async function callStructuredLLM(options: StructuredLLMOptions): Promise<string> {
+  if (options.preferOpenAI) {
+    try {
+      return await callOpenAI(options)
+    } catch (error) {
+      if (!process.env.NVIDIA_API_KEY) throw error
+      console.warn('OpenAI generation failed, falling back to NVIDIA:', error)
+      return callNvidia(options)
+    }
+  }
+
   if (process.env.NVIDIA_API_KEY) {
     try {
       return await callNvidia(options)

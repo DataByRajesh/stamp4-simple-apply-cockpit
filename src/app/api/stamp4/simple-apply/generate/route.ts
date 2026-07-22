@@ -123,6 +123,7 @@ export async function POST(request: Request) {
       userPrompt: buildAIUserPrompt(input),
       schemaName: 'stamp4_simple_apply_generation',
       schema: GENERATION_SCHEMA,
+      preferOpenAI: true,
     })
     const parsed = JSON.parse(raw) as unknown
 

@@ -113,6 +113,7 @@ export async function POST(request: Request) {
       userPrompt: buildInterviewPrepUserPrompt(input),
       schemaName: 'stamp4_simple_apply_interview_prep',
       schema: INTERVIEW_PREP_SCHEMA,
+      preferOpenAI: true,
     })
     const parsed = JSON.parse(raw) as unknown
 
