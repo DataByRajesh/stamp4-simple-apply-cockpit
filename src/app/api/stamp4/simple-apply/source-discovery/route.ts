@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
 import type { JobSource, SuggestedSource } from '@/lib/stamp4/simple-apply/jobSources'
+import { callStructuredLLM } from '@/lib/stamp4/simple-apply/llm'
 
 export const runtime = 'nodejs'
 
@@ -51,21 +52,6 @@ function isSuggestedSource(value: unknown): value is SuggestedSource {
   )
 }
 
-function extractOutputText(data: unknown) {
-  if (!data || typeof data !== 'object') return null
-  const response = data as { output_text?: unknown; output?: Array<{ content?: Array<{ text?: unknown }> }> }
-
-  if (typeof response.output_text === 'string') return response.output_text
-
-  for (const item of response.output ?? []) {
-    for (const content of item.content ?? []) {
-      if (typeof content.text === 'string') return content.text
-    }
-  }
-
-  return null
-}
-
 function buildUserPrompt(existingSources: JobSource[]) {
   const existingNames = existingSources.map((source) => source.name).join(', ')
 
@@ -82,43 +68,6 @@ Return ONLY JSON matching this shape:
 { "suggestions": [{ "name": "...", "url": "...", "region": "Ireland|Netherlands|EU-wide", "reasoning": "one sentence", "confidence": "high|medium|low" }] }
 
 If you are not confident in a specific URL, set "url" to null rather than guessing one. Do not include job postings; suggest source directories only.`.trim()
-}
-
-async function callAI(systemPrompt: string, userPrompt: string): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured')
-
-  const response = await fetch('https://api.openai.com/v1/responses', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: process.env.OPENAI_MODEL ?? 'gpt-4.1-mini',
-      input: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      text: {
-        format: {
-          type: 'json_schema',
-          name: 'stamp4_source_discovery',
-          strict: true,
-          schema: SUGGESTION_SCHEMA,
-        },
-      },
-    }),
-  })
-
-  if (!response.ok) {
-    throw new Error(`OpenAI request failed with ${response.status}: ${await response.text()}`)
-  }
-
-  const text = extractOutputText(await response.json())
-  if (!text) throw new Error('OpenAI response did not include output text')
-
-  return text
 }
 
 export async function POST(request: Request) {
@@ -138,7 +87,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const raw = await callAI(SOURCE_DISCOVERY_SYSTEM_PROMPT, buildUserPrompt(existingSources))
+    const raw = await callStructuredLLM({
+      systemPrompt: SOURCE_DISCOVERY_SYSTEM_PROMPT,
+      userPrompt: buildUserPrompt(existingSources),
+      schemaName: 'stamp4_source_discovery',
+      schema: SUGGESTION_SCHEMA,
+    })
     const parsed = JSON.parse(raw) as { suggestions?: unknown }
     const suggestions = Array.isArray(parsed.suggestions) ? parsed.suggestions.filter(isSuggestedSource) : []
 

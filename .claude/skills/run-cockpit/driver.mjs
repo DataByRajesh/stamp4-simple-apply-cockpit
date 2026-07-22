@@ -145,12 +145,14 @@ const COMMANDS = {
     console.log('analyse -> parsed, on Confirm-before-scoring step')
   },
 
-  // Project-specific shortcut: step 2 of the flow - triggers a real AI generation call, can take
-  // 30-60s. Waits for the results grid (Seniority fit card) rather than a fixed timeout.
+  // Project-specific shortcut: step 2 of the flow - triggers a real AI generation call. Can take
+  // up to ~70s (NVIDIA is tried first and genuinely takes ~50-65s on its free tier under load,
+  // not hanging - measured live; OpenAI is the fallback if that fails). Waits for the results
+  // grid (Seniority fit card) rather than a fixed timeout.
   async 'confirm-generate'() {
     const p = requirePage()
     await p.locator('button', { hasText: /Confirm & generate/i }).first().click()
-    await p.waitForSelector('text=Seniority fit', { timeout: 60000 })
+    await p.waitForSelector('text=Seniority fit', { timeout: 90000 })
     console.log('confirm-generate -> results grid rendered')
   },
 

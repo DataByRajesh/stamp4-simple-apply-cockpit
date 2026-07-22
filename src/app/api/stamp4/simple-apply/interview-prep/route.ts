@@ -5,7 +5,7 @@ import {
   INTERVIEW_PREP_SYSTEM_PROMPT,
   isInterviewPrepOutput,
 } from '@/lib/stamp4/simple-apply/generator'
-import { callOpenAIJson } from '@/lib/stamp4/simple-apply/openai'
+import { callStructuredLLM } from '@/lib/stamp4/simple-apply/llm'
 import type { InterviewPrepBundle, ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const raw = await callOpenAIJson({
+    const raw = await callStructuredLLM({
       systemPrompt: INTERVIEW_PREP_SYSTEM_PROMPT,
       userPrompt: buildInterviewPrepUserPrompt(input),
       schemaName: 'stamp4_simple_apply_interview_prep',

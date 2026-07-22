@@ -50,7 +50,8 @@ export function ApplicationPack({
       {source === 'fallback' && (
         <p className="notice warning">
           AI generation was unavailable, so this pack, the interview questions and correction actions below are
-          deterministic templates, not AI-written prose. Check OPENAI_API_KEY/OPENAI_MODEL if this is unexpected.
+          deterministic templates, not AI-written prose. Check NVIDIA_API_KEY and OPENAI_API_KEY if this is
+          unexpected - either can generate the pack, OpenAI is the fallback if NVIDIA fails.
         </p>
       )}
       <CopyBlock title="CV summary" text={pack.tailoredCvSummary} />
