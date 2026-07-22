@@ -24,9 +24,10 @@ export function GermanyEmployerUniverse() {
     }, 200)
     return () => clearTimeout(timer)
   }, [query, tier])
+  const universeTotal = data ? data.tierCounts.aligned + data.tierCounts.review + data.tierCounts.evidence : null
   return (
     <section className="panel stack">
-      <div><p className="eyebrow">Germany focus</p><h2>500 current-hiring employers</h2>
+      <div><p className="eyebrow">Germany focus</p><h2>{universeTotal ?? '...'} current-hiring employers</h2>
         <p>Target-role evidence from current Federal Employment Agency listings. Germany has no sponsor register, so verify visa support, language and salary per vacancy.</p>
       </div>
       {data && <div className="toolbar">
@@ -40,7 +41,7 @@ export function GermanyEmployerUniverse() {
       <div className="grid two-grid">
         <input className="input" placeholder="Search employer or role" value={query} onChange={(event) => setQuery(event.target.value)} />
         <select className="select" value={tier} onChange={(event) => setTier(event.target.value as GermanyEmployerTier | '')}>
-          <option value="">All 500</option><option value="aligned">Aligned</option><option value="review">Review</option>
+          <option value="">All{universeTotal ? ` ${universeTotal}` : ''}</option><option value="aligned">Aligned</option><option value="review">Review</option>
         </select>
       </div>
       {!data ? <p>Loading German employers...</p> : <>

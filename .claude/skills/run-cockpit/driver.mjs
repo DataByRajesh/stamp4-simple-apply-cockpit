@@ -156,6 +156,16 @@ const COMMANDS = {
     console.log('confirm-generate -> results grid rendered')
   },
 
+  // resize <width> <height> - for checking responsive layout at specific breakpoints.
+  async resize(rest) {
+    const p = requirePage()
+    const [widthStr, heightStr] = rest.split(' ')
+    const width = Number(widthStr)
+    const height = Number(heightStr)
+    await p.setViewportSize({ width, height })
+    console.log('resize ->', width, 'x', height)
+  },
+
   async quit() {
     if (browser) await browser.close().catch(() => {})
     browser = null

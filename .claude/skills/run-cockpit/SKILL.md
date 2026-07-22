@@ -86,6 +86,7 @@ if ($conn) { Stop-Process -Id ($conn.OwningProcess | Sort-Object -Unique) -Force
 | `wait-for <selector-or-text=...> [timeoutMs]` | wait for an element (default 15000ms) |
 | `screenshot [name]` | full-page screenshot → `screenshots/<name>.png` |
 | `screenshot-element <selector> [name]` | screenshot just one element |
+| `resize <width> <height>` | set the viewport size - for checking responsive breakpoints (e.g. `resize 375 812` for mobile, `resize 768 1024` for tablet) |
 | `text <selector>` | print `textContent` |
 | `count <selector>` | print element count |
 | `eval <js>` | evaluate in the page, print JSON |

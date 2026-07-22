@@ -5,7 +5,7 @@ import { apiCall } from '@/lib/stamp4/simple-apply/storage'
 import type { PermitEmployer, PermitEmployerTier } from '@/lib/stamp4/simple-apply/permitEmployers'
 
 type Universe = {
-  metadata: { sourcePage: string; disclaimer: string }
+  metadata: { sourceYear: number; sourcePage: string; disclaimer: string }
   tierCounts: Record<PermitEmployerTier, number>
   total: number
   employers: PermitEmployer[]
@@ -24,10 +24,11 @@ export function PermitEmployerUniverse() {
     }, 200)
     return () => clearTimeout(timer)
   }, [query, tier])
+  const universeTotal = data ? data.tierCounts.aligned + data.tierCounts.review + data.tierCounts.evidence : null
   return (
     <section className="panel stack">
-      <div><p className="eyebrow">Ireland focus</p><h2>500 permit-active employers</h2>
-        <p>Official 2025 permit evidence ranked for triage. Historical permits do not guarantee sponsorship for a vacancy.</p>
+      <div><p className="eyebrow">Ireland focus</p><h2>{universeTotal ?? '...'} permit-active employers</h2>
+        <p>Official {data?.metadata.sourceYear ?? ''} permit evidence ranked for triage. Historical permits do not guarantee sponsorship for a vacancy.</p>
       </div>
       {data && <div className="toolbar">
         <span className="badge ok">{data.tierCounts.aligned} aligned</span>
@@ -38,7 +39,7 @@ export function PermitEmployerUniverse() {
       <div className="grid two-grid">
         <input className="input" placeholder="Search employer" value={query} onChange={(event) => setQuery(event.target.value)} />
         <select className="select" value={tier} onChange={(event) => setTier(event.target.value as PermitEmployerTier | '')}>
-          <option value="">All 500</option><option value="aligned">Aligned</option>
+          <option value="">All{universeTotal ? ` ${universeTotal}` : ''}</option><option value="aligned">Aligned</option>
           <option value="review">Review</option><option value="evidence">Evidence only</option>
         </select>
       </div>
