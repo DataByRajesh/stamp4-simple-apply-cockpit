@@ -1,4 +1,4 @@
-import data from '@/data/ireland-permit-employers-2025.json'
+import data from '@/data/ireland-permit-employers-2026.json'
 
 export type PermitEmployerTier = 'aligned' | 'review' | 'evidence'
 export interface PermitEmployer {

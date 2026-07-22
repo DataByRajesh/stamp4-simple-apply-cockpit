@@ -9,28 +9,51 @@ function buildRegisterUrl(year: number): string {
   return `https://enterprise.gov.ie/en/publications/publication-files/employment-permits-issued-to-companies-${year}.xlsx`
 }
 
-export async function fetchIrelandVerifiedSponsorNames(year: number = new Date().getFullYear()): Promise<string[]> {
+export interface IrelandPermitEmployerRecord {
+  name: string
+  permitCount: number
+}
+
+// Full name + permit-count records from the same government spreadsheet, for use cases that
+// need the actual permit volume (e.g. the scored permit-employer universe), not just the name
+// list the verified-sponsor cross-check needs. The grand-total column is always the last one -
+// its position shifts depending on how many months have been published so far in a
+// year-to-date snapshot, so this reads by relative position, not a fixed index.
+export async function fetchIrelandPermitEmployerRecords(
+  year: number = new Date().getFullYear(),
+): Promise<IrelandPermitEmployerRecord[]> {
   const response = await fetch(buildRegisterUrl(year))
-  if (!response.ok) throw new Error(`Ireland sponsor register fetch failed: ${response.status}`)
+  if (!response.ok) throw new Error(`Ireland permit register fetch failed: ${response.status}`)
 
   const buffer = await response.arrayBuffer()
   const workbook = XLSX.read(buffer, { type: 'array' })
   const sheet = workbook.Sheets[workbook.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1 })
 
-  const names = new Set<string>()
+  const records: IrelandPermitEmployerRecord[] = []
+  const seen = new Set<string>()
 
   for (const row of rows.slice(1)) {
     const cell = row[0]
     if (typeof cell !== 'string') continue
 
     const name = cell.trim()
-    if (!name || name.toLowerCase() === 'total') continue
+    if (!name || name.toLowerCase() === 'total' || seen.has(name)) continue
 
-    names.add(name)
+    const lastCell = row[row.length - 1]
+    const permitCount = typeof lastCell === 'number' ? lastCell : Number(lastCell)
+    if (!Number.isFinite(permitCount)) continue
+
+    seen.add(name)
+    records.push({ name, permitCount })
   }
 
-  return [...names]
+  return records
+}
+
+export async function fetchIrelandVerifiedSponsorNames(year: number = new Date().getFullYear()): Promise<string[]> {
+  const records = await fetchIrelandPermitEmployerRecords(year)
+  return records.map((record) => record.name)
 }
 
 const LEGAL_SUFFIXES = /\b(unlimited company|limited|ltd|llp|plc|inc|co)\b\.?/gi

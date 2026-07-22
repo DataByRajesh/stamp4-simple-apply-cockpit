@@ -146,3 +146,6 @@ vite.config.ts.timestamp-*
 
 # run-cockpit skill's screenshots (verification artifacts, not source)
 .claude/skills/run-cockpit/screenshots/
+
+# Scratch outputs from one-off data-pull scripts, not source
+scripts/_*.json
