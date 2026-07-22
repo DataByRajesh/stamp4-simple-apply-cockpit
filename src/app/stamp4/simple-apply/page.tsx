@@ -133,7 +133,7 @@ export default function SimpleApplyPage() {
             </section>
           ) : (
             <>
-              <ApplicationPack pack={analysis.pack} source={analysis.generationSource} />
+              <ApplicationPack pack={analysis.pack} source={analysis.generationSource} companyName={analysis.parsed.company} />
               {trackedJob && <ApplicationDocuments job={trackedJob} />}
               <InterviewPrep questions={analysis.questions} />
               <CorrectionActions actions={analysis.actions} />

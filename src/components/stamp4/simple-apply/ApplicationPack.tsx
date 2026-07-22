@@ -1,9 +1,10 @@
 'use client'
 
-import { Copy } from 'lucide-react'
+import { Copy, Search } from 'lucide-react'
 import { useState } from 'react'
 import { copyToClipboard } from '@/lib/stamp4/simple-apply/clipboard'
 import type { GenerationSource } from '@/lib/stamp4/simple-apply/generator'
+import { buildRecruiterSearchUrl } from '@/lib/stamp4/simple-apply/recruiterSearch'
 import type { ApplicationPack as ApplicationPackType } from '@/lib/stamp4/simple-apply/types'
 
 function CopyBlock({ title, text }: { title: string; text: string }) {
@@ -32,9 +33,11 @@ function CopyBlock({ title, text }: { title: string; text: string }) {
 export function ApplicationPack({
   pack,
   source,
+  companyName,
 }: {
   pack: ApplicationPackType
   source: GenerationSource
+  companyName: string
 }) {
   return (
     <section className="panel stack">
@@ -57,7 +60,18 @@ export function ApplicationPack({
       <CopyBlock title="CV summary" text={pack.tailoredCvSummary} />
       <CopyBlock title="Top CV bullets" text={pack.topCvBullets.map((bullet) => `- ${bullet}`).join('\n')} />
       <CopyBlock title="Cover message" text={pack.coverMessage} />
-      <CopyBlock title="Recruiter LinkedIn message" text={pack.recruiterLinkedInMessage} />
+      <div className="stack">
+        <CopyBlock title="Recruiter LinkedIn message" text={pack.recruiterLinkedInMessage} />
+        <a
+          className="button secondary"
+          href={buildRecruiterSearchUrl(companyName)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Search size={16} aria-hidden="true" />
+          Find a recruiter at {companyName} on LinkedIn
+        </a>
+      </div>
       <CopyBlock title="Why me answer" text={pack.whyMeAnswer} />
       <CopyBlock title="Project proof paragraph" text={pack.projectProofParagraph} />
     </section>
