@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Stamp4 Capture",
+  "version": "0.1.0",
+  "description": "Send the job posting on the current tab straight into your Stamp4 Cockpit for scoring, visa check, and application pack generation. Captures text only - Stamp4 does the analysis and you approve everything before it's sent anywhere.",
+  "permissions": ["activeTab", "scripting", "storage", "contextMenus"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Send this job to Stamp4"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

@@ -4,7 +4,7 @@ import { ClipboardCheck, Loader2, Sparkles } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { generateApplicationOutputs, type GenerationSource } from '@/lib/stamp4/simple-apply/generator'
 import { parseJobDescription } from '@/lib/stamp4/simple-apply/parser'
-import { takePendingJd } from '@/lib/stamp4/simple-apply/pendingJdHandoff'
+import { resolvePendingJd } from '@/lib/stamp4/simple-apply/pendingJdHandoff'
 import { mapProofs } from '@/lib/stamp4/simple-apply/proofMapper'
 import { scoreJob } from '@/lib/stamp4/simple-apply/scoring'
 import { buildSkipReason } from '@/lib/stamp4/simple-apply/skipReason'
@@ -63,15 +63,18 @@ export function JobInputForm({ onAnalyse }: { onAnalyse: (result: AnalysisResult
   )
 
   useEffect(() => {
-    // One-shot handoff from the sponsor-companies "Send to Cockpit" action - lands straight on
-    // the confirm-before-scoring step instead of making the user re-paste the JD.
-    const pending = takePendingJd()
-    if (pending) {
-      queueMicrotask(() => {
-        setRawText(pending.rawText)
-        setPendingTrackedJobId(pending.trackedJobId)
-        setParsedDraft(parseJobDescription(pending.rawText))
-      })
+    // One-shot handoff from either the sponsor-companies "Send to Cockpit" action (sessionStorage)
+    // or the browser extension's "Send to Stamp4" capture (a ?captureToken= fetched from the API)
+    // - lands straight on the confirm-before-scoring step instead of making the user re-paste.
+    let cancelled = false
+    resolvePendingJd().then((pending) => {
+      if (cancelled || !pending) return
+      setRawText(pending.rawText)
+      setPendingTrackedJobId(pending.trackedJobId)
+      setParsedDraft(parseJobDescription(pending.rawText))
+    })
+    return () => {
+      cancelled = true
     }
   }, [])
 

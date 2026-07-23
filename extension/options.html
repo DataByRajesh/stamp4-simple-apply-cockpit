@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 420px; padding: 20px; }
+      label { display: block; margin-top: 12px; font-size: 13px; font-weight: 600; }
+      input { width: 100%; padding: 8px; font-size: 14px; margin-top: 4px; box-sizing: border-box; }
+      button { margin-top: 16px; padding: 8px 16px; cursor: pointer; }
+      p.hint { font-size: 12px; color: #555; }
+      p#status { font-size: 13px; color: #15803d; }
+    </style>
+  </head>
+  <body>
+    <h2>Stamp4 Capture settings</h2>
+    <p class="hint">
+      Domain is your deployed Cockpit's host only - no <code>https://</code>, no trailing slash
+      (e.g. <code>stamp4.yourdomain.com</code>). The secret must match the
+      <code>STAMP4_ACCESS_SECRET</code> environment variable set on your Stamp4 deployment.
+    </p>
+    <label for="domain">Stamp4 domain</label>
+    <input id="domain" type="text" placeholder="stamp4.yourdomain.com" />
+    <label for="secret">Access secret</label>
+    <input id="secret" type="password" placeholder="STAMP4_ACCESS_SECRET value" />
+    <button id="save">Save</button>
+    <p id="status"></p>
+    <script src="options.js"></script>
+  </body>
+</html>

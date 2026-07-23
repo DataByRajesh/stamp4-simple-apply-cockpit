@@ -48,3 +48,31 @@ export function takePendingJd(): PendingJdHandoff | null {
     return { rawText: value }
   }
 }
+
+/**
+ * Resolves a JD handoff from either source: the same-origin sessionStorage handoff (used by the
+ * "Send to Cockpit" action elsewhere in the app) takes priority since it's synchronous and
+ * already available; otherwise, a ?captureToken= from the browser extension is fetched from the
+ * one-shot /api/stamp4/simple-apply/capture endpoint. The captureToken is stripped from the URL
+ * either way (found-and-consumed or not-found) so a refresh never re-triggers or re-errors.
+ */
+export async function resolvePendingJd(): Promise<PendingJdHandoff | null> {
+  const sessionHandoff = takePendingJd()
+  if (sessionHandoff) return sessionHandoff
+
+  const url = new URL(window.location.href)
+  const token = url.searchParams.get('captureToken')
+  if (!token) return null
+
+  url.searchParams.delete('captureToken')
+  window.history.replaceState({}, '', url.toString())
+
+  try {
+    const response = await fetch(`/api/stamp4/simple-apply/capture?token=${encodeURIComponent(token)}`)
+    if (!response.ok) return null
+    const data = (await response.json()) as { rawText: string }
+    return typeof data.rawText === 'string' ? { rawText: data.rawText } : null
+  } catch {
+    return null
+  }
+}

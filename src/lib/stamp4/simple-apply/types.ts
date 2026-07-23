@@ -1,6 +1,7 @@
 export interface MobilityProfile {
   ukPermissionType: string
   ukPermissionExpiry: string
+  ukSponsorship: string
   irelandSponsorship: string
   netherlandsSponsorship: string
   germanySponsorship: string
