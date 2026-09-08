@@ -1,7 +1,7 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
-import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import { authenticateRequest } from '@/lib/stamp4/simple-apply/supabaseAuth'
 import type { JobSource } from '@/lib/stamp4/simple-apply/jobSources'
+import type { NextRequest } from 'next/server'
 
 type SourceRow = {
   name: string
@@ -22,22 +22,25 @@ function rowToSource(row: SourceRow): JobSource {
   }
 }
 
-export async function GET(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
-  const { data, error } = await getSupabaseServer().from('custom_job_sources').select('*').order('added_at')
+  const { data, error } = await auth.supabase.from('custom_job_sources').select('*').order('added_at')
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json((data as SourceRow[]).map(rowToSource))
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json((data as SourceRow[]).map(rowToSource))
 }
 
-export async function POST(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const parsed = await parseJsonBody<JobSource>(request)
   if (!parsed.ok) return parsed.response
   const source = parsed.body
-  const { error } = await getSupabaseServer().from('custom_job_sources').insert({
+  const { error } = await auth.supabase.from('custom_job_sources').insert({
+    user_id: auth.user.id,
     name: source.name,
     url: source.url === '#' ? null : source.url,
     region: source.region,
@@ -45,7 +48,7 @@ export async function POST(request: Request) {
     confidence: null,
   })
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }
 
