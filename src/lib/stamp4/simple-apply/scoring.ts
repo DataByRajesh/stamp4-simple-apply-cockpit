@@ -1,11 +1,11 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import { mapProofs } from './proofMapper'
 import type { ParsedJob, ScoreBreakdown } from './types'
 
-function roleFit(roleTitle: string) {
+function roleFit(roleTitle: string, profile: CareerMobilityProfile) {
   const title = roleTitle.toLowerCase()
-  if (RAJ_PROFILE.targetRoleLane.some((role) => title.includes(role))) return 5
-  if (RAJ_PROFILE.adjacentRoleLane.some((role) => title.includes(role))) return 3.75
+  if (profile.targetRoleLane.some((role) => title.includes(role))) return 5
+  if (profile.adjacentRoleLane.some((role) => title.includes(role))) return 3.75
   if ((title.includes('analyst') && title.includes('system')) || (title.includes('analyst') && title.includes('business'))) return 3
   if (title.includes('analyst')) return 1.25
   return 0
@@ -26,12 +26,12 @@ function extractNumericSalary(salary: string | null) {
   return amounts.length ? Math.min(...amounts) : null
 }
 
-function scoreSalaryComponent(salary: string | null) {
+function scoreSalaryComponent(salary: string | null, profile: CareerMobilityProfile) {
   const parsedAmount = extractNumericSalary(salary)
 
   if (!salary || parsedAmount === null) return -1.25
-  if (parsedAmount < RAJ_PROFILE.salaryPermitFloorEUR) return -3.75
-  if (parsedAmount >= RAJ_PROFILE.salaryTargetRangeEUR.min) return 1.25
+  if (parsedAmount < profile.salaryPermitFloorEUR) return -3.75
+  if (parsedAmount >= profile.salaryTargetRangeEUR.min) return 1.25
   return 0
 }
 
@@ -45,7 +45,7 @@ function extractRequiredYears(signals: string[]): number | null {
   return null
 }
 
-function scoreSeniorityFit(parsed: ParsedJob): number {
+function scoreSeniorityFit(parsed: ParsedJob, profile: CareerMobilityProfile): number {
   const signals = parsed.senioritySignals.map((signal) => signal.toLowerCase())
   const hasSeniorKeyword = signals.some((signal) => SENIOR_KEYWORDS.includes(signal))
   const requiredYears = extractRequiredYears(parsed.senioritySignals)
@@ -53,18 +53,18 @@ function scoreSeniorityFit(parsed: ParsedJob): number {
   let seniorityFit = 5
 
   if (hasSeniorKeyword) seniorityFit -= 3
-  if (requiredYears !== null && requiredYears > RAJ_PROFILE.yearsExperience) {
-    seniorityFit -= Math.min(3.75, (requiredYears - RAJ_PROFILE.yearsExperience) * 1.25)
+  if (requiredYears !== null && requiredYears > profile.yearsExperience) {
+    seniorityFit -= Math.min(3.75, (requiredYears - profile.yearsExperience) * 1.25)
   }
 
   return Math.max(0, Math.min(5, seniorityFit))
 }
 
-export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
-  const role = roleFit(parsed.roleTitle)
+export function scoreJob(parsed: ParsedJob, profile: CareerMobilityProfile = RAJ_PROFILE): ScoreBreakdown {
+  const role = roleFit(parsed.roleTitle, profile)
   const domainFit = Math.min(5, parsed.domainKeywords.length)
   const matchedCoreSkills = parsed.requiredSkills.filter((skill) =>
-    RAJ_PROFILE.coreSkills.includes(skill as (typeof RAJ_PROFILE.coreSkills)[number]),
+    profile.coreSkills.includes(skill),
   )
   const skillFit = Math.min(5, matchedCoreSkills.length * 0.625)
   const hasPermitRisk = parsed.sponsorshipSignals.length > 0
@@ -76,12 +76,12 @@ export function scoreJob(parsed: ParsedJob): ScoreBreakdown {
   if (hasPermitRisk && !positiveCountry) permitFit -= 3.75
   if (hasPermitRisk && positiveCountry) permitFit -= 2
   if (countryLower === 'uk') permitFit -= 2.5
-  permitFit += scoreSalaryComponent(parsed.salary)
+  permitFit += scoreSalaryComponent(parsed.salary, profile)
 
   permitFit = Math.max(0, Math.min(5, permitFit))
 
-  const proofStrength = Math.min(5, mapProofs(parsed).length)
-  const seniorityFit = scoreSeniorityFit(parsed)
+  const proofStrength = Math.min(5, mapProofs(parsed, profile).length)
+  const seniorityFit = scoreSeniorityFit(parsed, profile)
   // Each dimension is scored out of 5 so new dimensions can be added later without
   // rebalancing a shared point pool; the verdict is their average, not their sum.
   const total = Math.round(((role + domainFit + skillFit + permitFit + proofStrength + seniorityFit) / 6) * 10) / 10

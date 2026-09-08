@@ -30,14 +30,30 @@ const DOMAIN_SECTORS = [
   },
 ] as const
 
-export function matchedDomainSectors(domainKeywords: readonly string[]): string[] {
+export interface CareerMobilityProfile {
+  yearsExperience: number
+  targetCountries: readonly string[]
+  passiveCountries: readonly string[]
+  targetRoleLane: readonly string[]
+  adjacentRoleLane: readonly string[]
+  domainSectors: readonly { name: string; keywords: readonly string[] }[]
+  targetDomains: readonly string[]
+  coreSkills: readonly string[]
+  proofAssets: Record<string, string>
+  positiveLocationSignals: readonly string[]
+  permitRiskPhrases: readonly string[]
+  salaryPermitFloorEUR: number
+  salaryTargetRangeEUR: { min: number; max: number }
+}
+
+export function matchedDomainSectors(domainKeywords: readonly string[], sectors: CareerMobilityProfile['domainSectors'] = DOMAIN_SECTORS): string[] {
   const matched = new Set(domainKeywords.map((keyword) => keyword.toLowerCase()))
-  return DOMAIN_SECTORS.filter((sector) => sector.keywords.some((keyword) => matched.has(keyword))).map(
+  return sectors.filter((sector) => sector.keywords.some((keyword) => matched.has(keyword))).map(
     (sector) => sector.name,
   )
 }
 
-export const RAJ_PROFILE = {
+export const RAJ_PROFILE: CareerMobilityProfile = {
   yearsExperience: 3,
   targetCountries: ['Ireland', 'Netherlands'],
   passiveCountries: ['UK'],

@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob } from './types'
 
 const BROADER_SKILLS = [
@@ -21,7 +21,6 @@ const BROADER_SKILLS = [
 ]
 
 const BROADER_LOCATIONS = [
-  ...RAJ_PROFILE.positiveLocationSignals,
   'london',
   'manchester',
   'birmingham',
@@ -98,9 +97,10 @@ function extractCompany(rawText: string) {
   return proper && proper !== extractTitle(rawText) ? proper : 'Unknown company'
 }
 
-function extractLocation(rawText: string) {
+function extractLocation(rawText: string, profile: CareerMobilityProfile) {
   const lower = rawText.toLowerCase()
-  const matches = BROADER_LOCATIONS.filter((place) => new RegExp(`\\b${escapeRegExp(place)}\\b`).test(lower))
+  const locations = unique([...profile.positiveLocationSignals, ...BROADER_LOCATIONS])
+  const matches = locations.filter((place) => new RegExp(`\\b${escapeRegExp(place)}\\b`).test(lower))
   const location = unique(matches).join(', ')
   let country = ''
 
@@ -155,15 +155,15 @@ function extractBullets(text: string) {
     .slice(0, 8)
 }
 
-export function parseJobDescription(rawText: string): ParsedJob {
+export function parseJobDescription(rawText: string, profile: CareerMobilityProfile = RAJ_PROFILE): ParsedJob {
   const lower = rawText.toLowerCase()
-  const allSkills = unique([...RAJ_PROFILE.coreSkills, ...BROADER_SKILLS])
+  const allSkills = unique([...profile.coreSkills, ...BROADER_SKILLS])
   const requiredSection = sectionText(rawText, ['requirements', 'about you', 'what you need'])
   const niceSection = sectionText(rawText, ['preferred', 'nice to have', 'desirable'])
   const requiredSkills = keywordMatches(requiredSection || rawText, allSkills)
   const niceToHaveSkills = keywordMatches(niceSection, allSkills)
-  const { country, location } = extractLocation(rawText)
-  const sponsorshipSignals = phraseMatches(lower, RAJ_PROFILE.permitRiskPhrases)
+  const { country, location } = extractLocation(rawText, profile)
+  const sponsorshipSignals = phraseMatches(lower, profile.permitRiskPhrases)
   const salary = extractSalary(rawText)
   const responsibilities = extractBullets(
     sectionText(rawText, ['responsibilities', "what you'll do", 'what you will do', 'duties']),
@@ -209,7 +209,7 @@ export function parseJobDescription(rawText: string): ParsedJob {
     requiredSkills,
     niceToHaveSkills,
     tools,
-    domainKeywords: keywordMatches(rawText, RAJ_PROFILE.targetDomains),
+    domainKeywords: keywordMatches(rawText, profile.targetDomains),
     responsibilities,
     sponsorshipSignals,
     redFlags,

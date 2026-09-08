@@ -1,18 +1,18 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob, ProofMapping } from './types'
 
 function hasAny(text: string, words: string[]) {
   return words.some((word) => new RegExp(`\\b${word}\\b`, 'i').test(text))
 }
 
-export function mapProofs(parsed: ParsedJob): ProofMapping[] {
+export function mapProofs(parsed: ParsedJob, profile: CareerMobilityProfile = RAJ_PROFILE): ProofMapping[] {
   const text = parsed.rawText.toLowerCase()
   const mappings: ProofMapping[] = []
 
   if (hasAny(text, ['payment', 'payments', 'reconciliation', 'settlement'])) {
     mappings.push({
       jdRequirement: 'Payment reconciliation',
-      proofAsset: `${RAJ_PROFILE.proofAssets.fisFintech} + ${RAJ_PROFILE.proofAssets.payGuardIE}`,
+      proofAsset: `${profile.proofAssets.fisFintech} + ${profile.proofAssets.payGuardIE}`,
       howToUse:
         'Reference the PayGuard IE mismatch-detection scenario: comparing payment vs settlement records on ID, amount, status, timestamp.',
     })
@@ -21,7 +21,7 @@ export function mapProofs(parsed: ParsedJob): ProofMapping[] {
   if (hasAny(text, ['sql', 'data validation'])) {
     mappings.push({
       jdRequirement: 'SQL/data validation',
-      proofAsset: `${RAJ_PROFILE.proofAssets.fisFintech} + ${RAJ_PROFILE.proofAssets.payGuardIE}`,
+      proofAsset: `${profile.proofAssets.fisFintech} + ${profile.proofAssets.payGuardIE}`,
       howToUse: 'Describe the SQL-based duplicate/mismatch detection logic built in PayGuard IE.',
     })
   }
@@ -29,7 +29,7 @@ export function mapProofs(parsed: ParsedJob): ProofMapping[] {
   if (hasAny(text, ['uat', 'jira', 'testing', 'defect'])) {
     mappings.push({
       jdRequirement: 'UAT/testing',
-      proofAsset: `FIS/Yalamanchili software testing experience + ${RAJ_PROFILE.proofAssets.payGuardIE}`,
+      proofAsset: `${profile.proofAssets.fisFintech} + ${profile.proofAssets.payGuardIE}`,
       howToUse: 'Reference the 40-case UAT test pack and defect log built for PayGuard IE.',
     })
   }
@@ -46,7 +46,7 @@ export function mapProofs(parsed: ParsedJob): ProofMapping[] {
   if (hasAny(text, ['compliance', 'regulatory', 'kyc', 'aml', 'dora'])) {
     mappings.push({
       jdRequirement: 'Regulatory/compliance awareness',
-      proofAsset: RAJ_PROFILE.proofAssets.regPulse,
+      proofAsset: profile.proofAssets.regPulse,
       howToUse: "Reference RegPulse's DORA/PSD3 control-evidence tracking approach.",
     })
   }

@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob, ScoreBreakdown } from './types'
 
 export interface SkipReason {
@@ -6,7 +6,7 @@ export interface SkipReason {
   details: string[]
 }
 
-export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipReason {
+export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob, profile: CareerMobilityProfile = RAJ_PROFILE): SkipReason {
   const details: string[] = []
 
   if (score.roleFit === 0) {
@@ -27,7 +27,7 @@ export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipR
     if (parsed.sponsorshipSignals.length) {
       details.push(
         `Permit risk: JD signals "${parsed.sponsorshipSignals[0]}"${
-          parsed.country && !RAJ_PROFILE.targetCountries.some((country) => country.toLowerCase() === parsed.country.toLowerCase())
+          parsed.country && !profile.targetCountries.some((country) => country.toLowerCase() === parsed.country.toLowerCase())
             ? ` and "${parsed.country}" isn't one of your target countries`
             : ''
         }.`,
@@ -43,7 +43,7 @@ export function buildSkipReason(score: ScoreBreakdown, parsed: ParsedJob): SkipR
 
   if (score.seniorityFit < 2) {
     details.push(
-      `Seniority mismatch: this JD looks like it needs more scope/years than your ~${RAJ_PROFILE.yearsExperience} years of experience.`,
+      `Seniority mismatch: this JD looks like it needs more scope/years than your ~${profile.yearsExperience} years of experience.`,
     )
   }
 

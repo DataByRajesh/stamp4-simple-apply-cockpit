@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import { apiCall } from './storage'
 
 export interface JobSource {
@@ -248,7 +248,7 @@ const REGION_HUB_CITY: Record<'Ireland' | 'Netherlands' | 'Germany', string> = {
   Germany: 'Berlin',
 }
 
-export function buildSuggestedSearchQuery(region: 'Ireland' | 'Netherlands' | 'Germany'): string {
-  const roles = RAJ_PROFILE.targetRoleLane.slice(0, 3).join(' OR ')
+export function buildSuggestedSearchQuery(region: 'Ireland' | 'Netherlands' | 'Germany', profile: CareerMobilityProfile = RAJ_PROFILE): string {
+  const roles = profile.targetRoleLane.slice(0, 3).join(' OR ')
   return `(${roles}) ${REGION_HUB_CITY[region]}`
 }

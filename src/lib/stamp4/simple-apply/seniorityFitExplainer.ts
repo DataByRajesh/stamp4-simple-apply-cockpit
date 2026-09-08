@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob, ScoreBreakdown } from './types'
 
 export type SeniorityVerdict = 'matched' | 'moderate-stretch' | 'overreach'
@@ -23,11 +23,11 @@ function extractRequiredYears(signals: string[]): number | null {
   return null
 }
 
-export function explainSeniorityFit(parsed: ParsedJob, score: ScoreBreakdown): SeniorityFitExplanation {
+export function explainSeniorityFit(parsed: ParsedJob, score: ScoreBreakdown, profile: CareerMobilityProfile = RAJ_PROFILE): SeniorityFitExplanation {
   const signals = parsed.senioritySignals.map((signal) => signal.toLowerCase())
   const hasSeniorTitle = signals.some((signal) => SENIOR_KEYWORDS.includes(signal))
   const requiredYears = extractRequiredYears(parsed.senioritySignals)
-  const yearsGap = requiredYears !== null ? requiredYears - RAJ_PROFILE.yearsExperience : null
+  const yearsGap = requiredYears !== null ? requiredYears - profile.yearsExperience : null
 
   // Mirrors the seniorityFit <= 1 threshold in scoreJob() that caps the decision -
   // keep this in sync so the panel's verdict always agrees with what actually happened to the score.
@@ -47,7 +47,7 @@ export function explainSeniorityFit(parsed: ParsedJob, score: ScoreBreakdown): S
     const parts: string[] = []
     if (hasSeniorTitle) parts.push('the title itself signals a senior-level role')
     if (yearsGap !== null && yearsGap > 0) {
-      parts.push(`the JD asks for ${requiredYears}+ years against your ${RAJ_PROFILE.yearsExperience}`)
+      parts.push(`the JD asks for ${requiredYears}+ years against your ${profile.yearsExperience}`)
     }
     headline = `Worth a stretch, not a given - ${parts.join(' and ')}.`
     guidance =
@@ -57,7 +57,7 @@ export function explainSeniorityFit(parsed: ParsedJob, score: ScoreBreakdown): S
     const parts: string[] = []
     if (hasSeniorTitle) parts.push('a Senior/Lead/Principal-titled role')
     if (yearsGap !== null && yearsGap > 0) {
-      parts.push(`${requiredYears}+ years required vs your ${RAJ_PROFILE.yearsExperience} (a ${yearsGap}-year gap)`)
+      parts.push(`${requiredYears}+ years required vs your ${profile.yearsExperience} (a ${yearsGap}-year gap)`)
     }
     headline = `Real overreach - ${parts.join(', ')}. The score would clear Apply Now on other dimensions alone, so this has been capped.`
     guidance =

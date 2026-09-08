@@ -1,4 +1,4 @@
-import { matchedDomainSectors, RAJ_PROFILE } from './profile'
+import { matchedDomainSectors, RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from './types'
 
 export interface ScoreExplanation {
@@ -19,22 +19,22 @@ function explainRoleFit(points: number, parsed: ParsedJob): string {
   return `"${title}" has no analyst/target-lane signal at all - this caps the decision at Save / Low Priority regardless of the other scores.`
 }
 
-function explainDomainFit(parsed: ParsedJob): string {
+function explainDomainFit(parsed: ParsedJob, profile: CareerMobilityProfile): string {
   if (!parsed.domainKeywords.length) return 'No FinTech/banking/payments domain keywords were detected in the JD.'
-  const sectors = matchedDomainSectors(parsed.domainKeywords)
+  const sectors = matchedDomainSectors(parsed.domainKeywords, profile.domainSectors)
   const sectorLine = sectors.length ? ` Sector${sectors.length === 1 ? '' : 's'}: ${sectors.join(', ')}.` : ''
   return `Matched ${parsed.domainKeywords.length} domain keyword${parsed.domainKeywords.length === 1 ? '' : 's'}: ${parsed.domainKeywords.join(', ')} (1 pt each, capped at 5).${sectorLine}`
 }
 
-function explainSkillFit(parsed: ParsedJob): string {
+function explainSkillFit(parsed: ParsedJob, profile: CareerMobilityProfile): string {
   const matched = parsed.requiredSkills.filter((skill) =>
-    RAJ_PROFILE.coreSkills.includes(skill as (typeof RAJ_PROFILE.coreSkills)[number]),
+    profile.coreSkills.includes(skill),
   )
   if (!matched.length) return 'None of your core skills (SQL, UAT, Jira, defect, incident, production support, etc.) were detected.'
   return `Matched ${matched.length} of your core skills: ${matched.join(', ')} (0.625 pts each, capped at 5).`
 }
 
-function explainPermitFit(parsed: ParsedJob): string {
+function explainPermitFit(parsed: ParsedJob, profile: CareerMobilityProfile): string {
   const parts: string[] = []
   const countryLower = parsed.country.toLowerCase()
   const positiveCountry = countryLower === 'ireland' || countryLower === 'netherlands' || countryLower === 'eu'
@@ -71,7 +71,7 @@ function explainProofStrength(proofs: ProofMapping[]): string {
 
 const SENIOR_KEYWORDS = ['senior', 'lead', 'principal', 'manager']
 
-function explainSeniorityFit(parsed: ParsedJob): string {
+function explainSeniorityFit(parsed: ParsedJob, profile: CareerMobilityProfile): string {
   const signals = parsed.senioritySignals.map((signal) => signal.toLowerCase())
   const seniorKeyword = signals.find((signal) => SENIOR_KEYWORDS.includes(signal))
   const yearsSignal = parsed.senioritySignals.find((signal) => /\d+\+?\s*years?/i.test(signal))
@@ -79,11 +79,11 @@ function explainSeniorityFit(parsed: ParsedJob): string {
   const parts: string[] = []
   if (seniorKeyword) {
     parts.push(
-      `JD signals a "${seniorKeyword}"-level role, which typically needs more scope/years than your ~${RAJ_PROFILE.yearsExperience} years of experience.`,
+      `JD signals a "${seniorKeyword}"-level role, which typically needs more scope/years than your ~${profile.yearsExperience} years of experience.`,
     )
   }
   if (yearsSignal) {
-    parts.push(`JD states "${yearsSignal}" - checked against your ~${RAJ_PROFILE.yearsExperience} years of experience.`)
+    parts.push(`JD states "${yearsSignal}" - checked against your ~${profile.yearsExperience} years of experience.`)
   }
 
   return parts.length
@@ -91,13 +91,13 @@ function explainSeniorityFit(parsed: ParsedJob): string {
     : "No seniority signal detected, or it matches your early/mid-career level - full marks."
 }
 
-export function explainScore(score: ScoreBreakdown, parsed: ParsedJob, proofs: ProofMapping[]): ScoreExplanation[] {
+export function explainScore(score: ScoreBreakdown, parsed: ParsedJob, proofs: ProofMapping[], profile: CareerMobilityProfile = RAJ_PROFILE): ScoreExplanation[] {
   return [
     { dimension: 'Role fit', points: score.roleFit, cap: 5, reason: explainRoleFit(score.roleFit, parsed) },
-    { dimension: 'Domain fit', points: score.domainFit, cap: 5, reason: explainDomainFit(parsed) },
-    { dimension: 'Skill fit', points: score.skillFit, cap: 5, reason: explainSkillFit(parsed) },
-    { dimension: 'Permit fit', points: score.permitFit, cap: 5, reason: explainPermitFit(parsed) },
+    { dimension: 'Domain fit', points: score.domainFit, cap: 5, reason: explainDomainFit(parsed, profile) },
+    { dimension: 'Skill fit', points: score.skillFit, cap: 5, reason: explainSkillFit(parsed, profile) },
+    { dimension: 'Permit fit', points: score.permitFit, cap: 5, reason: explainPermitFit(parsed, profile) },
     { dimension: 'Proof strength', points: score.proofStrength, cap: 5, reason: explainProofStrength(proofs) },
-    { dimension: 'Seniority fit', points: score.seniorityFit, cap: 5, reason: explainSeniorityFit(parsed) },
+    { dimension: 'Seniority fit', points: score.seniorityFit, cap: 5, reason: explainSeniorityFit(parsed, profile) },
   ]
 }
