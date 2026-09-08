@@ -1,4 +1,4 @@
-﻿import data from '@/data/netherlands-recognised-sponsors-2026-07.json'
+import data from '@/data/netherlands-recognised-sponsors.json'
 export type RecognisedSponsorTier = 'aligned' | 'review' | 'evidence'
 export interface RecognisedSponsor {
   name: string
