@@ -1,14 +1,17 @@
 /** Pull and rank IND-recognised work sponsors. Usage: npx tsx scripts/pull-netherlands-sponsors.ts [--dry-run] */
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { fetchArbeitnowVisaSponsorshipJobs } from '../src/lib/stamp4/simple-apply/arbeitnowFeed'
+import { fetchAdzunaJobs } from '../src/lib/stamp4/simple-apply/adzunaFeed'
 import { RAJ_PROFILE } from '../src/lib/stamp4/simple-apply/profile'
+
+if (fs.existsSync('.env.local')) process.loadEnvFile('.env.local')
 
 const REGISTER_URL = 'https://ind.nl/en/public-register-recognised-sponsors/public-register-work'
 const EXPECTED_ROW_RANGE = { min: 10_000, max: 20_000 }
+const ALIGNED_SCORE_MINIMUM = 12
+const REVIEW_SCORE_MINIMUM = 10
 const DRY_RUN = process.argv.includes('--dry-run')
 const SIGNAL_KEYWORDS = [...RAJ_PROFILE.targetRoleLane, ...RAJ_PROFILE.adjacentRoleLane]
-const NL_LOCATIONS = ['netherlands', 'amsterdam', 'rotterdam', 'utrecht', 'eindhoven', 'the hague', 'den haag']
 
 interface RawSponsor { name: string; kvkNumber: string }
 
@@ -66,7 +69,7 @@ function matchedSignals(title: string): string[] {
 }
 
 function tierFor(score: number): 'aligned' | 'review' | 'evidence' {
-  return score >= 40 ? 'aligned' : score >= 20 ? 'review' : 'evidence'
+  return score >= ALIGNED_SCORE_MINIMUM ? 'aligned' : score >= REVIEW_SCORE_MINIMUM ? 'review' : 'evidence'
 }
 
 async function main() {
@@ -77,11 +80,18 @@ async function main() {
   console.log('First/last:', sponsors[0], sponsors.at(-1))
   if (DRY_RUN) return
 
-  const visaJobs = await fetchArbeitnowVisaSponsorshipJobs()
+  const jobsById = new Map<string, Awaited<ReturnType<typeof fetchAdzunaJobs>>[number]>()
+  let fetchedJobCount = 0
+  for (const query of SIGNAL_KEYWORDS) {
+    const jobs = await fetchAdzunaJobs('nl', query)
+    fetchedJobCount += jobs.length
+    jobs.forEach((job) => jobsById.set(job.externalId, job))
+  }
+  const nlJobs = [...jobsById.values()]
+  console.log(`Fetched ${fetchedJobCount} Adzuna results across ${SIGNAL_KEYWORDS.length} role terms; ${nlJobs.length} unique Netherlands postings.`)
+
   const jobsByEmployer = new Map<string, { count: number; signals: Set<string> }>()
-  for (const job of visaJobs) {
-    const location = (job.location ?? '').toLowerCase()
-    if (!NL_LOCATIONS.some((candidate) => location.includes(candidate))) continue
+  for (const job of nlJobs) {
     const key = normalizeCompanyName(job.companyName)
     if (!key) continue
     const entry = jobsByEmployer.get(key) ?? { count: 0, signals: new Set<string>() }
@@ -98,8 +108,8 @@ async function main() {
     return {
       ...sponsor, relevanceRank: 0, relevanceScore, tier: tierFor(relevanceScore),
       reasons: activeRoles
-        ? [`${activeRoles} current Arbeitnow visa-sponsorship posting${activeRoles === 1 ? '' : 's'} matched by normalized name.`, ...(signals.length ? [`Role signals: ${signals.slice(0, 5).join(', ')}`] : [])]
-        : ['Confirmed IND-recognised sponsor; no current matching Arbeitnow visa-sponsorship posting found by normalized name match.'],
+        ? [`${activeRoles} current Netherlands Adzuna posting${activeRoles === 1 ? '' : 's'} matched by normalized name.`, ...(signals.length ? [`Role signals: ${signals.slice(0, 5).join(', ')}`] : [])]
+        : ['Confirmed IND-recognised sponsor; no current matching Netherlands Adzuna posting found by normalized name match.'],
     }
   })
   employers.sort((a, b) => b.relevanceScore - a.relevanceScore || a.name.localeCompare(b.name))
@@ -108,7 +118,7 @@ async function main() {
   const output = { metadata: {
     country: 'Netherlands', registerUpdated: 'See the IND register page for its last-updated date at fetch time.',
     sourcePage: REGISTER_URL, generatedAt: new Date().toISOString(),
-    method: `${sponsors.length} IND-recognised sponsors deduplicated by KVK and conservatively name-matched against Netherlands-located Arbeitnow visa-sponsorship postings. Score = min(active roles, 20) + 10 x distinct role signals.`,
+    method: `${sponsors.length} IND-recognised sponsors deduplicated by KVK and conservatively name-matched against Netherlands Adzuna postings fetched across ${SIGNAL_KEYWORDS.length} role terms. Score = min(active roles, 20) + 10 x distinct role signals; aligned >= ${ALIGNED_SCORE_MINIMUM}, review >= ${REVIEW_SCORE_MINIMUM}, otherwise evidence.`,
     disclaimer: 'IND recognition does not mean a specific vacancy offers sponsorship or is currently hiring. Confirm sponsorship intent, salary and role fit for each vacancy.',
     totalRecognisedSponsors: sponsors.length,
   }, employers }
