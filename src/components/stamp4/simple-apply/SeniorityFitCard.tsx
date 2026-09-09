@@ -1,7 +1,7 @@
 'use client'
 
 import { explainSeniorityFit } from '@/lib/stamp4/simple-apply/seniorityFitExplainer'
-import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
+import { RAJ_PROFILE, type CareerMobilityProfile } from '@/lib/stamp4/simple-apply/profile'
 import type { ParsedJob, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
 const BADGE_CLASS: Record<ReturnType<typeof explainSeniorityFit>['verdict'], string> = {
@@ -16,8 +16,16 @@ const VERDICT_LABEL: Record<ReturnType<typeof explainSeniorityFit>['verdict'], s
   overreach: 'Overreach',
 }
 
-export function SeniorityFitCard({ parsed, score }: { parsed: ParsedJob; score: ScoreBreakdown }) {
-  const result = explainSeniorityFit(parsed, score)
+export function SeniorityFitCard({
+  parsed,
+  score,
+  profile = RAJ_PROFILE,
+}: {
+  parsed: ParsedJob
+  score: ScoreBreakdown
+  profile?: CareerMobilityProfile
+}) {
+  const result = explainSeniorityFit(parsed, score, profile)
 
   return (
     <section className="card stack seniority-fit">
@@ -28,7 +36,7 @@ export function SeniorityFitCard({ parsed, score }: { parsed: ParsedJob; score: 
 
       <span className={`badge ${BADGE_CLASS[result.verdict]}`}>
         {result.requiredYears !== null
-          ? `${result.requiredYears}+ years required vs your ${RAJ_PROFILE.yearsExperience}`
+          ? `${result.requiredYears}+ years required vs your ${profile.yearsExperience}`
           : result.hasSeniorTitle
             ? 'Senior-titled role, no years figure stated'
             : 'No years figure stated'}

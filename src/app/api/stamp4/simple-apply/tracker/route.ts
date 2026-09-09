@@ -1,9 +1,9 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
 import { EMPTY_APPLICATION_PACK } from '@/lib/stamp4/simple-apply/generator'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
-import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import { authenticateRequest } from '@/lib/stamp4/simple-apply/supabaseAuth'
 import { validateTrackerPatch, validateTrackerPost } from '@/lib/stamp4/simple-apply/trackerValidation'
 import type { TrackedJob, TrackerStatus } from '@/lib/stamp4/simple-apply/types'
+import type { NextRequest } from 'next/server'
 
 export const runtime = 'nodejs'
 
@@ -95,42 +95,47 @@ function jobToInsert(job: TrackedJob) {
   }
 }
 
-export async function GET(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
-  const { data, error } = await getSupabaseServer()
+  const { data, error } = await auth.supabase
     .from('tracked_jobs')
     .select('*')
     .order('date_added', { ascending: false })
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json((data as TrackedJobRow[]).map(rowToJob))
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json((data as TrackedJobRow[]).map(rowToJob))
 }
 
-export async function POST(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const parsed = await parseJsonBody<TrackedJob>(request)
   if (!parsed.ok) return parsed.response
   const job = parsed.body
   const validationError = validateTrackerPost(job)
-  if (validationError) return Response.json({ error: validationError }, { status: 400 })
+  if (validationError) return auth.json({ error: validationError }, { status: 400 })
 
-  const { error } = await getSupabaseServer().from('tracked_jobs').upsert(jobToInsert(job), { onConflict: 'id' })
+  const { error } = await auth.supabase
+    .from('tracked_jobs')
+    .upsert({ ...jobToInsert(job), user_id: auth.user.id }, { onConflict: 'id' })
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }
 
-export async function PATCH(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function PATCH(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const parsed = await parseJsonBody<{ id?: string; status?: TrackerStatus; notes?: string; applicationUrl?: string; applicationDeadline?: string; sponsorshipStatus?: TrackedJob['sponsorshipStatus']; sponsorshipEvidence?: string; outreach?: TrackedJob['outreach']; applicationRecord?: TrackedJob['applicationRecord']; interviewExecution?: TrackedJob['interviewExecution']; offerDecision?: TrackedJob['offerDecision'] }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
   const validationError = validateTrackerPatch(body)
-  if (validationError) return Response.json({ error: validationError }, { status: 400 })
-  if (!body.id) return Response.json({ error: 'Missing id' }, { status: 400 })
+  if (validationError) return auth.json({ error: validationError }, { status: 400 })
+  if (!body.id) return auth.json({ error: 'Missing id' }, { status: 400 })
 
   const update: { status?: TrackerStatus; notes?: string; application_url?: string | null; application_deadline?: string | null; sponsorship_status?: TrackedJob['sponsorshipStatus']; sponsorship_evidence?: string; outreach?: TrackedJob['outreach']; application_record?: TrackedJob['applicationRecord']; interview_execution?: TrackedJob['interviewExecution']; offer_decision?: TrackedJob['offerDecision']; updated_at: string } = { updated_at: new Date().toISOString() }
   if (body.status) update.status = body.status
@@ -144,22 +149,23 @@ export async function PATCH(request: Request) {
   if (body.interviewExecution !== undefined) update.interview_execution = body.interviewExecution
   if (body.offerDecision !== undefined) update.offer_decision = body.offerDecision
 
-  const { error } = await getSupabaseServer().from('tracked_jobs').update(update).eq('id', body.id)
+  const { error } = await auth.supabase.from('tracked_jobs').update(update).eq('id', body.id)
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }
 
-export async function DELETE(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function DELETE(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const id = new URL(request.url).searchParams.get('id')
-  if (!id) return Response.json({ error: 'Missing id' }, { status: 400 })
+  if (!id) return auth.json({ error: 'Missing id' }, { status: 400 })
 
-  const { error } = await getSupabaseServer().from('tracked_jobs').delete().eq('id', id)
+  const { error } = await auth.supabase.from('tracked_jobs').delete().eq('id', id)
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }
 
 
