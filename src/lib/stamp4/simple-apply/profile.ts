@@ -30,6 +30,33 @@ const DOMAIN_SECTORS = [
   },
 ] as const
 
+// The JD-requirement categories proofMapper.ts matches against. A tagged
+// proof asset can support more than one - e.g. a reconciliation project
+// usually demonstrates payments, SQL/data validation and UAT all at once.
+export type ProofTag =
+  | 'payments'
+  | 'sql-data-validation'
+  | 'uat-testing'
+  | 'incident-support'
+  | 'compliance-regulatory'
+  | 'stakeholder-communication'
+
+/**
+ * One piece of evidence (a project, a role, a specific achievement) the
+ * candidate can point to, tagged by which JD-requirement categories it
+ * supports. Replaces the old Record<string, string> shape (fixed keys like
+ * "fisFintech"/"payGuardIE") which only ever worked for the one profile it
+ * was written for - proofMapper.ts now matches on tags, not on knowing a
+ * specific project's name in advance, so this generalizes to any
+ * candidate's own portfolio.
+ */
+export interface ProofAsset {
+  id: string
+  label: string
+  description: string
+  tags: readonly ProofTag[]
+}
+
 export interface CareerMobilityProfile {
   yearsExperience: number
   targetCountries: readonly string[]
@@ -39,7 +66,7 @@ export interface CareerMobilityProfile {
   domainSectors: readonly { name: string; keywords: readonly string[] }[]
   targetDomains: readonly string[]
   coreSkills: readonly string[]
-  proofAssets: Record<string, string>
+  proofAssets: readonly ProofAsset[]
   positiveLocationSignals: readonly string[]
   permitRiskPhrases: readonly string[]
   salaryPermitFloorEUR: number
@@ -101,15 +128,50 @@ export const RAJ_PROFILE: CareerMobilityProfile = {
     'requirements',
     'user stories',
   ],
-  proofAssets: {
-    fisFintech: 'FIS FinTech software engineering experience (banking/payments systems)',
-    payGuardIE:
-      'PayGuard IE - payment reconciliation, SQL validation, UAT, defect evidence portfolio project',
-    regPulse:
-      'RegPulse - EU FinTech regulatory readiness dashboard (DORA/PSD3/FiDA)',
-    stamp4Engine: 'Stamp4 Job Positioning Intelligence Engine - internal job-fit tooling',
-    autoTimeAI: 'AutoTime AI - founder, AI automation product',
-  },
+  proofAssets: [
+    {
+      id: 'fisFintech',
+      label: 'FIS FinTech experience',
+      description: 'FIS FinTech software engineering experience (banking/payments systems)',
+      tags: ['payments', 'sql-data-validation', 'uat-testing'],
+    },
+    {
+      id: 'payGuardIE',
+      label: 'PayGuard IE',
+      description: 'PayGuard IE - payment reconciliation, SQL validation, UAT, defect evidence portfolio project',
+      tags: ['payments', 'sql-data-validation', 'uat-testing'],
+    },
+    {
+      id: 'fisYalamanchiliSupport',
+      label: 'FIS/Yalamanchili application support',
+      description: 'FIS/Yalamanchili banking and payment application maintenance/support experience',
+      tags: ['incident-support'],
+    },
+    {
+      id: 'regPulse',
+      label: 'RegPulse',
+      description: 'RegPulse - EU FinTech regulatory readiness dashboard (DORA/PSD3/FiDA)',
+      tags: ['compliance-regulatory'],
+    },
+    {
+      id: 'analystStakeholderWork',
+      label: 'Business-user support and application analyst positioning',
+      description: 'Business-user support + application analyst positioning',
+      tags: ['stakeholder-communication'],
+    },
+    {
+      id: 'stamp4Engine',
+      label: 'Stamp4 Job Positioning Intelligence Engine',
+      description: 'Stamp4 Job Positioning Intelligence Engine - internal job-fit tooling',
+      tags: [],
+    },
+    {
+      id: 'autoTimeAI',
+      label: 'AutoTime AI',
+      description: 'AutoTime AI - founder, AI automation product',
+      tags: [],
+    },
+  ],
   positiveLocationSignals: [
     'ireland',
     'dublin',

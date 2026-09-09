@@ -6,6 +6,9 @@ import {
   isInterviewPrepOutput,
 } from '@/lib/stamp4/simple-apply/generator'
 import { callStructuredLLM } from '@/lib/stamp4/simple-apply/llm'
+import { OPERATOR_USER_ID } from '@/lib/stamp4/simple-apply/operatorAccount'
+import { RAJ_PROFILE, type CareerMobilityProfile } from '@/lib/stamp4/simple-apply/profile'
+import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 import type { InterviewPrepBundle, ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
 export const runtime = 'nodejs'
@@ -101,16 +104,36 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid interview prep request' }, { status: 400 })
   }
 
+  const supabase = getSupabaseServer()
+
+  const [{ data: settingsRows }, { data: careerProfileRow }] = await Promise.all([
+    supabase
+      .from('user_app_settings')
+      .select('key,value')
+      .eq('user_id', OPERATOR_USER_ID)
+      .in('key', ['candidate_evidence_profile', 'mobility_profile']),
+    supabase.from('career_search_profiles').select('profile').eq('user_id', OPERATOR_USER_ID).maybeSingle(),
+  ])
+  const settings = Object.fromEntries((settingsRows ?? []).map((row) => [row.key, row.value]))
+  const evidenceProfile = settings.candidate_evidence_profile
+  const mobilityProfile = settings.mobility_profile
+  const candidateEvidence = [
+    evidenceProfile && typeof evidenceProfile === 'object' ? 'Permanent evidence:\n' + Object.entries(evidenceProfile as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\n') : '',
+    mobilityProfile && typeof mobilityProfile === 'object' ? 'Current mobility and sponsorship settings:\n' + Object.entries(mobilityProfile as Record<string, unknown>).map(([key, value]) => '- ' + key + ': ' + String(value)).join('\n') : '',
+  ].filter(Boolean).join('\n\n').slice(0, 30_000)
+  const careerProfile = (careerProfileRow?.profile as CareerMobilityProfile | undefined) ?? RAJ_PROFILE
+
   const input = {
     parsed: body.parsed,
     score: body.score,
     proofs: body.proofs,
+    candidateEvidence,
   }
 
   try {
     const raw = await callStructuredLLM({
       systemPrompt: INTERVIEW_PREP_SYSTEM_PROMPT,
-      userPrompt: buildInterviewPrepUserPrompt(input),
+      userPrompt: buildInterviewPrepUserPrompt(input, careerProfile),
       schemaName: 'stamp4_simple_apply_interview_prep',
       schema: INTERVIEW_PREP_SCHEMA,
       preferOpenAI: true,

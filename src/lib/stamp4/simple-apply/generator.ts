@@ -1,4 +1,4 @@
-import { RAJ_PROFILE } from './profile'
+import type { CareerMobilityProfile } from './profile'
 import type {
   ApplicationPack,
   CorrectionAction,
@@ -42,19 +42,17 @@ export const EMPTY_APPLICATION_PACK: ApplicationPack = {
   projectProofParagraph: '',
 }
 
-export const SYSTEM_PROMPT = `You are helping Raj, a FinTech systems/application analyst candidate, write application materials for Ireland/EU job applications.
+// Deliberately carries no candidate biography of its own - the real facts
+// (career summary, achievements, projects) come from the candidate's own
+// CandidateEvidenceProfile, passed in the user prompt's "Candidate evidence
+// library" section (see buildAIUserPrompt/buildInterviewPrepUserPrompt).
+// Baking a specific person's background into this constant would make the
+// AI assert someone else's employment history as fact for every other
+// candidate who uses this - the exact "no invented experience" rule below
+// would otherwise be violated by the prompt itself.
+export const SYSTEM_PROMPT = `You are helping a job candidate write application materials for their target roles.
 
-Tone: UK English, practical, no hype, no fake claims, no invented experience. Only use the facts provided below. Raj will personally review and edit every output before use.
-
-Raj's background, verified facts only:
-- About 3 years across regulated banking and payment software at FIS and Yalamanchili (approximately 1 year at FIS and 2 years at Yalamanchili)
-- SQL/data validation, UAT, application support and incident investigation
-- Portfolio projects: PayGuard IE for payment reconciliation, SQL validation, UAT and defect evidence; RegPulse for EU FinTech regulatory readiness around DORA/PSD3/FiDA
-- Founder of AutoTime AI, an AI automation product for jobseekers/SMEs`.trim()
-
-function hasRequirement(proofs: ProofMapping[], requirement: string) {
-  return proofs.some((proof) => proof.jdRequirement.toLowerCase().includes(requirement))
-}
+Tone: UK English, practical, no hype, no fake claims, no invented experience beyond what the candidate has stated themselves. Only use the facts provided in the candidate evidence library and job details below - never assert a background, employer, or project the candidate has not stated. The candidate will personally review and edit every output before use.`.trim()
 
 function companyName(company: string) {
   return company === 'Unknown company' ? 'your organisation' : company
@@ -128,14 +126,14 @@ Rules:
 
 export const INTERVIEW_PREP_SYSTEM_PROMPT = `${SYSTEM_PROMPT}
 
-For this task you are producing a full interview prep bundle, not just a question bank: the questions Raj is likely to be asked (tagged by interview stage), good questions for Raj to ask the interviewer, and grounded salary-negotiation talking points. Every question must be genuinely tailored to the exact job details and proof mappings supplied: reference specific responsibilities, tools, domain keywords, seniority signals or proof assets from that job. Do not produce generic, could-apply-to-any-analyst-role questions - each one should read as if written by someone who read this exact JD closely and is testing Raj against it specifically.`.trim()
+For this task you are producing a full interview prep bundle, not just a question bank: the questions the candidate is likely to be asked (tagged by interview stage), good questions for the candidate to ask the interviewer, and grounded salary-negotiation talking points. Every question must be genuinely tailored to the exact job details and proof mappings supplied: reference specific responsibilities, tools, domain keywords, seniority signals or proof assets from that job. Do not produce generic, could-apply-to-any-analyst-role questions - each one should read as if written by someone who read this exact JD closely and is testing the candidate against it specifically.`.trim()
 
-function salaryContextLines() {
-  return `- Raj's target salary range: EUR ${RAJ_PROFILE.salaryTargetRangeEUR.min.toLocaleString()}-${RAJ_PROFILE.salaryTargetRangeEUR.max.toLocaleString()}
-- Raj's minimum permit-eligible salary floor: EUR ${RAJ_PROFILE.salaryPermitFloorEUR.toLocaleString()}`
+function salaryContextLines(profile: CareerMobilityProfile) {
+  return `- Candidate's target salary range: EUR ${profile.salaryTargetRangeEUR.min.toLocaleString()}-${profile.salaryTargetRangeEUR.max.toLocaleString()}
+- Candidate's minimum permit-eligible salary floor: EUR ${profile.salaryPermitFloorEUR.toLocaleString()}`
 }
 
-export function buildInterviewPrepUserPrompt(input: AIGenerationInput) {
+export function buildInterviewPrepUserPrompt(input: AIGenerationInput, careerProfile: CareerMobilityProfile) {
   return `Job details:
 - Role: ${input.parsed.roleTitle}
 - Company: ${input.parsed.company}
@@ -155,8 +153,8 @@ ${input.candidateEvidence || '- No additional candidate evidence saved.'}
 Relevant proof mappings for this JD:
 ${proofLines(input.proofs)}
 
-Raj's salary context (for negotiation prep only - do not restate as fact about this specific offer):
-${salaryContextLines()}
+Candidate's salary context (for negotiation prep only - do not restate as fact about this specific offer):
+${salaryContextLines(careerProfile)}
 
 Generate a JSON object with this exact shape:
 {
@@ -167,8 +165,8 @@ Generate a JSON object with this exact shape:
       "answerDirection": "practical answer direction",
       "starOutline": {
         "situation": "1 short sentence: the specific context to open with, grounded in a named proof asset",
-        "task": "1 short sentence: what Raj was responsible for in that context",
-        "action": "1-2 short sentences: the concrete steps Raj took - this is the main substance of the answer",
+        "task": "1 short sentence: what the candidate was responsible for in that context",
+        "action": "1-2 short sentences: the concrete steps the candidate took - this is the main substance of the answer",
         "result": "1 short sentence: the outcome, ideally with a concrete detail (a number, a fix, a decision made)"
       },
       "likelyFollowUp": "the single most likely probing follow-up an interviewer would ask after hearing this answer, testing depth rather than repeating the original question",
@@ -178,13 +176,13 @@ Generate a JSON object with this exact shape:
   ],
   "questionsToAsk": [
     {
-      "question": "a good question for Raj to ask the interviewer",
+      "question": "a good question for the candidate to ask the interviewer",
       "whyAsk": "one sentence on what this reveals or why it matters for this specific role"
     }
   ],
   "salaryNegotiation": {
-    "talkingPoints": ["grounded talking point Raj can use if salary comes up"],
-    "suggestedRange": "a specific EUR range to anchor on for this role, reasoned from Raj's target range and what the JD states",
+    "talkingPoints": ["grounded talking point the candidate can use if salary comes up"],
+    "suggestedRange": "a specific EUR range to anchor on for this role, reasoned from the candidate's target range and what the JD states",
     "notes": "1-2 sentences of role-specific negotiation context (e.g. permit/visa leverage considerations, seniority mismatch, salary not stated)"
   }
 }
@@ -195,11 +193,11 @@ Rules:
 - Each question must reference at least one concrete detail from the job details above (a named responsibility, tool, domain keyword or proof asset) so it could not be reused unchanged for a different role.
 - Tag every question with the stage it is most likely to appear in. Use a reasonable spread across all three stages rather than putting everything in one.
 - Only build a starOutline when the question is answerable through a specific past example (most are). If a question is purely hypothetical/opinion-based with no natural STAR story (e.g. "what makes X different from Y"), still fill all four fields but keep them short and note the answer is more explanatory than story-based.
-- likelyFollowUp must be a genuine probe, not a rephrase - e.g. asking for a number, a harder edge case, what Raj would do differently, or how a stakeholder reacted.
+- likelyFollowUp must be a genuine probe, not a rephrase - e.g. asking for a number, a harder edge case, what the candidate would do differently, or how a stakeholder reacted.
 - If payment/reconciliation/settlement is relevant, include this exact question tagged "Technical / Panel": "How would you investigate a payment marked successful in the application but missing in settlement?"
 - Only set tamilAudioNote to the revision-script note for questions that genuinely warrant extra spoken-answer practice; set it to null for the rest.
 - Make 4-6 questionsToAsk - genuinely specific to this company/role, not generic ("What's the culture like?" is not acceptable).
-- Ground salaryNegotiation.suggestedRange and notes in the actual JD salary (if stated) versus Raj's target range and permit floor above - do not invent a JD salary that was not given.
+- Ground salaryNegotiation.suggestedRange and notes in the actual JD salary (if stated) versus the candidate's target range and permit floor above - do not invent a JD salary that was not given.
 - Keep every claim grounded in the job details and proof mappings above.`.trim()
 }
 
@@ -356,66 +354,55 @@ export function generateApplicationOutputsFallback(
   }
 }
 
+// Generic, category-level filler bullets used only to pad out to 5 when the
+// candidate has fewer than 5 matched proofs for this JD - deliberately not
+// naming any specific project/employer, since this path has no candidate
+// evidence to draw a real bullet from for that category.
+const GENERIC_BULLET_FILLERS: Record<string, string> = {
+  'Payment reconciliation': 'Comfortable mapping payment and settlement scenarios into reconciliation checks (ID, amount, status, timestamp).',
+  'SQL/data validation': 'Comfortable using SQL/data validation thinking to investigate duplicate records and mismatch patterns.',
+  'UAT/testing': 'Comfortable building UAT-style test cases and defect evidence for application quality review.',
+  'Application support/incident investigation': 'Comfortable approaching application support issues via logs, database records and workflow state.',
+  'Regulatory/compliance awareness': 'Comfortable structuring regulatory/compliance evidence tracking.',
+  'Stakeholder/business analysis': 'Comfortable translating business requirements into system behaviour and validation rules.',
+}
+
+/**
+ * Non-AI fallback content, used only when the AI call fails. Built entirely
+ * from `proofs` (the caller's own tagged evidence, already resolved
+ * per-candidate by mapProofs) - never asserts a specific job title,
+ * employer or project name, since this function has no candidate identity
+ * to draw one from honestly. Quality is intentionally more generic than the
+ * AI path in exchange for being correct for any candidate.
+ */
 export function generateApplicationPackFallback(parsed: ParsedJob, proofs: ProofMapping[]): ApplicationPack {
   const proofNames = proofs.slice(0, 2).map((proof) => proof.jdRequirement.toLowerCase())
   const summaryTail = proofNames.length ? ` Strongest proof areas: ${proofNames.join(' and ')}.` : ''
   const tailoredCvSummary =
-    'FinTech systems/application analyst with regulated FIS and Yalamanchili banking/payment software experience, SQL/data validation exposure, testing/application quality understanding, and practical payment workflow knowledge.' +
-    summaryTail
+    'Candidate with evidence-backed application analyst experience.' + summaryTail
 
-  const bulletBank = [
-    {
-      key: 'payment',
-      text: 'Mapped payment and settlement scenarios into practical reconciliation checks, including ID, amount, status and timestamp comparisons.',
-    },
-    {
-      key: 'sql',
-      text: 'Used SQL/data validation thinking to investigate duplicate records, mismatch patterns and reporting inconsistencies.',
-    },
-    {
-      key: 'uat',
-      text: 'Built UAT-style test cases, defect notes and acceptance evidence for application quality review.',
-    },
-    {
-      key: 'incident',
-      text: 'Approached application support issues by checking logs, database records, workflow state and user-reported symptoms.',
-    },
-    {
-      key: 'regulatory',
-      text: 'Created RegPulse to structure EU FinTech regulatory readiness around DORA, PSD3 and FiDA evidence tracking.',
-    },
-    {
-      key: 'stakeholder',
-      text: 'Translated business requirements into clear system behaviour, validation rules and delivery-ready notes.',
-    },
-  ]
-
-  const matchedBullets = bulletBank.filter((bullet) =>
-    proofs.some((proof) => proof.jdRequirement.toLowerCase().includes(bullet.key)),
-  )
-  const topCvBullets = [...matchedBullets, ...bulletBank]
-    .filter((bullet, index, array) => array.findIndex((item) => item.text === bullet.text) === index)
-    .slice(0, 5)
-    .map((bullet) => bullet.text)
+  const matchedBullets = proofs.map((proof) => `${proof.jdRequirement}: ${proof.howToUse}`)
+  const fillerBullets = Object.entries(GENERIC_BULLET_FILLERS)
+    .filter(([requirement]) => !proofs.some((proof) => proof.jdRequirement === requirement))
+    .map(([, text]) => text)
+  const topCvBullets = [...matchedBullets, ...fillerBullets].slice(0, 5)
 
   const roleTitle = parsed.roleTitle || 'the role'
   const company = companyName(parsed.company)
   const primaryProof = proofs[0]?.jdRequirement ?? 'systems analysis and application quality'
-  const secondaryProof = proofs[1]?.jdRequirement ?? 'FinTech application support'
+  const secondaryProof = proofs[1]?.jdRequirement
 
   return {
     tailoredCvSummary,
     topCvBullets,
-    coverMessage: `Hello ${company} team,\n\nI am interested in the ${roleTitle} position because it sits close to my target lane: FinTech systems/application analysis, payment workflow understanding, SQL/data validation and UAT-quality evidence. My FIS and Yalamanchili banking/payment software background and focused PayGuard IE/RegPulse project work give me practical proof for the system investigation, validation and stakeholder-facing parts of this role.\n\nI would welcome the chance to discuss where my experience can support the team while I continue building in the Ireland/EU FinTech systems space.`,
-    recruiterLinkedInMessage: `Hi, I saw the ${roleTitle} role at ${company}. My background includes FIS and Yalamanchili banking/payment software, SQL and testing, plus UAT and payment-workflow proof through PayGuard IE. I am focusing on Ireland/EU FinTech systems/application analyst roles and would be glad to discuss fit.`,
-    whyMeAnswer: `My fit is strongest where the role needs practical system investigation rather than generic business analysis. I can connect ${primaryProof} with ${secondaryProof}, and explain the evidence clearly through PayGuard IE or RegPulse. I would still review the exact product context, but the core lane matches my FIS and Yalamanchili banking/payment software and application-quality background.`,
-    projectProofParagraph:
-      hasRequirement(proofs, 'regulatory') &&
-      !hasRequirement(proofs, 'payment') &&
-      !hasRequirement(proofs, 'sql') &&
-      !hasRequirement(proofs, 'uat')
-        ? 'RegPulse is my EU FinTech regulatory readiness dashboard. It organises DORA/PSD3/FiDA themes into control evidence, readiness status and stakeholder review notes, which helps show structured compliance thinking without claiming direct regulatory ownership.'
-        : 'PayGuard IE is my payment reconciliation proof project. It models payment versus settlement records and checks mismatches across ID, amount, status and timestamp, with SQL validation thinking, UAT cases and defect-style evidence that can be discussed in application analyst interviews.',
+    coverMessage: `Hello ${company} team,\n\nI am interested in the ${roleTitle} position because it sits close to my target lane${secondaryProof ? `: ${primaryProof.toLowerCase()} and ${secondaryProof.toLowerCase()}` : ''}. I would welcome the chance to discuss where my experience can support the team.\n\nPlease review and personalise this message with your own specific evidence before sending.`,
+    recruiterLinkedInMessage: `Hi, I saw the ${roleTitle} role at ${company}. My relevant background includes ${primaryProof.toLowerCase()}${secondaryProof ? ` and ${secondaryProof.toLowerCase()}` : ''}. I would be glad to discuss fit.`,
+    whyMeAnswer: secondaryProof
+      ? `My fit is strongest where the role needs ${primaryProof.toLowerCase()} and ${secondaryProof.toLowerCase()}. I would still review the exact product context, but the core lane matches my recorded evidence.`
+      : `My fit is strongest where the role needs ${primaryProof.toLowerCase()}. I would still review the exact product context before finalising this answer.`,
+    projectProofParagraph: proofs[0]
+      ? `${proofs[0].proofAsset}. ${proofs[0].howToUse}`
+      : 'No specific proof project matched this JD automatically - review your evidence library and add the most relevant project or achievement here yourself.',
   }
 }
 
@@ -458,7 +445,7 @@ export function generateInterviewQuestionsFallback(parsed: ParsedJob, proofs: Pr
   const proof = (label: string) =>
     proofs.find((item) => item.jdRequirement.toLowerCase().includes(label))?.proofAsset ??
     proofs[0]?.proofAsset ??
-    'FIS banking software experience'
+    'your relevant experience'
 
   const questions: InterviewQuestion[] = []
   const text = parsed.rawText.toLowerCase()
@@ -538,7 +525,7 @@ export function generateCorrectionActionsFallback(
 
   if (score.proofStrength < 3.75) {
     actions.push({
-      action: 'Add one PayGuard IE reconciliation mismatch scenario',
+      action: 'Add one concrete reconciliation/validation scenario to your evidence library',
       whyItMatters: 'The JD has too few directly mapped proof anchors for a strong application.',
       priority: 'High',
     })
@@ -571,7 +558,7 @@ export function generateCorrectionActionsFallback(
   if (parsed.salary === null) {
     actions.push({
       action: 'Flag salary as unknown - confirm before investing full application effort',
-      whyItMatters: "Salary clarity helps avoid spending time on a role outside Raj's target range.",
+      whyItMatters: "Salary clarity helps avoid spending time on a role outside the candidate's target range.",
       priority: 'Low',
     })
   }

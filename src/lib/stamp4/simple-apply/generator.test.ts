@@ -4,8 +4,11 @@ import {
   generateCorrectionActionsFallback,
   generateInterviewQuestionsFallback,
   isAIGenerationOutput,
+  SYSTEM_PROMPT,
 } from './generator'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from './types'
+
+const NAMES_THAT_MUST_NEVER_BE_HARDCODED = ['Raj', 'FIS', 'Yalamanchili', 'PayGuard', 'RegPulse']
 
 function job(overrides: Partial<ParsedJob> = {}): ParsedJob {
   return {
@@ -110,6 +113,27 @@ describe('generateApplicationPackFallback', () => {
     expect(pack.coverMessage.length).toBeGreaterThan(0)
     expect(pack.recruiterLinkedInMessage.length).toBeGreaterThan(0)
   })
+
+  it('never hardcodes a specific candidate identity, with or without matched proofs', () => {
+    const withoutProofs = generateApplicationPackFallback(job(), [])
+    const withProofs = generateApplicationPackFallback(
+      job(),
+      [{ jdRequirement: 'Payment reconciliation', proofAsset: 'Acme DevOps role', howToUse: 'Describe the on-call rotation.' }],
+    )
+
+    for (const pack of [withoutProofs, withProofs]) {
+      const allText = [pack.tailoredCvSummary, pack.coverMessage, pack.recruiterLinkedInMessage, pack.whyMeAnswer, pack.projectProofParagraph, ...pack.topCvBullets].join(' ')
+      for (const name of NAMES_THAT_MUST_NEVER_BE_HARDCODED) expect(allText).not.toContain(name)
+    }
+
+    expect(withProofs.projectProofParagraph).toContain('Acme DevOps role')
+  })
+})
+
+describe('SYSTEM_PROMPT', () => {
+  it('carries no candidate identity - the real facts come from the per-user evidence library in the user prompt', () => {
+    for (const name of NAMES_THAT_MUST_NEVER_BE_HARDCODED) expect(SYSTEM_PROMPT).not.toContain(name)
+  })
 })
 
 describe('generateInterviewQuestionsFallback', () => {
@@ -132,7 +156,7 @@ describe('generateInterviewQuestionsFallback', () => {
 describe('generateCorrectionActionsFallback', () => {
   it('flags weak proof strength as a high-priority action', () => {
     const actions = generateCorrectionActionsFallback(job(), score({ proofStrength: 1.25 }), [])
-    expect(actions.some((a) => a.action.includes('PayGuard IE') && a.priority === 'High')).toBe(true)
+    expect(actions.some((a) => a.action.includes('evidence library') && a.priority === 'High')).toBe(true)
   })
 
   it('flags an unmapped SQL mention', () => {

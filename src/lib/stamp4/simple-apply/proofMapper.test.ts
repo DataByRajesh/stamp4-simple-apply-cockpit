@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mapProofs } from './proofMapper'
+import { RAJ_PROFILE, type CareerMobilityProfile } from './profile'
 import type { ParsedJob } from './types'
 
 function jobWithText(rawText: string): ParsedJob {
@@ -64,5 +65,27 @@ describe('mapProofs', () => {
   it('does not duplicate a rule when its keywords appear multiple times', () => {
     const text = 'SQL SQL SQL data validation data validation'
     expect(requirements(text).filter((r) => r === 'SQL/data validation')).toHaveLength(1)
+  })
+
+  it('generalizes to a different candidate profile: uses their own tagged evidence, not RAJ_PROFILE\'s', () => {
+    const otherProfile: CareerMobilityProfile = {
+      ...RAJ_PROFILE,
+      proofAssets: [
+        { id: 'acmeStint', label: 'Acme Corp DevOps role', description: 'Acme Corp - 2 years DevOps, on-call incident response', tags: ['incident-support'] },
+      ],
+    }
+
+    const job = jobWithText('Own application support and monitor logs for incidents.')
+    const [mapping] = mapProofs(job, otherProfile)
+
+    expect(mapping.jdRequirement).toBe('Application support/incident investigation')
+    expect(mapping.proofAsset).toBe('Acme Corp - 2 years DevOps, on-call incident response')
+    expect(mapping.proofAsset).not.toContain('FIS')
+    expect(mapping.proofAsset).not.toContain('Yalamanchili')
+  })
+
+  it('skips a category entirely when the candidate has no evidence tagged for it, rather than inventing a fallback', () => {
+    const sparseProfile: CareerMobilityProfile = { ...RAJ_PROFILE, proofAssets: [] }
+    expect(mapProofs(jobWithText('Gather requirements from business users.'), sparseProfile)).toEqual([])
   })
 })
