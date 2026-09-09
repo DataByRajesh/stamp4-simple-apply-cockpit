@@ -7,6 +7,7 @@ import {
   type AIGenerationOutput,
 } from '@/lib/stamp4/simple-apply/generator'
 import { callStructuredLLM } from '@/lib/stamp4/simple-apply/llm'
+import { OPERATOR_USER_ID } from '@/lib/stamp4/simple-apply/operatorAccount'
 import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
 import type { ParsedJob, ProofMapping, ScoreBreakdown } from '@/lib/stamp4/simple-apply/types'
 
@@ -101,7 +102,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid generation request' }, { status: 400 })
   }
 
-  const { data: settingsRows } = await getSupabaseServer().from('app_settings').select('key,value').in('key', ['candidate_evidence_profile', 'mobility_profile'])
+  const { data: settingsRows } = await getSupabaseServer()
+    .from('user_app_settings')
+    .select('key,value')
+    .eq('user_id', OPERATOR_USER_ID)
+    .in('key', ['candidate_evidence_profile', 'mobility_profile'])
   const settings = Object.fromEntries((settingsRows ?? []).map((row) => [row.key, row.value]))
   const evidenceProfile = settings.candidate_evidence_profile
   const mobilityProfile = settings.mobility_profile

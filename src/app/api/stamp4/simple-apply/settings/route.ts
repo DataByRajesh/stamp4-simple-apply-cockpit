@@ -1,37 +1,52 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import type { NextRequest } from 'next/server'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
-import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import { authenticateRequest } from '@/lib/stamp4/simple-apply/supabaseAuth'
 
-export async function GET(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+// Per-user settings keys only - see docs/auth-migration.md's "app_settings
+// ownership audit". Operational/global keys (last_sponsor_poll,
+// last_ireland_sponsor_sync, last_uk_sponsor_sync) live in app_settings and
+// are written directly by their cron routes via the service-role client;
+// this route must never expose those to a regular signed-in caller.
+const ALLOWED_KEYS = new Set(['candidate_evidence_profile', 'mobility_profile', 'last_source_check'])
+
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const key = new URL(request.url).searchParams.get('key')
-  if (!key) return Response.json({ error: 'Missing key' }, { status: 400 })
+  if (!key || !ALLOWED_KEYS.has(key)) return auth.json({ error: 'Missing or unsupported key' }, { status: 400 })
 
-  const { data, error } = await getSupabaseServer().from('app_settings').select('value').eq('key', key).maybeSingle()
+  const { data, error } = await auth.supabase
+    .from('user_app_settings')
+    .select('value')
+    .eq('user_id', auth.user.id)
+    .eq('key', key)
+    .maybeSingle()
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ value: data?.value ?? null })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ value: data?.value ?? null })
 }
 
-export async function POST(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const parsed = await parseJsonBody<{ key?: string; value?: unknown }>(request)
   if (!parsed.ok) return parsed.response
   const body = parsed.body
-  if (!body.key || !/^[a-z0-9_-]{1,100}$/i.test(body.key)) return Response.json({ error: 'Missing or invalid key' }, { status: 400 })
-  if (JSON.stringify(body.value).length > 100_000) return Response.json({ error: 'Setting value is too large' }, { status: 413 })
+  if (!body.key || !ALLOWED_KEYS.has(body.key)) return auth.json({ error: 'Missing or unsupported key' }, { status: 400 })
+  if (JSON.stringify(body.value).length > 100_000) return auth.json({ error: 'Setting value is too large' }, { status: 413 })
 
-  const { error } = await getSupabaseServer().from('app_settings').upsert(
+  const { error } = await auth.supabase.from('user_app_settings').upsert(
     {
+      user_id: auth.user.id,
       key: body.key,
       value: body.value,
       updated_at: new Date().toISOString(),
     },
-    { onConflict: 'key' },
+    { onConflict: 'user_id,key' },
   )
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }

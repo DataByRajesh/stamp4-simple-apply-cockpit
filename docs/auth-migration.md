@@ -26,31 +26,42 @@ server operations.
 Do not treat the compatibility cookie or extension bearer secret as tenant
 identity. Routes using either mechanism must not expose per-user data.
 
-## `app_settings` ownership audit
+## `app_settings` ownership audit (completed)
 
-Per-user keys:
+The per-user keys moved to a dedicated `user_app_settings` table
+(`user_id, key` composite primary key, RLS-scoped to `auth.uid() = user_id`)
+rather than overloading `app_settings` with a nullable-user_id composite key -
+same pattern as `career_search_profiles`:
 
 - `candidate_evidence_profile`
 - `mobility_profile`
 - `last_source_check`
 
-Operational/global keys, written by privileged cron routes:
+`settings/route.ts` (session-scoped via `authenticateRequest`) enforces this
+exact key allowlist and rejects anything else - closing the previous gap
+where the route accepted any key at all. `app_settings` itself keeps its
+original bare `key` primary key and now holds only genuinely global,
+privileged-cron-written keys:
 
 - `last_sponsor_poll`
 - `last_ireland_sponsor_sync`
 - `last_uk_sponsor_sync`
 
-Before migrating `app_settings`, change its key from a globally unique primary
-key to a composite identity that can represent both user-owned and global rows.
-The settings API must allow only the per-user key allowlist; cron routes should
-write global operational keys through the service-role client.
+`generate/route.ts` is reachable only via the extension's shared-secret path
+(see "Remaining sequence" step 5 below - it has no caller identity yet), so it
+reads the per-user settings keys via a documented single-operator fallback
+(`OPERATOR_USER_ID` in `operatorAccount.ts`) rather than a real per-user
+lookup, until personal extension tokens exist.
 
 ## Remaining sequence
 
 1. Apply `20260908150000_rls_custom_job_sources.sql` and verify two test users
    cannot read or mutate each other's rows.
-2. Migrate the remaining user-owned routes and tables one at a time.
-3. Split `app_settings` as described above and migrate its API consumers.
+2. ~~Migrate the remaining user-owned routes and tables one at a time.~~ Done:
+   `custom_job_sources`, `tracker_jobs`, `seen_job_postings`,
+   `alert_setup_status`, `career_search_profiles`, `user_app_settings`.
+3. ~~Split `app_settings` as described above and migrate its API consumers.~~ Done.
 4. Remove the legacy cookie once every web route uses Supabase sessions.
 5. Introduce hashed, revocable, user-owned extension tokens; then remove shared
-   bearer-secret support.
+   bearer-secret support (this also resolves `generate/route.ts`'s
+   single-operator fallback above).
