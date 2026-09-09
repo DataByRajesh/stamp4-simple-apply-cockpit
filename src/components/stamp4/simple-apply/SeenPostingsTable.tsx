@@ -3,11 +3,8 @@
 import { ExternalLink, Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
 import { seenPostingTrackedJobId, savePendingJd } from '@/lib/stamp4/simple-apply/pendingJdHandoff'
-import { RAJ_PROFILE } from '@/lib/stamp4/simple-apply/profile'
-import { buildSkipReason } from '@/lib/stamp4/simple-apply/skipReason'
-import { buildJdRawText, isEmailWorthyMatch, scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
+import { buildJdRawText } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
 import { apiCall } from '@/lib/stamp4/simple-apply/storage'
 import type { SeenSponsorPosting } from '@/lib/stamp4/simple-apply/types'
 
@@ -20,26 +17,6 @@ function decisionBadgeClass(decision: string | null): string {
     default:
       return 'low'
   }
-}
-
-function postingExplanation(posting: SeenSponsorPosting): string {
-  if (isEmailWorthyMatch(posting.decision ?? '', posting.title, RAJ_PROFILE.targetRoleLane)) {
-    return 'Target-lane match; email-worthy when first seen.'
-  }
-
-  if (!matchesTargetRoles(posting.title, RAJ_PROFILE.targetRoleLane)) {
-    return 'Not emailed: title does not match the target role lane.'
-  }
-
-  if (posting.decision === 'Skip') {
-    if (!posting.descriptionText) return 'Not emailed: stored decision is Skip, but no JD text was captured for details.'
-
-    const { parsed, score } = scorePosting(posting.companyName, posting.title, posting.location, posting.descriptionText)
-    const reason = buildSkipReason(score, parsed)
-    return `Not emailed: ${reason.details.join(' ')}`
-  }
-
-  return 'Target-lane match; email-worthy when first seen.'
 }
 
 export function SeenPostingsTable() {
@@ -121,7 +98,7 @@ export function SeenPostingsTable() {
                     )}
                   </td>
                   <td>{posting.location ?? '-'}</td>
-                  <td>{postingExplanation(posting)}</td>
+                  <td>{posting.explanation}</td>
                   <td className="muted">{new Date(posting.firstSeenAt).toLocaleDateString()}</td>
                   <td>
                     <button

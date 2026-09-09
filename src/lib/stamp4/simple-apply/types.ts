@@ -154,6 +154,10 @@ export interface SeenSponsorPosting {
   // True only for Ireland/Jooble postings cross-checked against the government sponsor
   // register; null for every other source (no equivalent register wired up for them).
   verifiedSponsor: boolean | null
+  // Computed server-side (seen-postings/route.ts) against the viewer's own
+  // career_search_profiles row, so the UI never needs a hardcoded profile
+  // to explain why a posting was or wasn't email-worthy.
+  explanation: string
 }
 
 export type SponsorshipStatus = 'Unknown' | 'Confirmed' | 'Likely' | 'Recruiter confirmation required' | 'Authorised candidates only' | 'No sponsorship'

@@ -1,3 +1,4 @@
+import type { CareerMobilityProfile } from './profile'
 import type { ApplicationRecord, BackupPayload, InterviewExecution, OfferDecision, OutreachDetails, TrackedJob, TrackerStatus } from './types'
 
 export async function apiCall<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -65,6 +66,10 @@ export async function getAlertSetupStatus(): Promise<Record<string, boolean>> {
 
 export async function setAlertSetupStatus(sourceName: string, done: boolean): Promise<void> {
   await apiCall<{ ok: true }>('alerts', { method: 'POST', body: JSON.stringify({ sourceName, done }) })
+}
+
+export async function getCareerSearchProfile(): Promise<CareerMobilityProfile | null> {
+  return apiCall<CareerMobilityProfile | null>('career-search-profile', { method: 'GET' })
 }
 
 export async function exportBackup(): Promise<BackupPayload> {

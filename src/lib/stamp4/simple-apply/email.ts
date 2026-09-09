@@ -37,13 +37,12 @@ function buildDigestHtml(matches: SponsorAlertMatch[]): string {
   return `<p>New roles matching your target lane were just posted by sponsor-friendly companies on your Stamp4 watchlist, pre-scored with your Cockpit's scoring engine:</p><ul>${items}</ul>`
 }
 
-export async function sendSponsorAlertEmail(matches: SponsorAlertMatch[]): Promise<void> {
+export async function sendSponsorAlertEmail(matches: SponsorAlertMatch[], to: string): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
-  const to = process.env.STAMP4_ALERT_EMAIL_TO
   const from = process.env.STAMP4_ALERT_EMAIL_FROM
 
   if (!apiKey || !to || !from) {
-    throw new Error('Resend is not configured. Set RESEND_API_KEY, STAMP4_ALERT_EMAIL_TO and STAMP4_ALERT_EMAIL_FROM.')
+    throw new Error('Resend is not configured. Set RESEND_API_KEY and STAMP4_ALERT_EMAIL_FROM, and pass a recipient.')
   }
 
   const response = await fetch('https://api.resend.com/emails', {

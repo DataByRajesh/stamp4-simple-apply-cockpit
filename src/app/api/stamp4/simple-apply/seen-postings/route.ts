@@ -1,5 +1,9 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
-import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import type { NextRequest } from 'next/server'
+import { matchesTargetRoles } from '@/lib/stamp4/simple-apply/atsFeeds'
+import type { CareerMobilityProfile } from '@/lib/stamp4/simple-apply/profile'
+import { buildSkipReason } from '@/lib/stamp4/simple-apply/skipReason'
+import { isEmailWorthyMatch, scorePosting } from '@/lib/stamp4/simple-apply/sponsorMatchScoring'
+import { authenticateRequest } from '@/lib/stamp4/simple-apply/supabaseAuth'
 import type { SeenSponsorPosting } from '@/lib/stamp4/simple-apply/types'
 
 type SeenPostingRow = {
@@ -15,7 +19,27 @@ type SeenPostingRow = {
   verified_sponsor: boolean | null
 }
 
-function rowToPosting(row: SeenPostingRow): SeenSponsorPosting {
+function postingExplanation(row: SeenPostingRow, profile: CareerMobilityProfile): string {
+  if (isEmailWorthyMatch(row.decision ?? '', row.title, profile.targetRoleLane)) {
+    return 'Target-lane match; email-worthy when first seen.'
+  }
+
+  if (!matchesTargetRoles(row.title, profile.targetRoleLane)) {
+    return 'Not emailed: title does not match your target role lane.'
+  }
+
+  if (row.decision === 'Skip') {
+    if (!row.description_text) return 'Not emailed: stored decision is Skip, but no JD text was captured for details.'
+
+    const { parsed, score } = scorePosting(row.company_name, row.title, row.location, row.description_text, profile)
+    const reason = buildSkipReason(score, parsed, profile)
+    return `Not emailed: ${reason.details.join(' ')}`
+  }
+
+  return 'Target-lane match; email-worthy when first seen.'
+}
+
+function rowToPosting(row: SeenPostingRow, profile: CareerMobilityProfile): SeenSponsorPosting {
   return {
     companyName: row.company_name,
     externalId: row.external_id,
@@ -27,20 +51,32 @@ function rowToPosting(row: SeenPostingRow): SeenSponsorPosting {
     descriptionText: row.description_text,
     firstSeenAt: row.first_seen_at,
     verifiedSponsor: row.verified_sponsor,
+    explanation: postingExplanation(row, profile),
   }
 }
 
-export async function GET(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
-  const { data, error } = await getSupabaseServer()
-    .from('seen_job_postings')
-    .select(
-      'company_name, external_id, title, url, location, score_total, decision, description_text, first_seen_at, verified_sponsor',
-    )
-    .order('first_seen_at', { ascending: false })
-    .limit(50)
+  const [postingsResult, profileResult] = await Promise.all([
+    auth.supabase
+      .from('seen_job_postings')
+      .select(
+        'company_name, external_id, title, url, location, score_total, decision, description_text, first_seen_at, verified_sponsor',
+      )
+      .order('first_seen_at', { ascending: false })
+      .limit(50),
+    auth.supabase.from('career_search_profiles').select('profile').eq('user_id', auth.user.id).maybeSingle(),
+  ])
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json((data as SeenPostingRow[]).map(rowToPosting))
+  if (postingsResult.error) return auth.json({ error: postingsResult.error.message }, { status: 500 })
+  if (profileResult.error) return auth.json({ error: profileResult.error.message }, { status: 500 })
+  if (!profileResult.data) {
+    return auth.json({ error: 'Set up your career search profile before viewing seen postings.' }, { status: 400 })
+  }
+
+  const profile = profileResult.data.profile as CareerMobilityProfile
+  const rows = postingsResult.data as SeenPostingRow[]
+  return auth.json(rows.map((row) => rowToPosting(row, profile)))
 }

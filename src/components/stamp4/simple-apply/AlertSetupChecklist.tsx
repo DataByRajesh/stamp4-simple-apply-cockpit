@@ -4,7 +4,8 @@ import { Copy, ExternalLink } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { copyToClipboard } from '@/lib/stamp4/simple-apply/clipboard'
 import { buildSuggestedSearchQuery, JOB_SOURCES, type JobSource } from '@/lib/stamp4/simple-apply/jobSources'
-import { getAlertSetupStatus, setAlertSetupStatus } from '@/lib/stamp4/simple-apply/storage'
+import type { CareerMobilityProfile } from '@/lib/stamp4/simple-apply/profile'
+import { getAlertSetupStatus, getCareerSearchProfile, setAlertSetupStatus } from '@/lib/stamp4/simple-apply/storage'
 
 const REGIONS: JobSource['region'][] = ['Ireland', 'Netherlands', 'Germany', 'EU-wide']
 
@@ -14,6 +15,7 @@ function alertHref(source: JobSource) {
 
 export function AlertSetupChecklist() {
   const [statusMap, setStatusMap] = useState<Record<string, boolean>>({})
+  const [profile, setProfile] = useState<CareerMobilityProfile | undefined>(undefined)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [copyStatus, setCopyStatus] = useState<Record<string, 'copied' | 'error' | undefined>>({})
@@ -25,8 +27,11 @@ export function AlertSetupChecklist() {
   }
 
   useEffect(() => {
-    getAlertSetupStatus()
-      .then(setStatusMap)
+    Promise.all([getAlertSetupStatus(), getCareerSearchProfile()])
+      .then(([status, careerProfile]) => {
+        setStatusMap(status)
+        setProfile(careerProfile ?? undefined)
+      })
       .catch(() => {
         setError('Cloud alert checklist unavailable. Check Supabase and STAMP4 access secret env vars.')
       })
@@ -57,13 +62,13 @@ export function AlertSetupChecklist() {
         <h2>Set native job alerts</h2>
         <p>
           Use each platform&apos;s own alert feature - copy a search below, paste it into the matching site, then
-          tick it off once its alert is set up. This checklist only tracks what Raj has manually set up.
+          tick it off once its alert is set up. This checklist only tracks what you have manually set up.
         </p>
       </div>
 
       <div className="grid two-grid">
         {(['Ireland', 'Netherlands', 'Germany'] as const).map((region) => {
-          const query = buildSuggestedSearchQuery(region)
+          const query = buildSuggestedSearchQuery(region, profile)
           return (
             <article className="card stack" key={region}>
               <div className="toolbar">

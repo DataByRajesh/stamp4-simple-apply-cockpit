@@ -1,4 +1,5 @@
 import { matchesTargetRoles } from './atsFeeds'
+import type { CareerMobilityProfile } from './profile'
 import { mapProofs } from './proofMapper'
 import { parseJobDescription } from './parser'
 import { scoreJob } from './scoring'
@@ -29,14 +30,20 @@ export function isEmailWorthyMatch(decision: string, title: string, targetRoleLa
  * the regex heuristics parseJobDescription uses for messy pasted text); everything else
  * (skills, domain keywords, salary, location, permit signals) is extracted from the JD body.
  */
-export function scorePosting(companyName: string, title: string, location: string | null, descriptionText: string): ScoredPosting {
+export function scorePosting(
+  companyName: string,
+  title: string,
+  location: string | null,
+  descriptionText: string,
+  profile?: CareerMobilityProfile,
+): ScoredPosting {
   const rawText = buildJdRawText(companyName, title, location, descriptionText)
   const parsed = parseJobDescription(rawText)
   parsed.roleTitle = title
   parsed.company = companyName
 
-  const score = scoreJob(parsed)
-  const proofs = mapProofs(parsed)
+  const score = profile ? scoreJob(parsed, profile) : scoreJob(parsed)
+  const proofs = profile ? mapProofs(parsed, profile) : mapProofs(parsed)
 
   return { parsed, score, proofs }
 }

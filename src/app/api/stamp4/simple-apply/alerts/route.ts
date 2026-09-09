@@ -1,22 +1,24 @@
-import { checkAccessSecret, unauthorizedResponse } from '@/lib/stamp4/simple-apply/checkAccessSecret'
+import type { NextRequest } from 'next/server'
 import { parseJsonBody } from '@/lib/stamp4/simple-apply/parseJsonBody'
-import { getSupabaseServer } from '@/lib/stamp4/simple-apply/supabaseServer'
+import { authenticateRequest } from '@/lib/stamp4/simple-apply/supabaseAuth'
 
 type AlertRow = { source_name: string; done: boolean }
 
-export async function GET(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function GET(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
-  const { data, error } = await getSupabaseServer().from('alert_setup_status').select('source_name, done')
+  const { data, error } = await auth.supabase.from('alert_setup_status').select('source_name, done')
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
 
   const status = Object.fromEntries((data as AlertRow[]).map((row) => [row.source_name, row.done]))
-  return Response.json(status)
+  return auth.json(status)
 }
 
-export async function POST(request: Request) {
-  if (!checkAccessSecret(request)) return unauthorizedResponse()
+export async function POST(request: NextRequest) {
+  const auth = await authenticateRequest(request)
+  if (auth instanceof Response) return auth
 
   const parsed = await parseJsonBody<{ sourceName?: string; source_name?: string; done?: boolean }>(request)
   if (!parsed.ok) return parsed.response
@@ -24,18 +26,19 @@ export async function POST(request: Request) {
   const sourceName = body.sourceName ?? body.source_name
 
   if (!sourceName || typeof body.done !== 'boolean') {
-    return Response.json({ error: 'Missing sourceName or done' }, { status: 400 })
+    return auth.json({ error: 'Missing sourceName or done' }, { status: 400 })
   }
 
-  const { error } = await getSupabaseServer().from('alert_setup_status').upsert(
+  const { error } = await auth.supabase.from('alert_setup_status').upsert(
     {
+      user_id: auth.user.id,
       source_name: sourceName,
       done: body.done,
       updated_at: new Date().toISOString(),
     },
-    { onConflict: 'source_name' },
+    { onConflict: 'user_id,source_name' },
   )
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json({ ok: true })
+  if (error) return auth.json({ error: error.message }, { status: 500 })
+  return auth.json({ ok: true })
 }

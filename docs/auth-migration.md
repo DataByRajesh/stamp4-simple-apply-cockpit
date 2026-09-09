@@ -8,8 +8,16 @@ server operations.
 ## Current migration status
 
 - Supabase email/password sign-in and sign-out issue HttpOnly auth cookies.
-- `custom_job_sources` is the proof route: reads and writes use the caller's
-  session-scoped client, and its RLS policy limits rows to their `user_id`.
+- `custom_job_sources`, `tracker_jobs`, `seen_job_postings` and
+  `alert_setup_status` are migrated: reads and writes use the caller's
+  session-scoped client, and RLS limits rows to their `user_id`.
+- `career_search_profiles` (renamed from the earlier hardcoded `RAJ_PROFILE`
+  constant, and distinct from the unrelated `mobility_profiles` table used by
+  AutoTime EU Apply's own cross-border sponsorship feature in this same
+  consolidated Supabase project) holds each user's own career-search
+  preferences. The daily `poll-sponsors` cron loops over every row in it
+  (service-role, cron-only) instead of one hardcoded profile, and emails each
+  user's own account address instead of one shared `STAMP4_ALERT_EMAIL_TO`.
 - Login also issues the old signed workspace cookie temporarily so unmigrated
   web routes continue to work during the staged cutover.
 - The extension may continue using `STAMP4_ACCESS_SECRET` until personal access
